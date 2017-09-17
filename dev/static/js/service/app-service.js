@@ -314,6 +314,26 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 				error: err
 			})
 		};
+		this.userUpdate = function(data,suc,com,err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/user/update',
+				data:[data],
+				success: suc,
+				complete: com,
+				error: err
+			})
+		};
+		this.getGameSetting = function(id, suc,com,err) {
+			appHttp.appGet({
+				url: baseSet.postServer + 'manager/gameSetting/getGameSetting',
+				params:{
+					serverId:id
+				},
+				success: suc,
+				complete: com,
+				error: err
+			})
+		};
 	}]);
 	appServices.service('debug',function() {
 		$(document).off('click','.icon-debug',function(){});

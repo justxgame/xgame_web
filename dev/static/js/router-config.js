@@ -98,6 +98,11 @@ function(angular, require){
                 //模块的代码路径
                 path: 'static/js/controller/inform.js?v='+stamp,
                 controller: 'informController'
+            },
+            '/game': { //路由
+                //模块的代码路径
+                path: 'static/js/controller/game.js?v='+stamp,
+                controller: 'gameController'
             }
         };
         //默认跳转到某个路由

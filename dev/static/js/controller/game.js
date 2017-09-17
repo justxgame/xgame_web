@@ -21,7 +21,7 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			};
 			$scope.filterBarModel.serverId = i;
 			$scope.filterBarModel.serverName = n;
-//			Query();
+			Query();
 		};
 		$scope.dt = $scope.$table.dataTable({
 			buttons: {
@@ -68,13 +68,11 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			}]
 		});
 		function Query(){
-			let p = $.extend(true, {}, $scope.filterBarModel);
-			delete p.serverName;
-			appApi.getPlayerInfo(p,data=>{
+			appApi.getGameSetting($scope.filterBarModel.serverId,data=>{
 				console.log(data);
-				$scope.dt.fnClearTable();
-				if(data.length==0) return;
-				$scope.dt.fnAddData(data);
+//				$scope.dt.fnClearTable();
+//				if(data.length==0) return;
+//				$scope.dt.fnAddData(data);
 			});
 		};
 		

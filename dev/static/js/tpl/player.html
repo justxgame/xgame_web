@@ -48,7 +48,9 @@
 								<th>uid</th>
 								<th>用户名</th>
 								<th>金钱</th>
+								<th>元宝</th>
 								<th>门票</th>
+								<th>积分</th>
 								<th>操作</th>
 							</tr>
 						</thead>
@@ -56,6 +58,63 @@
 						</tbody>
 					</table>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade custom-modal palery-modal form-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+          		</button>
+				<h4 class="modal-title text-center" id="myModalLabel"><span class="pull-left">{{title}}</span></h4>
+			</div>
+			<div class="modal-body">
+				<div class="body-container" ng-class="{'success overflow':success}">
+					<div class="submit-success transition-05" >
+						<div class="center">
+							<p class="icon"><i class="icon">&#xe60c;</i></p>
+							<p class="text">提交成功</p>
+						</div>
+					</div>
+					<form role="form" name="modalForm" class="clearfix transition-05" novalidate>
+						<div class="form-line pull-left" ng-if="formModel.actionId==4">
+							<div class="form-tag">玩家名称</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.userName" valid="true" required="required" focus="focus" name="name"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">金钱(moeny)</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.money" valid="true" required="required" focus="focus" name="money"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">元宝(coins)</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.coins" valid="true" required="required" focus="focus" name="coins"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">门票(ticket)</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.ticket" valid="true" required="required" focus="focus" name="ticket"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">积分(points)</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.points" valid="true" required="required" focus="focus" name="points"></ng-input>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success btn-submit" ng-click="submitForm($event)" ng-bind="success?'关闭':'提交'"></button>
 			</div>
 		</div>
 	</div>
