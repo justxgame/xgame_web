@@ -49,13 +49,13 @@
 	</div>
 </div>
 
-<div class="modal fade custom-modal server-modal form-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade custom-modal inform-modal form-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           		</button>
-				<h4 class="modal-title text-center" id="myModalLabel"><span class="pull-left">{{title}}服务器</span></h4>
+				<h4 class="modal-title text-center" id="myModalLabel"><span class="pull-left">发送广播</span></h4>
 			</div>
 			<div class="modal-body">
 				<div class="body-container" ng-class="{'success overflow':success}">
@@ -67,23 +67,23 @@
 					</div>
 					<form role="form" name="modalForm" class="clearfix transition-05" novalidate>
 						<div class="form-line pull-left">
-							<div class="form-tag">服务器名称</div>
+							<div class="form-tag">服务器</div>
 							<div class="dropdown form-content transition-02">
 								<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-									<span class="val pull-left" ng-bind="filterBarModel.serverName"></span>
+									<span class="val pull-left" ng-bind="formModel.serverName"></span>
 									<div class="pull-right">
 										<span class="caret icon-arrow"></span>
 									</div>
 								</a>
 								<ul class="dropdown-menu animated fadeInUpSmall fast" role="menu">
-									<li role="presentation" ng-repeat="item in serverBox" ng-bind="item.serverName" ng-click="serverClick($event,item.serverName,item.serverId)" ng-class="{'active':filterBarModel.serverId===item.serverId}"></li>
+									<li role="presentation" ng-repeat="item in serverBox" ng-bind="item.serverName" ng-click="serverClick($event,item.serverName,item.serverId)" ng-class="{'active':formModel.serverId===item.serverId}"></li>
 								</ul>
 							</div>
 						</div>
 						<div class="form-line pull-left">
 							<div class="form-tag">服务器ID</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.serverId" valid="true" required="required" focus="focus" name="name"></ng-input>
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.message" valid="true" required="required" focus="focus" name="name"></ng-input>
 							</div>
 						</div>
 					</form>

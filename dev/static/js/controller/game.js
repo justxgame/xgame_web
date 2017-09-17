@@ -1,4 +1,4 @@
-define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'], function(angular, tpl, require, NProgress,swal) {
+define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], function(angular, tpl, require, NProgress,swal) {
 	function controller($scope, appApi) {
 		NProgress.done();
 		$scope.filterBarModel = {};
@@ -63,7 +63,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				visible: true,
 				render: function(data, type, row, meta) {
 					var tmp = '<button class="btn btn-primary btn-edit">发送补偿邮件</button><button class="btn btn-info btn-del">修改玩家数据</button>';
-					return data.status==0?tmp+='<button class="btn btn-danger btn-edit">封号</button>':tmp+='<button class="btn btn-success btn-edit">解封</button>';
+					return data.userState==0?tmp+='<button class="btn btn-danger btn-edit">封号</button>':tmp+='<button class="btn btn-success btn-edit">解封</button>';
 				}
 			}]
 		});

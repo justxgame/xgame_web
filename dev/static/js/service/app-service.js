@@ -288,6 +288,32 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 				error: err
 			})
 		};
+		this.getInform = function(suc,com,err) {
+			appHttp.appGet({
+				url: baseSet.postServer + 'manager/broadcast/history',
+				success: suc,
+				complete: com,
+				error: err
+			})
+		};
+		this.sendInform = function(data,suc,com,err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/broadcast/send',
+				data:data,
+				success: suc,
+				complete: com,
+				error: err
+			})
+		};
+		this.getPlayerInfo = function(params, suc,com,err) {
+			appHttp.appGet({
+				url: baseSet.postServer + 'manager/user/search',
+				params:params,
+				success: suc,
+				complete: com,
+				error: err
+			})
+		};
 	}]);
 	appServices.service('debug',function() {
 		$(document).off('click','.icon-debug',function(){});

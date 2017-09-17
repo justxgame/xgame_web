@@ -1,6 +1,7 @@
 define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'], function(angular, tpl, require, NProgress,swal) {
 	function controller($scope, appApi, getMillisecond) {
 		NProgress.done();
+		$scope.$table = $('.delivery-data');
 		$scope.filterBarModel = {};
 		$scope.QueryDate = undefined;
 		$scope.QueryParam = {}
@@ -13,7 +14,7 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 			Param();
 			Query();
 		});
-		$scope.dt = $('.delivery-data').dataTable({
+		$scope.dt = $scope.$table.dataTable({
 			buttons: {
 				buttons: [{
 					extend: 'copyHtml5',
@@ -98,7 +99,7 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 			$scope.filterBarModel.orderTypeId = i;
 			$scope.filterBarModel.orderTypeName = n;
 		};
-		$('.delivery-data').on('click','.btn-retry',function(){
+		$scope.$table.on('click','.btn-retry',function(){
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({

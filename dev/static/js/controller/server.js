@@ -4,6 +4,7 @@ define(['angular','text!tpl/server.html','require','nprogress','sweetalert'], fu
 		$scope.btnText = '提交';
 		$scope.title = '新增';
 		$scope.$modal = $('.server-modal');
+		$scope.$table = $('.server-table');
 		$scope.filterBarModel = {};
 		$scope.serverBox = [];
 		$scope.formModel = {
@@ -35,7 +36,7 @@ define(['angular','text!tpl/server.html','require','nprogress','sweetalert'], fu
 			};
 			$scope.formModel.status = i;
 		};
-		$scope.dt = $('.server-table').dataTable({
+		$scope.dt = $scope.$table.dataTable({
 			buttons: {
 				buttons: [{
 					extend: 'copyHtml5',
@@ -92,7 +93,7 @@ define(['angular','text!tpl/server.html','require','nprogress','sweetalert'], fu
 			$scope.$modal.modal('show');
 			$scope.formModel.actionId = 1;
 		};
-		$('.server-table').on('click','.btn-edit',function(e){
+		$scope.$table.on('click','.btn-edit',function(e){
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			$scope.formModel = data;
@@ -102,7 +103,7 @@ define(['angular','text!tpl/server.html','require','nprogress','sweetalert'], fu
 			$scope.$modal.modal('show');
 			$scope.formModel.actionId = 2;
 		});
-		$('.server-table').on('click','.btn-del',function(e){
+		$scope.$table.on('click','.btn-del',function(e){
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
@@ -132,7 +133,7 @@ define(['angular','text!tpl/server.html','require','nprogress','sweetalert'], fu
 		};
 		$scope.submitForm = function(e){
 			if($scope.success){
-				$('.custom-modal').modal('hide');
+				$scope.$modal.modal('hide');
 				return false;
 			};
 			$scope.modalForm.$submitted = true;
