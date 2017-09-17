@@ -1,0 +1,93 @@
+@charset "utf-8";
+/*
+---------------------------------
+Site: kingnet-data -login
+Author: Clearlove 7*
+Updated: 2016.4.11
+Version: 1.0
+---------------------------------
+*/
+/*----------------icon-font-----------------*/
+@font-face {
+  font-family: 'iconfont';  /* project id 293816 */
+  src: url('//at.alicdn.com/t/font_adgd7tq4lu40a4i.eot');
+  src: url('//at.alicdn.com/t/font_adgd7tq4lu40a4i.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_adgd7tq4lu40a4i.woff') format('woff'),
+  url('//at.alicdn.com/t/font_adgd7tq4lu40a4i.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_adgd7tq4lu40a4i.svg#iconfont') format('svg');
+}
+
+/*@font-face {
+  font-family: 'iconfont';
+  src: url('../fonts/iconfont.eot'); 
+  src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'), 
+  url('../fonts/iconfont.woff') format('woff'),
+  url('../fonts/iconfont.ttf') format('truetype'), 
+  url('../fonts/iconfont.svg#iconfont') format('svg'); 
+}*/
+[class^="icon-"], [class*=" icon-"],.iconfont,.icon,a.icon {
+	font-family:"iconfont" !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-stroke-width: 0.2px;
+	color:#6a7a77;
+}
+
+.login-wrapper{background-color:#f5f8fb; height: 100%;width: 100%;position: absolute;top:0;bottom:0;left:0;right:0;}
+.wrapper .pv{padding-top: 0;}
+.copyright {position: fixed;bottom: 0;width: 100%;padding:10px 15px !important;font-size: 14px;color: #384066;z-index:1000;}
+.copyright span{margin-left: 10px;}
+
+.login-wrapper .block-center{position: absolute;top:50%; left:50%;z-index:999; width:512px;margin-top:-400px; margin-left:-256px; -webkit-transition: all 0.6s;-o-transition: all 0.6s;-moz-transition: all 0.6s;transition: all 0.6s;}
+.login-wrapper .panel-header{text-align: center;margin-bottom:30px;}
+.login-wrapper .panel-header .svg-icon{height: 80px;margin:20px 0;width: 80px;}
+.login-wrapper .panel-header .cname{font-size:36px;line-height:60px;margin-top:10px;}
+.login-wrapper .panel-header .ename{font-family:sans-serif; font-size:20px;line-height:28px;font-style: italic;font-weight: normal;}
+.login-wrapper .panel{border-radius:4px;box-shadow:0 0 20px rgba(0,0,0,.3);padding:0 30px; position: relative;margin:0 auto;width:410px;}
+.login-wrapper .panel .tit{line-height: 54px;font-size:20px;text-align: left;margin-bottom: 0;}
+.login-wrapper .panel .tit .tag{font-size:14px;}
+.login-wrapper .form-group {margin-bottom: 30px;}
+.login-wrapper .form-control{height: 52px;line-height: 50px;border-color:#e6ecef;padding-top: 0; font-size:14px;padding-bottom: 0;height:20px\9;line-height: 20px\9;font-size:18px\9; padding:15px 0\9;box-sizing: content-box\9; padding-left:60px;color:#7a8f99;}
+.login-wrapper .form-control::-moz-placeholder {
+  color: #7a8f99;
+}
+.login-wrapper .form-control:-ms-input-placeholder {
+  color: #7a8f99;
+}
+.login-wrapper .form-control::-webkit-input-placeholder {
+  color: #7a8f99;
+}
+.login-wrapper .form-control:focus{border-color:#26b99a;box-shadow:0 0 10px rgba(38, 185, 154, 0.5) !important;}
+.login-wrapper .form-control:focus ~ .text-muted{color: #26b99a;}
+.login-wrapper .form-control-feedback{margin-top: 0; height: 50px;line-height:54px;font-size:32px;width: 50px;left:0;right: auto;}
+
+
+.login-wrapper .has-feedback label ~ .form-control-feedback{top: 0;}
+.login-wrapper label.error{position: absolute;left: 0;top: 100%;line-height: 30px;color: #ff8279;}
+
+.login-wrapper .checkbox{padding-left:60px;line-height: 20px;margin:0;}
+.login-wrapper .checkbox input{opacity: 0;}
+.login-wrapper .checkbox label{padding-left:0;}
+.login-wrapper .checkbox .icon{display: inline-block;width: 18px;height:18px;border-radius:4px; background-color:#b8c5cc;position: absolute;text-align: center; left:16px;top:1px;line-height: 20px;font-size:18px;color:#b8c5cc;}
+.c-checkbox input[type="checkbox"]:checked + .icon{
+	color:#fff;
+}
+.login-wrapper .btn-login{width: 160px;display: inline-block;margin:20px auto;position:relative;}
+.login-wrapper .btn-login span{opacity:1;}
+.login-wrapper .btn-login span.ld-hide{opacity:0;}
+.login-wrapper .btn-login i{font-size:20px;display: inline-block;width: 20px;height: 20px;line-height:20px;text-align: center;left:50%;top:50%;margin-top:-10px; margin-left:-10px; transform-origin:50% 50% 0;-webkit-transform-origin:50% 50% 0;
+-webkit-animation:load 1.5s linear infinite;
+animation:load 1.5s linear infinite;-moz-animation:load 1.5s linear infinite;position: absolute;color:#fff;opacity:0;}
+.login-wrapper .btn-login i.ld-show{opacity:1;}
+
+
+
+
+
+
