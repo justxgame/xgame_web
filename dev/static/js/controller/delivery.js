@@ -99,7 +99,7 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 			$scope.filterBarModel.orderTypeId = i;
 			$scope.filterBarModel.orderTypeName = n;
 		};
-		$scope.$table.on('click','.btn-retry',function(){
+		$scope.$table.on('click','.btn-retry',()=>{
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
@@ -108,7 +108,7 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 				confirmButtonText: '确定',
 				showCancelButton:true,
 				cancelButtonText:'取消'
-			}).then(function () {
+			}).then(()=>{
 				appApi.sendReCallOrder(data,(data)=>{
 					console.log(data);
 					Query();
@@ -135,7 +135,7 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 			console.log($scope.QueryParam);
 			Query();
 		};
-		$(document).on('click','.daterangepicker .btn-unrestricted',function(){
+		$(document).on('click','.daterangepicker .btn-unrestricted',()=>{
 			$scope.picker.hide();
 	    	$('.filter-bar').find('.date-range-picker').val('不限时间');
 	    	$scope.QueryDate = 0;

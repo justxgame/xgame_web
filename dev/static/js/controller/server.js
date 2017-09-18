@@ -77,7 +77,10 @@ define(['angular','text!tpl/server.html','require','nprogress','sweetalert'], fu
 				targets: 3,
 				visible: true,
 				render: function(data, type, row, meta) {
-					return data.orderType==0?'':'<button class="btn btn-primary btn-edit">修改</button><button class="btn btn-danger btn-del">删除</button>';
+					var btns = '<button class="btn btn-primary btn-reboot">重启</button>';
+					var onOrOff = data.status==0?'<button class="btn btn-success btn-on">启动</button>':'<button class="btn btn-danger btn-off">关闭</button>';
+					var edit = '<button class="btn btn-info btn-edit">修改</button><button class="btn btn-danger btn-del">删除</button>';
+					return (btns+onOrOff+edit);
 				}
 			}]
 		});
@@ -88,50 +91,83 @@ define(['angular','text!tpl/server.html','require','nprogress','sweetalert'], fu
 				$scope.dt.fnAddData(data);
 			});
 		};
+		function formModelInit(){
+			$scope.formModel = {
+				status:1
+			};
+			$scope.modalForm.$submitted = false;
+			$scope.modalForm.serverName.$touched = false;
+			$scope.modalForm.serverId.$touched = false;
+			$scope.modalForm.ipPort.$touched = false;
+		};
 		$scope.addServer = function(e){
 			$scope.title = '新增';
 			$scope.$modal.modal('show');
 			$scope.formModel.actionId = 1;
 		};
-		$scope.$table.on('click','.btn-edit',function(e){
+		$scope.$table.on('click','.btn-edit',(e)=>{
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			$scope.formModel = data;
 			console.log($scope.formModel);
-			$scope.title = '编辑';
+			$scope.title = '编辑服务器信息';
+			$scope.formModel.actionId = 2;
 			$scope.$digest();
 			$scope.$modal.modal('show');
-			$scope.formModel.actionId = 2;
 		});
-		$scope.$table.on('click','.btn-del',function(e){
+		$scope.$table.on('click','.btn',(e)=>{
+			if($(e.target).hasClass('btn-edit')) return;
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
+			var txt = '';
+			$scope.formModel = data;
+			if($(e.target).hasClass('btn-reboot')){
+				$scope.formModel.actionId = 6;
+				txt = '重启';
+			}
+			if($(e.target).hasClass('btn-off')){
+				$scope.formModel.actionId = 5;
+				txt = '关闭';
+			}
+			if($(e.target).hasClass('btn-on')){
+				$scope.formModel.actionId = 4;
+				txt = '启动';
+			}
+			if($(e.target).hasClass('btn-del')){
+				$scope.formModel.actionId = 3;
+				txt = '删除';
+			}
 			swal({
-				html: '确认删除<label class="red">'+data.serverName+'</label>服务器?',
+				html: '确认'+txt+'<label class="red">'+data.serverName+'</label>服务器?',
 				type: 'warning',
 				confirmButtonText: '确定',
 				showCancelButton:true,
 				cancelButtonText:'取消'
-			}).then(function () {
-				$scope.formModel = data;
-				$scope.formModel.actionId = 3;
+			}).then(()=>{
 				serverPost();
+			},()=>{
+				formModelInit();
+				console.log(123)
 			}).catch(swal.noop);
 		});
+		
 		function serverPost(){
 			console.log($scope.formModel);
 			appApi.serverPost($scope.formModel,data=>{
 				console.log(data);
-				$scope.btnText = '关闭';
-				$('.submit-success').css('visibility','visible');
-				$scope.success = true;
 				Query();
-				setTimeout(function(){
-					$scope.$modal.modal('hide');
-				},1000)
+				if($scope.formModel.actionId ==2||$scope.formModel.actionId ==1){
+					$('.submit-success').css('visibility','visible');
+					$scope.btnText = '关闭';
+					$scope.success = true;
+					setTimeout(()=>{
+						$scope.$modal.modal('hide');
+					},1000);
+				}
+				formModelInit();
 			});
 		};
-		$scope.submitForm = function(e){
+		$scope.submitForm = (e)=>{
 			if($scope.success){
 				$scope.$modal.modal('hide');
 				return false;
@@ -144,13 +180,10 @@ define(['angular','text!tpl/server.html','require','nprogress','sweetalert'], fu
 			};
 			serverPost();
 		};
-		$scope.$modal.on('hidden.bs.modal',function(){
+		$scope.$modal.on('hidden.bs.modal',()=>{
 			$scope.success = false;
-			$scope.formModel = {
-				status:1
-			};
 			$('.submit-success').css('visibility','hidden');
-			$scope.modalForm.$submitted = false;
+			formModelInit();
 		});
 	};
 	return {controller: controller, tpl: tpl};

@@ -106,7 +106,7 @@ function(angular, require){
             }
         };
         //默认跳转到某个路由
-        var defaultRoute = '/player ';
+        var defaultRoute = '/player';
         //出现未定义路由跳转
         $routeProvider.otherwise({
             redirectTo: defaultRoute

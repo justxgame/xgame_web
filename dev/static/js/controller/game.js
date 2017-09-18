@@ -3,10 +3,10 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 		NProgress.done();
 		$scope.filterBarModel = {};
 		$scope.serverBox = [];
-		$scope.$table = $('.player-table');
+		$scope.$table = $('.game-table');
 		$scope.QueryParam = {}
 		$scope.formModel = {};
-		appApi.getServerBox(data=>{
+		appApi.getGameServerInfo(data=>{
 			$scope.serverBox = data;
 			$scope.filterBarModel.serverName = data[0].serverName;
 			$scope.filterBarModel.serverId = data[0].serverId;
@@ -24,58 +24,87 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			Query();
 		};
 		$scope.dt = $scope.$table.dataTable({
+			scrollX: true,
 			buttons: {
 				buttons: [{
 					extend: 'copyHtml5',
 					className: 'btn-success btn-sm'
 				}, {
 					extend: 'excelHtml5',
-					title: '玩家信息表',
+					title: '游戏信息表',
 					className: 'btn-success btn-sm',
 				}, {
 					extend: 'csvHtml5',
 					className: 'btn-success btn-sm'
 				}]
 			},
-			columns: [{
-					data: 'uid',
-					width: '20%'
-				},
-				{
-					data: 'userName',
-					width: '20%'
-				},
-				{
-					data: 'money',
-					width: '15%'
-				},
-				{
-					data: 'ticket',
-					width: '15%'
-				},
-				{
-					data: null,
-					width: '3/*90%'
-				}
+			columns: [
+				{data: 'id'},
+				{data: 'matchItemType'},
+				{data: 'gmaeType'},
+				{data: 'gameName'},
+				{data: 'matchMode'},
+				{data: 'minStartPlayerNum'},
+				{data: 'maxStartPlayerNum'},
+				{data: 'canIntMinCoin'},
+				{data: 'canIntMaxCoin'},
+				{data: 'tableCost'},
+				{data: 'maxPoint'},
+				{data: 'initBase'},
+				{data: 'baseIncreaseSecond'},
+				{data: 'baseTimes'},
+				{data: 'signCost'},
+				{data: 'iconId'},
+				{data: 'winnerRewards'},
+				{data: 'initStartScores'},
+				{data: 'remainPlayerNum'},
+				{data: 'secondRoundPlayerNumber'},
+				{data: 'phase2GameRounds'},
+				{data: 'dayMonDay'},
+				{data: 'dateWeekDay'},
+				{data: 'dateDayHour'},
+				{data: 'dateHourMinute'},
+				{data: 'allowLateMinutes'}
 			],
 			columnDefs: [{
-				targets: 4,
+				targets: 14,
 				visible: true,
 				render: function(data, type, row, meta) {
-					var tmp = '<button class="btn btn-primary btn-edit">发送补偿邮件</button><button class="btn btn-info btn-del">修改玩家数据</button>';
-					return data.userState==0?tmp+='<button class="btn btn-danger btn-edit">封号</button>':tmp+='<button class="btn btn-success btn-edit">解封</button>';
+					let str = '';
+					for(let item of data){
+						for(let name in item){
+							str+= item[name]+'|';
+						};
+						str = str.substr(0,str.length-1);
+						str +=';';
+					}
+					return str;
+				}
+			},
+			{
+				targets: 16,
+				visible: true,
+				render: function(data, type, row, meta) {
+					let str = '';
+					for(let item of data){
+						for(let name in item){
+							str+= item[name]+'|';
+						};
+						str = str.substr(0,str.length-1);
+						str +=';';
+					}
+					return str;
 				}
 			}]
 		});
 		function Query(){
 			appApi.getGameSetting($scope.filterBarModel.serverId,data=>{
 				console.log(data);
-//				$scope.dt.fnClearTable();
-//				if(data.length==0) return;
-//				$scope.dt.fnAddData(data);
+				$scope.dt.fnClearTable();
+				if(data.length==0) return;
+				$scope.dt.fnAddData(data);
 			});
 		};
-		
 	};
 	return {
 		controller: controller,

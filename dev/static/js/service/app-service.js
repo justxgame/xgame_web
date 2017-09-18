@@ -334,6 +334,14 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 				error: err
 			})
 		};
+		this.getGameServerInfo = function(suc,com,err) {
+			appHttp.appGet({
+				url: baseSet.postServer + 'manager/gameSetting/getServerBox',
+				success: suc,
+				complete: com,
+				error: err
+			})
+		};
 	}]);
 	appServices.service('debug',function() {
 		$(document).off('click','.icon-debug',function(){});

@@ -97,7 +97,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'paginator', 'datepicker', 'dateran
 					}
 					if(required != '') {
 						valid += ' required=' + required;
-						errorLable += '<span ng-show="(' + attrs.form + '.' + attrs.name + '.$error.required&&' + attrs.form + '.' + attrs.name + '.$touched)||' + attrs.form + '.' + attrs.name + '.$error.required&&' + attrs.form + '.$submitted" class="error-lable">内容不可为空</span>';
+						errorLable += '<span ng-show="(' + attrs.form + '.' + attrs.name + '.$error.required&&' + attrs.form + '.' + attrs.name + '.$touched)||(' + attrs.form + '.' + attrs.name + '.$error.required&&' + attrs.form + '.$submitted)" class="error-lable">内容不可为空</span>';
 					}
 					if(minlength != '') {
 						valid += ' ng-minlength=' + minlength;

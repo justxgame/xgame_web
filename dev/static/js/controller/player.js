@@ -71,12 +71,13 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				targets: 6,
 				visible: true,
 				render: function(data, type, row, meta) {
+					console.log(data);
 					var tmp = '<button class="btn btn-primary send-mail">发送补偿邮件</button><button class="btn btn-info btn-edit">修改玩家数据</button>';
 					return data.status==1?tmp+='<button class="btn btn-danger btn-blockade">封号</button>':tmp+='<button class="btn btn-success btn-relieve">解封</button>';
 				}
 			}]
 		});
-		$scope.$table.on('click','.btn-edit',function(e){
+		$scope.$table.on('click','.btn-edit',(e)=>{
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			$scope.formModel = data;
@@ -86,13 +87,13 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			$scope.$digest();
 			$scope.$modal.modal('show');
 		});
-		$scope.$table.on('click','.send-mail',function(e){
+		$scope.$table.on('click','.send-mail',(e)=>{
 			$scope.title = '发送补偿邮件';
 			$scope.formModel.actionId = 3;
 			$scope.$digest();
 			$scope.$modal.modal('show');
 		});
-		$scope.$table.on('click','.btn-blockade',function(e){
+		$scope.$table.on('click','.btn-blockade',(e)=>{
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
@@ -101,13 +102,13 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				confirmButtonText: '确定',
 				showCancelButton:true,
 				cancelButtonText:'取消'
-			}).then(function () {
+			}).then(()=>{
 				$scope.formModel = data;
 				$scope.formModel.actionId = 1;
 				serverPost();
 			}).catch(swal.noop);
 		});
-		$scope.$table.on('click','.btn-relieve',function(e){
+		$scope.$table.on('click','.btn-relieve',(e)=>{
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
@@ -116,7 +117,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				confirmButtonText: '确定',
 				showCancelButton:true,
 				cancelButtonText:'取消'
-			}).then(function () {
+			}).then(()=>{
 				$scope.formModel = data;
 				$scope.formModel.actionId = 2;
 				serverPost();
@@ -152,12 +153,12 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				$('.submit-success').css('visibility','visible');
 				$scope.success = true;
 				Query();
-				setTimeout(function(){
+				setTimeout(()=>{
 					$scope.$modal.modal('hide');
 				},1000)
 			});
 		};
-		$scope.submitForm = function(e){
+		$scope.submitForm = (e)=>{
 			if($scope.success){
 				$scope.$modal.modal('hide');
 				return false;
@@ -170,11 +171,16 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			};
 			userUpdate();
 		};
-		$scope.$modal.on('hidden.bs.modal',function(){
+		$scope.$modal.on('hidden.bs.modal',()=>{
 			$scope.success = false;
 			$scope.formModel = {};
 			$('.submit-success').css('visibility','hidden');
 			$scope.modalForm.$submitted = false;
+			$scope.modalForm.money.$touched = false;
+			$scope.modalForm.coins.$touched = false;
+			$scope.modalForm.ticket.$touched = false;
+			$scope.modalForm.points.$touched = false;
+			$scope.modalForm.name?$scope.modalForm.name.$touched=false:console.log(null);
 		});
 	};
 	return {
