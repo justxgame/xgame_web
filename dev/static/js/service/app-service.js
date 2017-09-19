@@ -354,5 +354,33 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 				debug:false
 			});
 		});
-	})
+	});
+	appServices.service('dropdownMenuScrollbar',function($rootScope){
+		$(document).on('shown.bs.dropdown','.dropdown',function(){
+			var $list = $(this).find('ul').parent('div');
+			var $bar = $list.find('.ps-scrollbar-y');
+			var listHiehgt = $list.find('ul').height();
+			var $input = $(this).find('input');
+			console.log($list.outerHeight());
+			if($list.find('li').length==0||$list.outerHeight()<205) return;
+			if($input.length>0){
+				$input.on('input',function(){
+					$list.perfectScrollbar('update');
+				});
+			};
+			if($list.find('.ps-scrollbar-y-rail').length>0){
+				$list.perfectScrollbar('update');
+			}else{
+//				console.log($list.find('ul').height());
+//				console.log($list.height())
+				$list.perfectScrollbar({
+	        		suppressScrollX:true
+	        	});
+	        	if($bar.height()==0&&listHiehgt>205){
+					$bar.height((205/listHiehgt)*205);
+					$list.addClass('ps-active-y');
+				}
+			};
+		});
+	});
 });

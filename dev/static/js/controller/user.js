@@ -1,9 +1,8 @@
-define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert'], function(angular, tpl, require, NProgress, swal) {
+define(['angular', 'text!tpl/user.html', 'require', 'nprogress', 'sweetalert'], function(angular, tpl, require, NProgress, swal) {
 	function controller($scope, appApi, dataFormat) {
 		NProgress.done();
 		$scope.btnText = '提交';
 		$scope.title = '新增';
-		$scope.$modal = $('.server-modal');
 		$scope.$table = $('.server-table');
 		$scope.filterBarModel = {};
 		$scope.serverBox = [];
@@ -192,11 +191,6 @@ define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert']
 			};
 			serverPost();
 		};
-		$scope.$modal.on('hidden.bs.modal', () => {
-			$scope.success = false;
-			$('.submit-success').css('visibility', 'hidden');
-			formModelInit();
-		});
 	};
 	return {
 		controller: controller,

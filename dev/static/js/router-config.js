@@ -1,7 +1,7 @@
 define(['angular', 'require','angular-route','appDirectives','appServices','appFactorys','appTemplates','appController','jquery','table'],
 function(angular, require){
 	var app = angular.module('webapp', ['ngRoute','app.directives','app.services','app.factorys','app.template','app.controller']);
-	app.run(function($rootScope,$location){
+	app.run(function($rootScope,$location,dropdownMenuScrollbar){
 		$rootScope.$on('$routeChangeStart', function(evt, next, current){
 	    	$('.daterangepicker').remove();
 	    	$rootScope.path=$location.$$path;
@@ -103,6 +103,16 @@ function(angular, require){
                 //模块的代码路径
                 path: 'static/js/controller/game.js?v='+stamp,
                 controller: 'gameController'
+            },
+            '/console': { //路由
+                //模块的代码路径
+                path: 'static/js/controller/console.js?v='+stamp,
+                controller: 'consoleController'
+            },
+            '/user': { //路由
+                //模块的代码路径
+                path: 'static/js/controller/user.js?v='+stamp,
+                controller: 'userController'
             }
         };
         //默认跳转到某个路由
