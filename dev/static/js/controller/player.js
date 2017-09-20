@@ -14,6 +14,9 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			console.log($scope.filterBarModel);
 			Query();
 		});
+		$scope.drapListSearch = function(name) {
+			return $scope.inputKey == undefined || $scope.inputKey == '' || name.indexOf($scope.inputKey) > -1;
+		};
 		$scope.serverClick = (e,n,i)=>{
 			if(i==$scope.filterBarModel.serverId) {
 				e.stopPropagation();
@@ -77,23 +80,30 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				}
 			}]
 		});
-		$scope.$table.on('click','.btn-edit',(e)=>{
+		$scope.$table.on('click','.btn-edit',function(e){
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
-			$scope.formModel = data;
+			$scope.formModel = $.extend(true, {}, data);
 			console.log($scope.formModel);
 			$scope.title = '编辑玩家信息';
 			$scope.formModel.actionId = 4;
 			$scope.$digest();
 			$scope.$modal.modal('show');
 		});
-		$scope.$table.on('click','.send-mail',(e)=>{
-			$scope.title = '发送补偿邮件';
+		$scope.$table.on('click','.send-mail',function(e){
+			var data = $scope.dt.api(true)
+			.row($(this).parents('tr')).data();
+			$scope.formModel = $.extend(true, {}, data);
+			console.log(data);
+			$scope.formModel.money = undefined;
+			$scope.formModel.points = undefined;
+			$scope.formModel.ticket = undefined;
+			$scope.formModel.coins = undefined;
 			$scope.formModel.actionId = 3;
 			$scope.$digest();
 			$scope.$modal.modal('show');
 		});
-		$scope.$table.on('click','.btn-blockade',(e)=>{
+		$scope.$table.on('click','.btn-blockade',function(e){
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
@@ -103,24 +113,25 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				showCancelButton:true,
 				cancelButtonText:'取消'
 			}).then(()=>{
-				$scope.formModel = data;
+				console.log(123123);
+				$scope.formModel = $.extend(true, {}, data);
 				$scope.formModel.actionId = 1;
-				serverPost();
+				userUpdate();
 			}).catch(swal.noop);
 		});
-		$scope.$table.on('click','.btn-relieve',(e)=>{
+		$scope.$table.on('click','.btn-relieve',function(e){
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
-				html: '确认解除<label class="red">'+data.uid+'</label>封号?',
+				html: '确认解除<label class="red">'+data.uid+'</label>解封?',
 				type: 'warning',
 				confirmButtonText: '确定',
 				showCancelButton:true,
 				cancelButtonText:'取消'
 			}).then(()=>{
-				$scope.formModel = data;
+				$scope.formModel = $.extend(true, {}, data);
 				$scope.formModel.actionId = 2;
-				serverPost();
+				userUpdate();
 			}).catch(swal.noop);
 		});
 		function Query(){
@@ -131,15 +142,6 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				$scope.dt.fnClearTable();
 				if(data.length==0) return;
 				$scope.dt.fnAddData(data);
-			});
-		};
-		function userUpdate(){
-//			1封号
-//			2解封
-//			3补偿邮件
-//			4修改数据
-			appApi.userUpdate($scope.formModel,data=>{
-				console.log(data);
 			});
 		};
 		$scope.Query = ()=>{

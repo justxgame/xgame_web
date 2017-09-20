@@ -10,16 +10,21 @@
 					<div class="filter-bar form-line clearfix">
 						<div class="form-item col-md-3 col-sm-12 col-xs-12">
 							<div class="form-tag">货物类别</div>
-							<div class="channel-drapdown dropdown form-content transition-02">
+							<div class="channel-drapdown dropdown select form-content transition-02">
 								<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
 									<span class="val pull-left" ng-bind="filterBarModel.itemTypeName"></span>
 									<div class="pull-right">
 										<span class="caret icon-arrow"></span>
 									</div>
 								</a>
-								<ul class="dropdown-menu animated fadeInUpSmall fast" role="menu">
-									<li role="presentation" ng-repeat="item in filterBarData.itemTypeBoxModel.itemTypeModelList" ng-bind="item.itemTypeName" ng-click="typeClick($event,item.itemTypeName,item.itemTypeId)" ng-class="{'active':filterBarModel.itemTypeId===item.itemTypeId}"></li>
-								</ul>
+								<div class="dropdown-menu search animated fadeInUpSmall fast" role="menu">
+									<ng-input class="sm" icon-left="&#xe623;" model="inputKey" type="text" placeholder="搜索货物类别"></ng-input>
+									<div class="dropdown-list clearfix">
+										<ul class="clearfix">
+											<li role="presentation" ng-repeat="item in filterBarData.itemTypeBoxModel.itemTypeModelList" ng-bind="item.itemTypeName" ng-click="typeClick($event,item.itemTypeName,item.itemTypeId)" ng-show="drapListSearch(item.itemTypeName)" ng-class="{'active':filterBarModel.itemTypeId===item.itemTypeId}"></li>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="form-item col-md-3 col-sm-12 col-xs-12">
@@ -42,7 +47,7 @@
 								<date-range-picker class="md" model="QueryDate" picker="picker"></date-range-picker>
 							</div>
 						</div>
-						
+
 						<div class="form-item btn-wrap clearfix col-md-3 col-sm-12 col-xs-12">
 							<button type="submit" class="btn btn-success btn-query" ng-click="Query($event)">
 								<span>查询</span>

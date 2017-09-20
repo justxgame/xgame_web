@@ -1,4 +1,4 @@
-define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'], function(angular, tpl, require, NProgress,swal) {
+define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert','moment'], function(angular, tpl, require, NProgress,swal,moment) {
 	function controller($scope, appApi, getMillisecond) {
 		NProgress.done();
 		$scope.$table = $('.delivery-data');
@@ -14,6 +14,9 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 			Param();
 			Query();
 		});
+		$scope.drapListSearch = function(name) {
+			return $scope.inputKey == undefined || $scope.inputKey == '' || name.indexOf($scope.inputKey) > -1;
+		};
 		$scope.dt = $scope.$table.dataTable({
 			buttons: {
 				buttons: [{
@@ -74,6 +77,18 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 				}
 			],
 			columnDefs: [{
+				targets: 6,
+				visible: true,
+				render: function(data, type, row, meta) {
+					return data==0?'<i class="text-success">成功</i>':'<i class="text-danger">失败</i>';
+				}
+			},{
+				targets: 9,
+				visible: true,
+				render: function(data, type, row, meta) {
+					return moment(data).format('YYYY-MM-DD');
+				}
+			},{
 				targets: 10,
 				visible: true,
 				render: function(data, type, row, meta) {
@@ -99,7 +114,7 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 			$scope.filterBarModel.orderTypeId = i;
 			$scope.filterBarModel.orderTypeName = n;
 		};
-		$scope.$table.on('click','.btn-retry',()=>{
+		$scope.$table.on('click','.btn-retry',function(e){
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
@@ -124,11 +139,12 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 			});
 		};
 		function Param(){
+			var today = moment().format('YYYY-MM-DD');
 			var dates = $scope.QueryDate?$scope.QueryDate.split('|'):0;
 			$scope.QueryParam.rewardType = $scope.filterBarModel.itemTypeId;
 			$scope.QueryParam.orderType = $scope.filterBarModel.orderTypeId;
 			$scope.QueryParam.dateFrom = $scope.QueryDate?getMillisecond(dates[0]):0;
-			$scope.QueryParam.dateTo = $scope.QueryDate?getMillisecond(dates[1]):0;
+			$scope.QueryParam.dateTo = $scope.QueryDate?dates[1] == today?moment().valueOf():getMillisecond(dates[1]):0;
 		}
 		$scope.Query = () => {
 			Param();

@@ -242,7 +242,7 @@ animation:load 1.5s linear infinite;-moz-animation:load 1.5s linear infinite;pos
 
 .select.dropdown .dropdown-menu{box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);max-height:205px;}
 .select.dropdown .dropdown-menu.search{max-height:none;}
-.select.dropdown .dropdown-menu.search .dropdown-list{max-height:205px;position:relative;overflow: hidden;}
+.select.dropdown .dropdown-menu.search .dropdown-list{max-height:205px;position:relative;}
 
 .select.dropdown .dropdown-menu .default-input{border-bottom:1px solid #e6ecef;height:41px;}
 

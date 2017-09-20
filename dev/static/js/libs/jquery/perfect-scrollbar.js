@@ -1,4 +1,4 @@
-/* perfect-scrollbar v0.6.14 */
+/* perfect-scrollbar v0.8.1 */
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
@@ -42,56 +42,12 @@ if (typeof define === 'function' && define.amd) {
 
 module.exports = mountJQuery;
 
-},{"../main":7,"../plugin/instances":18}],2:[function(require,module,exports){
-'use strict';
-
-function oldAdd(element, className) {
-  var classes = element.className.split(' ');
-  if (classes.indexOf(className) < 0) {
-    classes.push(className);
-  }
-  element.className = classes.join(' ');
-}
-
-function oldRemove(element, className) {
-  var classes = element.className.split(' ');
-  var idx = classes.indexOf(className);
-  if (idx >= 0) {
-    classes.splice(idx, 1);
-  }
-  element.className = classes.join(' ');
-}
-
-exports.add = function (element, className) {
-  if (element.classList) {
-    element.classList.add(className);
-  } else {
-    oldAdd(element, className);
-  }
-};
-
-exports.remove = function (element, className) {
-  if (element.classList) {
-    element.classList.remove(className);
-  } else {
-    oldRemove(element, className);
-  }
-};
-
-exports.list = function (element) {
-  if (element.classList) {
-    return Array.prototype.slice.apply(element.classList);
-  } else {
-    return element.className.split(' ');
-  }
-};
-
-},{}],3:[function(require,module,exports){
+},{"../main":6,"../plugin/instances":17}],2:[function(require,module,exports){
 'use strict';
 
 var DOM = {};
 
-DOM.e = function (tagName, className) {
+DOM.create = function (tagName, className) {
   var element = document.createElement(tagName);
   element.className = className;
   return element;
@@ -142,15 +98,8 @@ DOM.matches = function (element, query) {
   if (typeof element.matches !== 'undefined') {
     return element.matches(query);
   } else {
-    if (typeof element.matchesSelector !== 'undefined') {
-      return element.matchesSelector(query);
-    } else if (typeof element.webkitMatchesSelector !== 'undefined') {
-      return element.webkitMatchesSelector(query);
-    } else if (typeof element.mozMatchesSelector !== 'undefined') {
-      return element.mozMatchesSelector(query);
-    } else if (typeof element.msMatchesSelector !== 'undefined') {
-      return element.msMatchesSelector(query);
-    }
+    // must be IE11 and Edge
+    return element.msMatchesSelector(query);
   }
 };
 
@@ -172,7 +121,7 @@ DOM.queryChildren = function (element, selector) {
 
 module.exports = DOM;
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
 var EventElement = function (element) {
@@ -245,7 +194,7 @@ EventManager.prototype.once = function (element, eventName, handler) {
 
 module.exports = EventManager;
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 module.exports = (function () {
@@ -260,38 +209,13 @@ module.exports = (function () {
   };
 })();
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
-var cls = require('./class');
 var dom = require('./dom');
 
 var toInt = exports.toInt = function (x) {
   return parseInt(x, 10) || 0;
-};
-
-var clone = exports.clone = function (obj) {
-  if (!obj) {
-    return null;
-  } else if (obj.constructor === Array) {
-    return obj.map(clone);
-  } else if (typeof obj === 'object') {
-    var result = {};
-    for (var key in obj) {
-      result[key] = clone(obj[key]);
-    }
-    return result;
-  } else {
-    return obj;
-  }
-};
-
-exports.extend = function (original, source) {
-  var result = clone(original);
-  for (var key in source) {
-    result[key] = clone(source[key]);
-  }
-  return result;
 };
 
 exports.isEditable = function (el) {
@@ -302,11 +226,10 @@ exports.isEditable = function (el) {
 };
 
 exports.removePsClasses = function (element) {
-  var clsList = cls.list(element);
-  for (var i = 0; i < clsList.length; i++) {
-    var className = clsList[i];
+  for (var i = 0; i < element.classList.length; i++) {
+    var className = element.classList[i];
     if (className.indexOf('ps-') === 0) {
-      cls.remove(element, className);
+      element.classList.remove(className);
     }
   }
 };
@@ -319,33 +242,38 @@ exports.outerWidth = function (element) {
          toInt(dom.css(element, 'borderRightWidth'));
 };
 
-exports.startScrolling = function (element, axis) {
-  cls.add(element, 'ps-in-scrolling');
-  if (typeof axis !== 'undefined') {
-    cls.add(element, 'ps-' + axis);
+function psClasses(axis) {
+  var classes = ['ps--in-scrolling'];
+  var axisClasses;
+  if (typeof axis === 'undefined') {
+    axisClasses = ['ps--x', 'ps--y'];
   } else {
-    cls.add(element, 'ps-x');
-    cls.add(element, 'ps-y');
+    axisClasses = ['ps--' + axis];
+  }
+  return classes.concat(axisClasses);
+}
+
+exports.startScrolling = function (element, axis) {
+  var classes = psClasses(axis);
+  for (var i = 0; i < classes.length; i++) {
+    element.classList.add(classes[i]);
   }
 };
 
 exports.stopScrolling = function (element, axis) {
-  cls.remove(element, 'ps-in-scrolling');
-  if (typeof axis !== 'undefined') {
-    cls.remove(element, 'ps-' + axis);
-  } else {
-    cls.remove(element, 'ps-x');
-    cls.remove(element, 'ps-y');
+  var classes = psClasses(axis);
+  for (var i = 0; i < classes.length; i++) {
+    element.classList.remove(classes[i]);
   }
 };
 
 exports.env = {
-  isWebKit: 'WebkitAppearance' in document.documentElement.style,
-  supportsTouch: (('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch),
-  supportsIePointer: window.navigator.msMaxTouchPoints !== null
+  isWebKit: typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style,
+  supportsTouch: typeof window !== 'undefined' && (('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch),
+  supportsIePointer: typeof window !== 'undefined' && window.navigator.msMaxTouchPoints !== null
 };
 
-},{"./class":2,"./dom":3}],7:[function(require,module,exports){
+},{"./dom":2}],6:[function(require,module,exports){
 'use strict';
 
 var destroy = require('./plugin/destroy');
@@ -358,25 +286,28 @@ module.exports = {
   destroy: destroy
 };
 
-},{"./plugin/destroy":9,"./plugin/initialize":17,"./plugin/update":21}],8:[function(require,module,exports){
+},{"./plugin/destroy":8,"./plugin/initialize":16,"./plugin/update":20}],7:[function(require,module,exports){
 'use strict';
 
-module.exports = {
-  handlers: ['click-rail', 'drag-scrollbar', 'keyboard', 'wheel', 'touch'],
-  maxScrollbarLength: null,
-  minScrollbarLength: null,
-  scrollXMarginOffset: 0,
-  scrollYMarginOffset: 0,
-  suppressScrollX: false,
-  suppressScrollY: false,
-  swipePropagation: true,
-  useBothWheelAxes: false,
-  wheelPropagation: false,
-  wheelSpeed: 1,
-  theme: 'default'
+module.exports = function () {
+  return {
+    handlers: ['click-rail', 'drag-scrollbar', 'keyboard', 'wheel', 'touch'],
+    maxScrollbarLength: null,
+    minScrollbarLength: null,
+    scrollXMarginOffset: 0,
+    scrollYMarginOffset: 0,
+    suppressScrollX: false,
+    suppressScrollY: false,
+    swipePropagation: true,
+    swipeEasing: true,
+    useBothWheelAxes: false,
+    wheelPropagation: false,
+    wheelSpeed: 1,
+    theme: 'default'
+  };
 };
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 var _ = require('../lib/helper');
@@ -400,7 +331,7 @@ module.exports = function (element) {
   instances.remove(element);
 };
 
-},{"../lib/dom":3,"../lib/helper":6,"./instances":18}],10:[function(require,module,exports){
+},{"../lib/dom":2,"../lib/helper":5,"./instances":17}],9:[function(require,module,exports){
 'use strict';
 
 var instances = require('../instances');
@@ -441,7 +372,7 @@ module.exports = function (element) {
   bindClickRailHandler(element, i);
 };
 
-},{"../instances":18,"../update-geometry":19,"../update-scroll":20}],11:[function(require,module,exports){
+},{"../instances":17,"../update-geometry":18,"../update-scroll":19}],10:[function(require,module,exports){
 'use strict';
 
 var _ = require('../../lib/helper');
@@ -546,7 +477,7 @@ module.exports = function (element) {
   bindMouseScrollYHandler(element, i);
 };
 
-},{"../../lib/dom":3,"../../lib/helper":6,"../instances":18,"../update-geometry":19,"../update-scroll":20}],12:[function(require,module,exports){
+},{"../../lib/dom":2,"../../lib/helper":5,"../instances":17,"../update-geometry":18,"../update-scroll":19}],11:[function(require,module,exports){
 'use strict';
 
 var _ = require('../../lib/helper');
@@ -702,7 +633,7 @@ module.exports = function (element) {
   bindKeyboardHandler(element, i);
 };
 
-},{"../../lib/dom":3,"../../lib/helper":6,"../instances":18,"../update-geometry":19,"../update-scroll":20}],13:[function(require,module,exports){
+},{"../../lib/dom":2,"../../lib/helper":5,"../instances":17,"../update-geometry":18,"../update-scroll":19}],12:[function(require,module,exports){
 'use strict';
 
 var instances = require('../instances');
@@ -767,7 +698,14 @@ function bindMouseWheelHandler(element, i) {
   function shouldBeConsumedByChild(deltaX, deltaY) {
     var child = element.querySelector('textarea:hover, select[multiple]:hover, .ps-child:hover');
     if (child) {
-      if (!window.getComputedStyle(child).overflow.match(/(scroll|auto)/)) {
+      var style = window.getComputedStyle(child);
+      var overflow = [
+        style.overflow,
+        style.overflowX,
+        style.overflowY
+      ].join('');
+
+      if (!overflow.match(/(scroll|auto)/)) {
         // if not scrollable
         return false;
       }
@@ -845,7 +783,7 @@ module.exports = function (element) {
   bindMouseWheelHandler(element, i);
 };
 
-},{"../instances":18,"../update-geometry":19,"../update-scroll":20}],14:[function(require,module,exports){
+},{"../instances":17,"../update-geometry":18,"../update-scroll":19}],13:[function(require,module,exports){
 'use strict';
 
 var instances = require('../instances');
@@ -862,7 +800,7 @@ module.exports = function (element) {
   bindNativeScrollHandler(element, i);
 };
 
-},{"../instances":18,"../update-geometry":19}],15:[function(require,module,exports){
+},{"../instances":17,"../update-geometry":18}],14:[function(require,module,exports){
 'use strict';
 
 var _ = require('../../lib/helper');
@@ -979,7 +917,7 @@ module.exports = function (element) {
   bindSelectionHandler(element, i);
 };
 
-},{"../../lib/helper":6,"../instances":18,"../update-geometry":19,"../update-scroll":20}],16:[function(require,module,exports){
+},{"../../lib/helper":5,"../instances":17,"../update-geometry":18,"../update-scroll":19}],15:[function(require,module,exports){
 'use strict';
 
 var _ = require('../../lib/helper');
@@ -1043,6 +981,9 @@ function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
     }
   }
   function shouldHandle(e) {
+    if (e.pointerType && e.pointerType === 'pen' && e.buttons === 0) {
+      return false;
+    }
     if (e.targetTouches && e.targetTouches.length === 1) {
       return true;
     }
@@ -1103,28 +1044,30 @@ function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
     if (!inGlobalTouch && inLocalTouch) {
       inLocalTouch = false;
 
-      clearInterval(easingLoop);
-      easingLoop = setInterval(function () {
-        if (!instances.get(element)) {
-          clearInterval(easingLoop);
-          return;
-        }
+      if (i.settings.swipeEasing) {
+        clearInterval(easingLoop);
+        easingLoop = setInterval(function () {
+          if (!instances.get(element)) {
+            clearInterval(easingLoop);
+            return;
+          }
 
-        if (!speed.x && !speed.y) {
-          clearInterval(easingLoop);
-          return;
-        }
+          if (!speed.x && !speed.y) {
+            clearInterval(easingLoop);
+            return;
+          }
 
-        if (Math.abs(speed.x) < 0.01 && Math.abs(speed.y) < 0.01) {
-          clearInterval(easingLoop);
-          return;
-        }
+          if (Math.abs(speed.x) < 0.01 && Math.abs(speed.y) < 0.01) {
+            clearInterval(easingLoop);
+            return;
+          }
 
-        applyTouchMove(speed.x * 30, speed.y * 30);
+          applyTouchMove(speed.x * 30, speed.y * 30);
 
-        speed.x *= 0.8;
-        speed.y *= 0.8;
-      }, 10);
+          speed.x *= 0.8;
+          speed.y *= 0.8;
+        }, 10);
+      }
     }
   }
 
@@ -1134,9 +1077,7 @@ function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
     i.event.bind(element, 'touchstart', touchStart);
     i.event.bind(element, 'touchmove', touchMove);
     i.event.bind(element, 'touchend', touchEnd);
-  }
-
-  if (supportsIePointer) {
+  } else if (supportsIePointer) {
     if (window.PointerEvent) {
       i.event.bind(window, 'pointerdown', globalTouchStart);
       i.event.bind(window, 'pointerup', globalTouchEnd);
@@ -1162,11 +1103,9 @@ module.exports = function (element) {
   bindTouchHandler(element, i, _.env.supportsTouch, _.env.supportsIePointer);
 };
 
-},{"../../lib/helper":6,"../instances":18,"../update-geometry":19,"../update-scroll":20}],17:[function(require,module,exports){
+},{"../../lib/helper":5,"../instances":17,"../update-geometry":18,"../update-scroll":19}],16:[function(require,module,exports){
 'use strict';
 
-var _ = require('../lib/helper');
-var cls = require('../lib/class');
 var instances = require('./instances');
 var updateGeometry = require('./update-geometry');
 
@@ -1182,15 +1121,15 @@ var handlers = {
 var nativeScrollHandler = require('./handler/native-scroll');
 
 module.exports = function (element, userSettings) {
-  userSettings = typeof userSettings === 'object' ? userSettings : {};
-
-  cls.add(element, 'ps-container');
+  element.classList.add('ps');
 
   // Create a plugin instance.
-  var i = instances.add(element);
+  var i = instances.add(
+    element,
+    typeof userSettings === 'object' ? userSettings : {}
+  );
 
-  i.settings = _.extend(i.settings, userSettings);
-  cls.add(element, 'ps-theme-' + i.settings.theme);
+  element.classList.add('ps--theme_' + i.settings.theme);
 
   i.settings.handlers.forEach(function (handlerName) {
     handlers[handlerName](element);
@@ -1201,11 +1140,10 @@ module.exports = function (element, userSettings) {
   updateGeometry(element);
 };
 
-},{"../lib/class":2,"../lib/helper":6,"./handler/click-rail":10,"./handler/drag-scrollbar":11,"./handler/keyboard":12,"./handler/mouse-wheel":13,"./handler/native-scroll":14,"./handler/selection":15,"./handler/touch":16,"./instances":18,"./update-geometry":19}],18:[function(require,module,exports){
+},{"./handler/click-rail":9,"./handler/drag-scrollbar":10,"./handler/keyboard":11,"./handler/mouse-wheel":12,"./handler/native-scroll":13,"./handler/selection":14,"./handler/touch":15,"./instances":17,"./update-geometry":18}],17:[function(require,module,exports){
 'use strict';
 
 var _ = require('../lib/helper');
-var cls = require('../lib/class');
 var defaultSettings = require('./default-setting');
 var dom = require('../lib/dom');
 var EventManager = require('../lib/event-manager');
@@ -1213,10 +1151,14 @@ var guid = require('../lib/guid');
 
 var instances = {};
 
-function Instance(element) {
+function Instance(element, userSettings) {
   var i = this;
 
-  i.settings = _.clone(defaultSettings);
+  i.settings = defaultSettings();
+  for (var key in userSettings) {
+    i.settings[key] = userSettings[key];
+  }
+
   i.containerWidth = null;
   i.containerHeight = null;
   i.contentWidth = null;
@@ -1236,15 +1178,15 @@ function Instance(element) {
   i.ownerDocument = element.ownerDocument || document;
 
   function focus() {
-    cls.add(element, 'ps-focus');
+    element.classList.add('ps--focus');
   }
 
   function blur() {
-    cls.remove(element, 'ps-focus');
+    element.classList.remove('ps--focus');
   }
 
-  i.scrollbarXRail = dom.appendTo(dom.e('div', 'ps-scrollbar-x-rail'), element);
-  i.scrollbarX = dom.appendTo(dom.e('div', 'ps-scrollbar-x'), i.scrollbarXRail);
+  i.scrollbarXRail = dom.appendTo(dom.create('div', 'ps__scrollbar-x-rail'), element);
+  i.scrollbarX = dom.appendTo(dom.create('div', 'ps__scrollbar-x'), i.scrollbarXRail);
   i.scrollbarX.setAttribute('tabindex', 0);
   i.event.bind(i.scrollbarX, 'focus', focus);
   i.event.bind(i.scrollbarX, 'blur', blur);
@@ -1262,8 +1204,8 @@ function Instance(element) {
   i.railXWidth = null;
   i.railXRatio = null;
 
-  i.scrollbarYRail = dom.appendTo(dom.e('div', 'ps-scrollbar-y-rail'), element);
-  i.scrollbarY = dom.appendTo(dom.e('div', 'ps-scrollbar-y'), i.scrollbarYRail);
+  i.scrollbarYRail = dom.appendTo(dom.create('div', 'ps__scrollbar-y-rail'), element);
+  i.scrollbarY = dom.appendTo(dom.create('div', 'ps__scrollbar-y'), i.scrollbarYRail);
   i.scrollbarY.setAttribute('tabindex', 0);
   i.event.bind(i.scrollbarY, 'focus', focus);
   i.event.bind(i.scrollbarY, 'blur', blur);
@@ -1294,10 +1236,10 @@ function removeId(element) {
   element.removeAttribute('data-ps-id');
 }
 
-exports.add = function (element) {
+exports.add = function (element, userSettings) {
   var newId = guid();
   setId(element, newId);
-  instances[newId] = new Instance(element);
+  instances[newId] = new Instance(element, userSettings);
   return instances[newId];
 };
 
@@ -1310,11 +1252,10 @@ exports.get = function (element) {
   return instances[getId(element)];
 };
 
-},{"../lib/class":2,"../lib/dom":3,"../lib/event-manager":4,"../lib/guid":5,"../lib/helper":6,"./default-setting":8}],19:[function(require,module,exports){
+},{"../lib/dom":2,"../lib/event-manager":3,"../lib/guid":4,"../lib/helper":5,"./default-setting":7}],18:[function(require,module,exports){
 'use strict';
 
 var _ = require('../lib/helper');
-var cls = require('../lib/class');
 var dom = require('../lib/dom');
 var instances = require('./instances');
 var updateScroll = require('./update-scroll');
@@ -1373,7 +1314,7 @@ module.exports = function (element) {
 
   var existingRails;
   if (!element.contains(i.scrollbarXRail)) {
-    existingRails = dom.queryChildren(element, '.ps-scrollbar-x-rail');
+    existingRails = dom.queryChildren(element, '.ps__scrollbar-x-rail');
     if (existingRails.length > 0) {
       existingRails.forEach(function (rail) {
         dom.remove(rail);
@@ -1382,7 +1323,7 @@ module.exports = function (element) {
     dom.appendTo(i.scrollbarXRail, element);
   }
   if (!element.contains(i.scrollbarYRail)) {
-    existingRails = dom.queryChildren(element, '.ps-scrollbar-y-rail');
+    existingRails = dom.queryChildren(element, '.ps__scrollbar-y-rail');
     if (existingRails.length > 0) {
       existingRails.forEach(function (rail) {
         dom.remove(rail);
@@ -1421,30 +1362,27 @@ module.exports = function (element) {
   updateCss(element, i);
 
   if (i.scrollbarXActive) {
-    cls.add(element, 'ps-active-x');
+    element.classList.add('ps--active-x');
   } else {
-    cls.remove(element, 'ps-active-x');
+    element.classList.remove('ps--active-x');
     i.scrollbarXWidth = 0;
     i.scrollbarXLeft = 0;
     updateScroll(element, 'left', 0);
   }
   if (i.scrollbarYActive) {
-    cls.add(element, 'ps-active-y');
+    element.classList.add('ps--active-y');
   } else {
-    cls.remove(element, 'ps-active-y');
+    element.classList.remove('ps--active-y');
     i.scrollbarYHeight = 0;
     i.scrollbarYTop = 0;
     updateScroll(element, 'top', 0);
   }
 };
 
-},{"../lib/class":2,"../lib/dom":3,"../lib/helper":6,"./instances":18,"./update-scroll":20}],20:[function(require,module,exports){
+},{"../lib/dom":2,"../lib/helper":5,"./instances":17,"./update-scroll":19}],19:[function(require,module,exports){
 'use strict';
 
 var instances = require('./instances');
-
-var lastTop;
-var lastLeft;
 
 var createDOMEvent = function (name) {
   var event = document.createEvent("Event");
@@ -1480,7 +1418,7 @@ module.exports = function (element, axis, value) {
   if (axis === 'top' && value >= i.contentHeight - i.containerHeight) {
     // don't allow scroll past container
     value = i.contentHeight - i.containerHeight;
-    if (value - element.scrollTop <= 1) {
+    if (value - element.scrollTop <= 2) {
       // mitigates rounding errors on non-subpixel scroll values
       value = element.scrollTop;
     } else {
@@ -1492,7 +1430,7 @@ module.exports = function (element, axis, value) {
   if (axis === 'left' && value >= i.contentWidth - i.containerWidth) {
     // don't allow scroll past container
     value = i.contentWidth - i.containerWidth;
-    if (value - element.scrollLeft <= 1) {
+    if (value - element.scrollLeft <= 2) {
       // mitigates rounding errors on non-subpixel scroll values
       value = element.scrollLeft;
     } else {
@@ -1501,43 +1439,43 @@ module.exports = function (element, axis, value) {
     element.dispatchEvent(createDOMEvent('ps-x-reach-end'));
   }
 
-  if (!lastTop) {
-    lastTop = element.scrollTop;
+  if (i.lastTop === undefined) {
+    i.lastTop = element.scrollTop;
   }
 
-  if (!lastLeft) {
-    lastLeft = element.scrollLeft;
+  if (i.lastLeft === undefined) {
+    i.lastLeft = element.scrollLeft;
   }
 
-  if (axis === 'top' && value < lastTop) {
+  if (axis === 'top' && value < i.lastTop) {
     element.dispatchEvent(createDOMEvent('ps-scroll-up'));
   }
 
-  if (axis === 'top' && value > lastTop) {
+  if (axis === 'top' && value > i.lastTop) {
     element.dispatchEvent(createDOMEvent('ps-scroll-down'));
   }
 
-  if (axis === 'left' && value < lastLeft) {
+  if (axis === 'left' && value < i.lastLeft) {
     element.dispatchEvent(createDOMEvent('ps-scroll-left'));
   }
 
-  if (axis === 'left' && value > lastLeft) {
+  if (axis === 'left' && value > i.lastLeft) {
     element.dispatchEvent(createDOMEvent('ps-scroll-right'));
   }
 
-  if (axis === 'top') {
-    element.scrollTop = lastTop = value;
+  if (axis === 'top' && value !== i.lastTop) {
+    element.scrollTop = i.lastTop = value;
     element.dispatchEvent(createDOMEvent('ps-scroll-y'));
   }
 
-  if (axis === 'left') {
-    element.scrollLeft = lastLeft = value;
+  if (axis === 'left' && value !== i.lastLeft) {
+    element.scrollLeft = i.lastLeft = value;
     element.dispatchEvent(createDOMEvent('ps-scroll-x'));
   }
 
 };
 
-},{"./instances":18}],21:[function(require,module,exports){
+},{"./instances":17}],20:[function(require,module,exports){
 'use strict';
 
 var _ = require('../lib/helper');
@@ -1576,4 +1514,4 @@ module.exports = function (element) {
   dom.css(i.scrollbarYRail, 'display', '');
 };
 
-},{"../lib/dom":3,"../lib/helper":6,"./instances":18,"./update-geometry":19,"./update-scroll":20}]},{},[1]);
+},{"../lib/dom":2,"../lib/helper":5,"./instances":17,"./update-geometry":18,"./update-scroll":19}]},{},[1]);

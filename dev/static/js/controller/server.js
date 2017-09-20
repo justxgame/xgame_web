@@ -36,13 +36,6 @@ define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert']
 			};
 			$scope.formModel.status = i;
 		};
-		//		$('table').find('tr').each((i)=>{
-		//			var box = $(this).find('input[type=checkbox]');
-		//			var id = box.data('id');
-		//			if(idArray.indexOf(id)>-1){
-		//				box.prop('checked',true);
-		//			}
-		//		});
 		$scope.drapListSearch = function(name) {
 			return $scope.inputKey == undefined || $scope.inputKey == '' || name.indexOf($scope.inputKey) > -1;
 		};
@@ -117,22 +110,22 @@ define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert']
 			$scope.$modal.modal('show');
 			$scope.formModel.actionId = 1;
 		};
-		$scope.$table.on('click', '.btn-edit', (e) => {
+		$scope.$table.on('click', '.btn-edit', function(e) {
 			var data = $scope.dt.api(true)
 				.row($(this).parents('tr')).data();
-			$scope.formModel = data;
+			$scope.formModel = $.extend(true, {}, data);
 			console.log($scope.formModel);
 			$scope.title = '编辑服务器信息';
 			$scope.formModel.actionId = 2;
 			$scope.$digest();
 			$scope.$modal.modal('show');
 		});
-		$scope.$table.on('click', '.btn', (e) => {
+		$scope.$table.on('click', '.btn', function(e) {
 			if($(e.target).hasClass('btn-edit')) return;
 			var data = $scope.dt.api(true)
 				.row($(this).parents('tr')).data();
 			var txt = '';
-			$scope.formModel = data;
+			$scope.formModel = $.extend(true, {}, data);
 			if($(e.target).hasClass('btn-reboot')) {
 				$scope.formModel.actionId = 6;
 				txt = '重启';

@@ -369,17 +369,17 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 				});
 			};
 			if($list.find('.ps-scrollbar-y-rail').length>0){
+				console.log(666)
 				$list.perfectScrollbar('update');
 			}else{
-//				console.log($list.find('ul').height());
-//				console.log($list.height())
 				$list.perfectScrollbar({
-	        		suppressScrollX:true
+	        		suppressScrollX: true
 	        	});
-	        	if($bar.height()==0&&listHiehgt>205){
-					$bar.height((205/listHiehgt)*205);
-					$list.addClass('ps-active-y');
-				}
+//	        	if($bar.height()==0&&listHiehgt>205){
+//	        		console.log($list.find('ul').height());
+//					$bar.height((205/listHiehgt)*205);
+//					$list.addClass('ps-active-y');
+//				}
 			};
 		});
 	});

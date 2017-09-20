@@ -10,16 +10,21 @@
 					<div class="filter-bar form-line clearfix">
 						<div class="form-item col-md-3 col-sm-12 col-xs-12">
 							<div class="form-tag">服务器选择</div>
-							<div class="channel-drapdown dropdown form-content transition-02">
+							<div class="channel-drapdown dropdown select form-content transition-02">
 								<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
 									<span class="val pull-left" ng-bind="filterBarModel.serverName"></span>
 									<div class="pull-right">
 										<span class="caret icon-arrow"></span>
 									</div>
 								</a>
-								<ul class="dropdown-menu animated fadeInUpSmall fast" role="menu">
-									<li role="presentation" ng-repeat="item in serverBox" ng-bind="item.serverName" ng-click="serverClick($event,item.serverName,item.serverId)" ng-class="{'active':filterBarModel.serverId===item.serverId}"></li>
-								</ul>
+								<div class="dropdown-menu search animated fadeInUpSmall fast" role="menu">
+									<ng-input class="sm" icon-left="&#xe623;" model="inputKey" type="text" placeholder="搜索服务器"></ng-input>
+									<div class="dropdown-list clearfix">
+										<ul class="clearfix">
+											<li role="presentation" ng-repeat="item in serverBox" ng-bind="item.serverName" ng-click="serverClick($event,item.serverName,item.serverId)" ng-show="drapListSearch(item.serverName)" ng-class="{'active':filterBarModel.serverId===item.serverId}"></li>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="form-item col-md-3 col-sm-12 col-xs-12">

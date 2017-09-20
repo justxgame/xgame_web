@@ -3432,14 +3432,7 @@ a.hiddenanchor {
     float: right;
     margin-left: 15px
 }
-.clearfix:after,
-form:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden
-}
+
 .login_content {
     margin: 0 auto;
     padding: 25px 0 0;

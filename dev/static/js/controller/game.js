@@ -13,6 +13,9 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			console.log($scope.filterBarModel);
 			Query();
 		});
+		$scope.drapListSearch = function(name) {
+			return $scope.inputKey == undefined || $scope.inputKey == '' || name.indexOf($scope.inputKey) > -1;
+		};
 		$scope.serverClick = (e,n,i)=>{
 			if(i==$scope.filterBarModel.serverId) {
 				e.stopPropagation();
