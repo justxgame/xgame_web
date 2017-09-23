@@ -109,7 +109,9 @@
 
 
 .server .form-line .form-item.btn-wrap{text-align: right;}
-.dataTables_wrapper .game-table{min-width:4100px;}
+/*.dataTables_wrapper .dataTables_scroll .game-table{min-width:4100px;}*/
+.dataTables_scroll .game-table{min-width:4100px;}
+.dataTables_wrapper .DTFC_LeftWrapper .game-table{min-width:auto;}
 
 .error-msg{font-size:14px;line-height: 1; padding:0 20px; color:#ff8279;}
 .game-modal .form-line .form-tag{width: 200px;text-align: right;padding-right: 20px;}

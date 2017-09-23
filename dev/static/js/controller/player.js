@@ -100,7 +100,6 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			$scope.formModel.diamond = undefined;
 			$scope.formModel.ticket = undefined;
 			$scope.formModel.counpon = undefined;
-			$scope.formModel.pid = 7;
 			$scope.formModel.actionId = 3;
 			$scope.$digest();
 			$scope.$modal.modal('show');
@@ -118,7 +117,6 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				console.log(123123);
 				$scope.formModel = $.extend(true, {}, data);
 				$scope.formModel.actionId = 1;
-				$scope.formModel.pid = 7;
 				userUpdate();
 			}).catch(swal.noop);
 		});

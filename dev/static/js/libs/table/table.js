@@ -1,4 +1,4 @@
-define(['jquery','datatables','datatables.bootstrap','datatables.buttons','buttons.html5','buttons.bootstrap'],function($){
+define(['jquery','datatables','datatables.bootstrap','datatables.buttons','buttons.html5','buttons.bootstrap','datatables.fixedColumns'],function($){
 	$.extend( true, $.fn.dataTable.defaults, 
 			{
 				language:{

@@ -307,8 +307,10 @@
 
                 if (typeof options.ranges[range][0] === 'string')
                     start = moment(options.ranges[range][0], this.locale.format);
-                else if(options.ranges[range][0] === null)
+                else if(options.ranges[range][0] === null){
+                	console.log(123123123)
                     start = '';
+                }	
                 else
                 	start = moment(options.ranges[range][0]);
 
@@ -321,19 +323,19 @@
 				
                 // If the start or end date exceed those allowed by the minDate or dateLimit
                 // options, shorten the range to the allowable period.
-                if (this.minDate && start.isBefore(this.minDate))
+                if (this.minDate &&start!=''&& start.isBefore(this.minDate))
                     start = this.minDate.clone();
 
                 var maxDate = this.maxDate;
                 if (this.dateLimit && maxDate && start.clone().add(this.dateLimit).isAfter(maxDate))
                     maxDate = start.clone().add(this.dateLimit);
-                if (maxDate && end.isAfter(maxDate))
+                if (maxDate &&end!=''&& end.isAfter(maxDate))
                     end = maxDate.clone();
 
                 // If the end of the range is before the minimum or the start of the range is
                 // after the maximum, don't display this range option at all.
-                if ((this.minDate && end.isBefore(this.minDate, this.timepicker ? 'minute' : 'day')) 
-                  || (maxDate && start.isAfter(maxDate, this.timepicker ? 'minute' : 'day')))
+                if ((this.minDate &&end!=''&& end.isBefore(this.minDate, this.timepicker ? 'minute' : 'day')) 
+                  || (maxDate &&start!=''&& start.isAfter(maxDate, this.timepicker ? 'minute' : 'day')))
                     continue;
 
                 //Support unicode chars in the range names.
@@ -1379,8 +1381,9 @@
                       break;
                   }
               } else {
+              	console.log(this.ranges[range][0])
                   //ignore times when comparing dates if time picker is not enabled
-                  if (this.startDate.format('YYYY-MM-DD') == this.ranges[range][0].format('YYYY-MM-DD') && this.endDate.format('YYYY-MM-DD') == this.ranges[range][1].format('YYYY-MM-DD')) {
+                  if (this.ranges[range][0]!=''&&this.ranges[range][1]!=''&& this.startDate.format('YYYY-MM-DD') == this.ranges[range][0].format('YYYY-MM-DD') && this.endDate.format('YYYY-MM-DD') == this.ranges[range][1].format('YYYY-MM-DD')) {
                       customRange = false;
                       this.chosenLabel = this.container.find('.ranges li:eq(' + i + ')').addClass('active').html();
                       break;

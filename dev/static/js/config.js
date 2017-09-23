@@ -86,6 +86,7 @@ requirejs.config({
 		'datatables':'libs/table/jquery.dataTables',
 		'datatables.bootstrap':'libs/table/dataTables.bootstrap',
 		'datatables.buttons':'libs/table/dataTables.buttons',
+		'datatables.fixedColumns':'libs/table/dataTables.fixedColumns',
 		'buttons.html5':'libs/table/buttons.html5',
 		'buttons.bootstrap':'libs/table/buttons.bootstrap',
 		'table':'libs/table/table',

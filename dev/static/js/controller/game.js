@@ -27,7 +27,11 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			$scope.filterBarModel.serverName = n;
 			Query();
 		};
+		
 		$scope.dt = $scope.$table.dataTable({
+			fixedColumns: {
+		        leftColumns: 2
+		   },
 			scrollX: true,
 			buttons: {
 				buttons: [{
@@ -82,6 +86,7 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 				}
 			}]
 		});
+		console.log($.fn.dataTable.FixedColumns);
 		function Query(){
 			appApi.getGameSetting($scope.filterBarModel.serverId,data=>{
 				console.log(data);
@@ -130,7 +135,7 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			$scope.formModel = {};
 			$('.submit-success').css('visibility','hidden');
 			$scope.modalForm.$submitted = false;
-			for(let item of $scope.modalForm){
+			for(let item in $scope.modalForm){
 				console.log(item);
 			}
 		});

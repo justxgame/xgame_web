@@ -214,6 +214,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'paginator', 'datepicker', 'dateran
 						startDate: moment(),
 						endDate: moment(),
 						ranges: {
+							'不限': [null, null],
 							'今天': [moment(), moment()],
 							'最近7天': [moment().subtract(6, 'days'), moment()],
 							'最近14天': [moment().subtract(13, 'days'), moment()],
