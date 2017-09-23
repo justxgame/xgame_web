@@ -42,61 +42,42 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 				}]
 			},
 			columns: [
+				{data: null},
 				{data: 'id'},
-				{data: 'matchItemType'},
-				{data: 'gmaeType'},
-				{data: 'gameName'},
-				{data: 'matchMode'},
-				{data: 'minStartPlayerNum'},
-				{data: 'maxStartPlayerNum'},
-				{data: 'canIntMinCoin'},
-				{data: 'canIntMaxCoin'},
-				{data: 'tableCost'},
-				{data: 'maxPoint'},
-				{data: 'initBase'},
-				{data: 'baseIncreaseSecond'},
-				{data: 'baseTimes'},
-				{data: 'signCost'},
-				{data: 'iconId'},
-				{data: 'winnerRewards'},
-				{data: 'initStartScores'},
-				{data: 'remainPlayerNum'},
-				{data: 'secondRoundPlayerNumber'},
-				{data: 'phase2GameRounds'},
-				{data: 'dayMonDay'},
-				{data: 'dateWeekDay'},
-				{data: 'dateDayHour'},
-				{data: 'dateHourMinute'},
-				{data: 'allowLateMinutes'}
+				{data: 'match_item_type'},
+				{data: 'game_type'},
+				{data: 'name'},
+				{data: 'match_mode'},
+				{data: 'min_start_player_num'},
+				{data: 'max_start_player_num'},
+				{data: 'can_int_min_coin'},
+				{data: 'can_in_max_coin'},
+				{data: 'table_cost'},//10
+				{data: 'max_point'},
+				{data: 'init_base'},
+				{data: 'base_increase_second'},
+				{data: 'base_times'},
+				{data: 'sign_cost'},
+				{data: 'icon_id'},
+				{data: 'winner_rewards'},
+				{data: 'init_start_scores'},
+				{data: 'remain_player_num'},
+				{data: 'second_round_player_number'},//20
+				{data: 'phase2_game_rounds'},
+				{data: 'early_show_hour'},
+				{data: 'early_exam_minute'},
+				{data: 'date_mon_day'},
+				{data: 'date_week_day'},
+				{data: 'date_day_hour'},
+				{data: 'date_hour_minute'},
+				{data: 'allow_late_minutes'},
+				{data: 'open_flag'}//29
 			],
 			columnDefs: [{
-				targets: 14,
+				targets: 0,
 				visible: true,
 				render: function(data, type, row, meta) {
-					let str = '';
-					for(let item of data){
-						for(let name in item){
-							str+= item[name]+'|';
-						};
-						str = str.substr(0,str.length-1);
-						str +=';';
-					}
-					return str;
-				}
-			},
-			{
-				targets: 16,
-				visible: true,
-				render: function(data, type, row, meta) {
-					let str = '';
-					for(let item of data){
-						for(let name in item){
-							str+= item[name]+'|';
-						};
-						str = str.substr(0,str.length-1);
-						str +=';';
-					}
-					return str;
+					return '<button class="btn btn-info btn-edit">编辑</button>'
 				}
 			}]
 		});

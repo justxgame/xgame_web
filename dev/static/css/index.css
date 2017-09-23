@@ -6,12 +6,12 @@
 
 .dataTables_wrapper{overflow-x: scroll;overflow-y: hidden;margin-top:10px;}
 .top_nav .user-info{line-height:56px;margin:0 15px;}
-.dataTables_wrapper .table{min-width:12str00px;}
+.dataTables_wrapper .table{min-width:1200px;}
 .dataTables_wrapper .dataTables_length{width: auto;}
 .dataTables_wrapper .dt-buttons{margin-right: 20px;}
 
 
-.filter-bar,.tools-bar{height: 50px;line-height: 50px;border-bottom:1px solid #c3cbd0;}
+.filter-bar,.tools-bar{height: 51px;line-height: 50px;border-bottom:1px solid #c3cbd0;}
 .form-line {background-color: #fff;width: 100%;}
 .form-line .form-tag{width: 100px; text-align:center; border-right:1px solid #c3cbd0;float:left;}
 .form-line .form-input{width: calc(100% - 100px);float:left;}
@@ -21,16 +21,19 @@
 .form-line .form-content{width:calc(100% - 100px);float:left;padding:0 20px;}
 .form-line .form-content.has-daterangepicker{padding:0;}
 .form-line .form-item:first-child{padding-left: 0;}
+.form-line .form-item.only{border-right:1px solid #c3cbd0;}
 .form-line .form-content .dropdown-toggle{display:block;}
 .form-line .form-content.open{box-shadow:0 0 20px rgba(42,63,84,.5);}
 .form-line .form-content.open .dropdown-menu{box-shadow:0 5px 15px rgba(42,63,84,.5);}
-.form-line .form-content .dropdown-menu{width:calc(100% + 2px);font-size:14px;margin-top:0;margin-left:-1px;border-top:none; }
+.form-line .form-content .dropdown-menu{width:calc(100% + 2px);font-size:14px;margin-top:1px;margin-left:-1px;border-top:none;border-top-left-radius: 0;border-top-right-radius: 0;}
 .form-line .form-content .dropdown-menu>li{height:41px;border-bottom:1px solid #c3cbd0;line-height: 40px;padding:0 20px;cursor: pointer;}
 .form-line .form-content .dropdown-menu>li:last-child{border-bottom: none;}
 .form-line .form-content .dropdown-menu>li:hover,.form-line .form-content .dropdown-menu>li.active{background-color:#e6eeec;}
 .form-line .form-content .dropdown-menu>li>a{padding:0;line-height: 40px;}
 .filter-bar .btn-query{padding-right:40px;padding-left:40px;}
-
+.form-line.has-textarea textarea{width: 100%;resize: none;line-height: 40px;height:160px;border: none;padding:0 20px;}
+.form-line.has-textarea .form-tag{border-right:none;}
+.form-line.has-textarea .form-input{border-left: 1px solid #c3cbd0;}
 
 
 .copy-modal .modal-body{padding:0;}
@@ -106,4 +109,7 @@
 
 
 .server .form-line .form-item.btn-wrap{text-align: right;}
-.dataTables_wrapper .game-table{min-width:3600px;}
+.dataTables_wrapper .game-table{min-width:4100px;}
+
+.error-msg{font-size:14px;line-height: 1; padding:0 20px; color:#ff8279;}
+

@@ -9,15 +9,18 @@ define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert']
 		$scope.serverBox = [];
 		$scope.formModel = {
 			serverId: '',
-			status: 1
+			status: 0
 		};
-		appApi.getServerBox(data => {
-			console.log(data);
-			$scope.serverBox = data;
-			$scope.filterBarModel.serverId = data[0].serverId;
-			$scope.filterBarModel.serverName = data[0].serverName;
-			Query();
-		});
+		function getServerBox(){
+			appApi.getServerBox(data => {
+				console.log(data);
+				$scope.serverBox = data;
+				$scope.filterBarModel.serverId = 'ALL';
+				$scope.filterBarModel.serverName = '全服';
+				Query();
+			});
+		};
+		getServerBox();
 		$scope.serverClick = (e, n, i) => {
 			if(i == $scope.filterBarModel.serverId) {
 				e.stopPropagation();
@@ -83,7 +86,7 @@ define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert']
 					var btns = '<button class="btn btn-primary btn-reboot">重启</button>';
 					var onOrOff = data.status == 0 ? '<button class="btn btn-success btn-on">启动</button>' : '<button class="btn btn-danger btn-off">关闭</button>';
 					var edit = '<button class="btn btn-info btn-edit">修改</button><button class="btn btn-danger btn-del">删除</button>';
-					return(btns + onOrOff + edit);
+					return(btns + onOrOff);
 				}
 			}]
 		});
@@ -98,12 +101,13 @@ define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert']
 
 		function formModelInit() {
 			$scope.formModel = {
-				status: 1
+				status: 0
 			};
 			$scope.modalForm.$submitted = false;
 			$scope.modalForm.serverName.$touched = false;
 			$scope.modalForm.serverId.$touched = false;
 			$scope.modalForm.ipPort.$touched = false;
+			$scope.modalForm.gmPort.$touched = false;
 		};
 		$scope.addServer = function(e) {
 			$scope.title = '新增';
@@ -116,6 +120,7 @@ define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert']
 			$scope.formModel = $.extend(true, {}, data);
 			console.log($scope.formModel);
 			$scope.title = '编辑服务器信息';
+			$scope.formModel.serverId = parseInt($scope.formModel.serverId);
 			$scope.formModel.actionId = 2;
 			$scope.$digest();
 			$scope.$modal.modal('show');
@@ -160,7 +165,7 @@ define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert']
 			console.log($scope.formModel);
 			appApi.serverPost($scope.formModel, data => {
 				console.log(data);
-				Query();
+				getServerBox();
 				if($scope.formModel.actionId == 2 || $scope.formModel.actionId == 1) {
 					$('.submit-success').css('visibility', 'visible');
 					$scope.btnText = '关闭';

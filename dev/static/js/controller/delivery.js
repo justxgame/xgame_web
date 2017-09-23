@@ -11,9 +11,14 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 			$scope.filterBarModel.itemTypeName = data.itemTypeBoxModel.itemTypeModelList[0].itemTypeName;
 			$scope.filterBarModel.orderTypeId = data.orderTypeBoxModel.orderTypeModelList[0].orderTypeId;
 			$scope.filterBarModel.orderTypeName = data.orderTypeBoxModel.orderTypeModelList[0].orderTypeName;
-			Param();
+			$scope.QueryParam.rewardType = $scope.filterBarModel.itemTypeId;
+			$scope.QueryParam.orderType = $scope.filterBarModel.orderTypeId;
+			$scope.QueryParam.dateFrom = 0;
+			$scope.QueryParam.dateTo = 0;
+			$('.date-range-picker').val('不限时间');
 			Query();
 		});
+		
 		$scope.drapListSearch = function(name) {
 			return $scope.inputKey == undefined || $scope.inputKey == '' || name.indexOf($scope.inputKey) > -1;
 		};
@@ -86,7 +91,7 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 				targets: 9,
 				visible: true,
 				render: function(data, type, row, meta) {
-					return moment(data).format('YYYY-MM-DD');
+					return moment(data).format('YYYY-MM-DD hh:mm:ss');
 				}
 			},{
 				targets: 10,

@@ -1,4 +1,4 @@
-define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert'], function(angular, tpl, require, NProgress,swal) {
+define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','moment'], function(angular, tpl, require, NProgress,swal,moment) {
 	function controller($scope, appApi, getMillisecond) {
 		NProgress.done();
 		$scope.filterBarModel = {};
@@ -45,19 +45,46 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert'],
 				{
 					data: 'sendUserName',
 					width: '10%'
-				},
-				{
-					data: null,
-					width: '15%'
 				}
+//				,
+//				{
+//					data: null,
+//					width: '15%'
+//				}
 			],
 			columnDefs: [{
-				targets: 4,
+				targets: 2,
 				visible: true,
 				render: function(data, type, row, meta) {
-					return data.orderType==0?'':'<button class="btn btn-primary btn-edit">修改</button><button class="btn btn-danger btn-del">删除</button>';
+					return moment(data).format('YYYY-MM-DD hh:mm:ss');
 				}
-			}]
+			}
+//			,{
+//				targets: 4,
+//				visible: true,
+//				render: function(data, type, row, meta) {
+//					return '<button class="btn btn-danger btn-del">删除</button>';
+//				}
+//			}
+			]
+		});
+		$scope.$table.on('click','.btn-del',function(e){
+			var data = $scope.dt.api(true)
+			.row($(this).parents('tr')).data();
+			swal({
+				html: '确认删除这条广播?',
+				type: 'warning',
+				confirmButtonText: '确定',
+				showCancelButton:true,
+				cancelButtonText:'取消'
+			}).then(()=>{
+				$scope.formModel = $.extend(true, {}, data);
+				$scope.formModel.actionId = 2;
+				appApi.deleteInform(data,data=>{
+					console.log(data);
+					Query();
+				});
+			}).catch(swal.noop);
 		});
 		function Query(){
 			appApi.getInform(data=>{
@@ -86,6 +113,7 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert'],
 				return false;
 			};
 			$scope.modalForm.$submitted = true;
+			console.log($scope.modalForm.$valid);
 			if(!$scope.modalForm.$valid||!$scope.formModel.serverId){
 				e.stopPropagation();
 				e.preventDefault();

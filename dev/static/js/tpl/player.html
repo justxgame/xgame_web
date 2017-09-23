@@ -30,32 +30,33 @@
 						<div class="form-item col-md-3 col-sm-12 col-xs-12">
 							<div class="form-tag">玩家搜索</div>
 							<div class="form-input transition-02">
-								<ng-input class="md" placeholder="请输入uid..."  model="filterBarModel.userId" valid="true"></ng-input>
+								<ng-input class="md" type="number" placeholder="请输入uid..."  model="filterBarModel.userId" valid="true"></ng-input>
 							</div>
 						</div>
-						<div class="form-item col-md-3 col-sm-12 col-xs-12">
+						<!--<div class="form-item col-md-3 col-sm-12 col-xs-12">
 							<div class="form-tag">角色名</div>
 							<div class="form-input transition-02">
 								<ng-input class="md" placeholder="请输入角色名..." model="filterBarModel.userName"  focus="focus"></ng-input>
 							</div>
-						</div>
+						</div>-->
 						<div class="form-item btn-wrap clearfix col-md-3 col-sm-12 col-xs-12">
 							<button type="submit" class="btn btn-success btn-query" ng-click="Query($event)">
 								<span>查询</span>
 								<i class="icon-loading"></i>
 							</button>
+							<span class="error-msg">{{errorMsg}}</span>
 						</div>
 					</div>
 					<!--datatable-->
 					<table class="table table-striped table-hover table-bordered player-table">
 						<thead>
 							<tr>
-								<th>uid</th>
+								<th>pid</th>
 								<th>用户名</th>
-								<th>金钱</th>
-								<th>元宝</th>
+								<th>金币</th>
+								<th>钻石</th>
 								<th>门票</th>
-								<th>积分</th>
+								<th>优惠券</th>
 								<th>操作</th>
 							</tr>
 						</thead>
@@ -92,27 +93,27 @@
 							</div>
 						</div>
 						<div class="form-line pull-left">
-							<div class="form-tag">金钱(moeny)</div>
+							<div class="form-tag">金币</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.money" valid="true" required="required" focus="focus" name="money"></ng-input>
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.coins" valid="true" required="required" focus="focus" name="money"></ng-input>
 							</div>
 						</div>
 						<div class="form-line pull-left">
-							<div class="form-tag">元宝(coins)</div>
+							<div class="form-tag">钻石</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.coins" valid="true" required="required" focus="focus" name="coins"></ng-input>
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.diamond" valid="true" required="required" focus="focus" name="coins"></ng-input>
 							</div>
 						</div>
 						<div class="form-line pull-left">
-							<div class="form-tag">门票(ticket)</div>
+							<div class="form-tag">门票</div>
 							<div class="form-input">
 								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.ticket" valid="true" required="required" focus="focus" name="ticket"></ng-input>
 							</div>
 						</div>
 						<div class="form-line pull-left">
-							<div class="form-tag">积分(points)</div>
+							<div class="form-tag">优惠券</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.points" valid="true" required="required" focus="focus" name="points"></ng-input>
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.counpon" valid="true" required="required" focus="focus" name="points"></ng-input>
 							</div>
 						</div>
 					</form>

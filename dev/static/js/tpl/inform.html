@@ -37,7 +37,7 @@
 								<th>广播类型</th>
 								<th>发送时间</th>
 								<th>发送人</th>
-								<th>操作</th>
+								<!--<th>操作</th>-->
 							</tr>
 						</thead>
 						<tbody>
@@ -80,10 +80,10 @@
 								</ul>
 							</div>
 						</div>
-						<div class="form-line pull-left">
-							<div class="form-tag">服务器ID</div>
+						<div class="form-line pull-left has-textarea">
+							<div class="form-tag">信息</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.message" valid="true" required="required" focus="focus" name="name"></ng-input>
+								<textarea name="message" ng-model="formModel.message" placeholder="请输入广播内容..." required></textarea>
 							</div>
 						</div>
 					</form>

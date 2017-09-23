@@ -5,12 +5,11 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 	var appServices = angular.module('app.services', []);
 	appServices.service('login', function($http, $rootScope) {
 		this.check=function(fn){
-			fn(undefined);
-//			if(userInfo!=null&&userInfo!=undefined&&userInfo!=''&&userInfo.token){
-//				fn(userInfo.token);
-//			}else{
-//				window.location.href='login.html';
-//			};
+			if(userInfo!=null&&userInfo!=undefined&&userInfo!=''&&userInfo.token){
+				fn(userInfo.token);
+			}else{
+				window.location.href='login.html';
+			};
 		};
 		this.logout=function(e){
 			Cookies.remove('user');
@@ -97,7 +96,7 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 			delete obj.success;
 			delete obj.complete;
 			delete obj.error;
-			//login.check(function(token,id){
+			login.check(function(token,id){
 				var delModel = {
 					url: '',
 					method: 'DELETE',
@@ -148,7 +147,7 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 					});
 					err(response);
 				});
-//			});
+			});
 		};
 		this.appPost = function(obj) {
 			var suc = obj.success ? obj.success : function(e) {
@@ -299,6 +298,15 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 		this.sendInform = function(data,suc,com,err) {
 			appHttp.appPost({
 				url: baseSet.postServer + 'manager/broadcast/send',
+				data:data,
+				success: suc,
+				complete: com,
+				error: err
+			})
+		};
+		this.deleteInform = function(data,suc,com,err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/broadcast/delete',
 				data:data,
 				success: suc,
 				complete: com,

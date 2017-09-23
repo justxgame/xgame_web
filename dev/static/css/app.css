@@ -2370,15 +2370,7 @@ a.btn-danger {
     font-size: 10px;
     font-weight: 400
 }
-textarea {
-    padding: 10px;
-    vertical-align: top;
-    width: 200px
-}
-textarea:focus {
-    outline-style: solid;
-    outline-width: 2px
-}
+
 .btn_ {
     display: inline-block;
     padding: 3px 9px;

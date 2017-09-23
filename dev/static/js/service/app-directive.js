@@ -259,6 +259,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'paginator', 'datepicker', 'dateran
 				});
 				$input.on('apply.daterangepicker',
 					function(ev, picker) {
+						console.log(picker);
 						$(this).val(
 							picker.chosenLabel != '自定义时间' ? picker.chosenLabel :
 							picker.startDate.format('YYYY-MM-DD') == picker.endDate.format('YYYY-MM-DD') ? picker.startDate.format('YYYY-MM-DD') : picker.startDate.format('YYYY-MM-DD') +

@@ -7,12 +7,13 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 		$scope.$table = $('.player-table');
 		$scope.QueryParam = {}
 		$scope.formModel = {};
+		$scope.errorMsg = '';
 		appApi.getServerBox(data=>{
 			$scope.serverBox = data;
 			$scope.filterBarModel.serverName = data[0].serverName;
 			$scope.filterBarModel.serverId = data[0].serverId;
 			console.log($scope.filterBarModel);
-			Query();
+//			Query();
 		});
 		$scope.drapListSearch = function(name) {
 			return $scope.inputKey == undefined || $scope.inputKey == '' || name.indexOf($scope.inputKey) > -1;
@@ -42,7 +43,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				}]
 			},
 			columns: [{
-					data: 'uid',
+					data: 'pid',
 					width: '15%'
 				},
 				{
@@ -50,11 +51,11 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 					width: '15%'
 				},
 				{
-					data: 'money',
+					data: 'coins',
 					width: '10%'
 				},
 				{
-					data: 'coins',
+					data: 'diamond',
 					width: '10%'
 				},
 				{
@@ -62,7 +63,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 					width: '10%'
 				},
 				{
-					data: 'points',
+					data: 'counpon',
 					width: '10%'
 				},
 				{
@@ -76,7 +77,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				render: function(data, type, row, meta) {
 					console.log(data);
 					var tmp = '<button class="btn btn-primary send-mail">发送补偿邮件</button><button class="btn btn-info btn-edit">修改玩家数据</button>';
-					return data.status==1?tmp+='<button class="btn btn-danger btn-blockade">封号</button>':tmp+='<button class="btn btn-success btn-relieve">解封</button>';
+					return data.exist?tmp+='<button class="btn btn-danger btn-blockade">封号</button>':tmp+='<button class="btn btn-success btn-relieve">解封</button>';
 				}
 			}]
 		});
@@ -95,10 +96,11 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			.row($(this).parents('tr')).data();
 			$scope.formModel = $.extend(true, {}, data);
 			console.log(data);
-			$scope.formModel.money = undefined;
-			$scope.formModel.points = undefined;
-			$scope.formModel.ticket = undefined;
 			$scope.formModel.coins = undefined;
+			$scope.formModel.diamond = undefined;
+			$scope.formModel.ticket = undefined;
+			$scope.formModel.counpon = undefined;
+			$scope.formModel.pid = 7;
 			$scope.formModel.actionId = 3;
 			$scope.$digest();
 			$scope.$modal.modal('show');
@@ -107,7 +109,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
-				html: '确认将<label class="red">'+data.uid+'</label>封号?',
+				html: '确认将<label class="red">'+data.userName+'</label>封号?',
 				type: 'warning',
 				confirmButtonText: '确定',
 				showCancelButton:true,
@@ -116,6 +118,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				console.log(123123);
 				$scope.formModel = $.extend(true, {}, data);
 				$scope.formModel.actionId = 1;
+				$scope.formModel.pid = 7;
 				userUpdate();
 			}).catch(swal.noop);
 		});
@@ -135,9 +138,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			}).catch(swal.noop);
 		});
 		function Query(){
-			let p = $.extend(true, {}, $scope.filterBarModel);
-			delete p.serverName;
-			appApi.getPlayerInfo(p,data=>{
+			appApi.getPlayerInfo($scope.queryParam,data=>{
 				console.log(data);
 				$scope.dt.fnClearTable();
 				if(data.length==0) return;
@@ -145,6 +146,13 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			});
 		};
 		$scope.Query = ()=>{
+			if($scope.filterBarModel.userId==''||$scope.filterBarModel.userId==undefined){
+				$scope.errorMsg = 'uid不可为空';
+				return;
+			}else{
+				$scope.errorMsg = '';
+				$scope.queryParam = $.extend(true, {}, $scope.filterBarModel);
+			}
 			Query();
 		};
 		function userUpdate(){
