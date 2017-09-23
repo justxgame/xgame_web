@@ -73,7 +73,7 @@
 	</div>
 </div>
 
-<div class="modal fade custom-modal palery-modal form-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade custom-modal game-modal form-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -90,36 +90,170 @@
 						</div>
 					</div>
 					<form role="form" name="modalForm" class="clearfix transition-05" novalidate>
+						<div class="game-form-wrapper">
 						<div class="form-line pull-left" ng-if="formModel.actionId==4">
 							<div class="form-tag">奖品大类型</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.match_item_type" valid="true" required="required" focus="focus" name="name"></ng-input>
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.match_item_type" valid="true" required="required" focus="focus" name="match_item_type"></ng-input>
 							</div>
 						</div>
 						<div class="form-line pull-left">
-							<div class="form-tag">金币</div>
+							<div class="form-tag">比赛类别</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.coins" valid="true" required="required" focus="focus" name="money"></ng-input>
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.game_type" valid="true" required="required" focus="focus" name="game_type"></ng-input>
 							</div>
 						</div>
 						<div class="form-line pull-left">
-							<div class="form-tag">钻石</div>
+							<div class="form-tag">比赛名称</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.diamond" valid="true" required="required" focus="focus" name="coins"></ng-input>
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.name" valid="true" required="required" focus="focus" name="name"></ng-input>
 							</div>
 						</div>
 						<div class="form-line pull-left">
-							<div class="form-tag">门票</div>
+							<div class="form-tag">比赛类型</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.ticket" valid="true" required="required" focus="focus" name="ticket"></ng-input>
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.match_mode" valid="true" required="required" focus="focus" name="match_mode"></ng-input>
 							</div>
 						</div>
 						<div class="form-line pull-left">
-							<div class="form-tag">优惠券</div>
+							<div class="form-tag">最少开赛人数</div>
 							<div class="form-input">
-								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.counpon" valid="true" required="required" focus="focus" name="points"></ng-input>
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.min_start_player_num" valid="true" required="required" focus="focus" name="min_start_player_num"></ng-input>
 							</div>
 						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">最多开赛人数</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.max_start_player_num" valid="true" required="required" focus="focus" name="max_start_player_num"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">金币场最低入门数量</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.can_int_min_coin" valid="true" required="required" focus="focus" name="can_int_min_coin"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">金币场门槛最高</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.can_in_max_coin" valid="true" required="required" focus="focus" name="can_in_max_coin"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">房费</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.table_cost" valid="true" required="required" focus="focus" name="table_cost"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">封顶分</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.max_point" valid="true" required="required" focus="focus" name="max_point"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">初始底分</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.init_base" valid="true" required="required" focus="focus" name="init_base"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">底分增长间隔时间</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.base_increase_second" valid="true" required="required" focus="focus" name="base_increase_second"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">默认倍数</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.base_times" valid="true" required="required" focus="focus" name="base_times"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">报名消耗物品id和数量</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.sign_cost" valid="true" required="required" focus="focus" name="sign_cost"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">对应图标显示</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.icon_id" valid="true" required="required" focus="focus" name="icon_id"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">奖励获取的最后为名次</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.winner_rewards" valid="true" required="required" focus="focus" name="winner_rewards"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">初始开始分</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.init_start_scores" valid="true" required="required" focus="focus" name="init_start_scores"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">开始淘汰的剩余人数</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.remain_player_num" valid="true" required="required" focus="focus" name="remain_player_num"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">进入淘汰赛的人数</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.second_round_player_number" valid="true" required="required" focus="focus" name="second_round_player_number"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">淘汰赛进行的局数</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.phase2_game_rounds" valid="true" required="required" focus="focus" name="phase2_game_rounds"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">比赛提前显示小时</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.early_show_hour" valid="true" required="required" focus="focus" name="early_show_hour"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">比赛提前报名分钟</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.early_exam_minute" valid="true" required="required" focus="focus" name="early_exam_minute"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">定时赛开始的每个月的日期</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.date_mon_day" valid="true" required="required" focus="focus" name="date_mon_day"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">定时赛开始的每周几</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.date_week_day" valid="true" required="required" focus="focus" name="date_week_day"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">定时赛开启的小时</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.date_day_hour" valid="true" required="required" focus="focus" name="date_day_hour"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left">
+							<div class="form-tag">定时赛开始的分钟</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.date_hour_minute" valid="true" required="required" focus="focus" name="date_hour_minute"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left last">
+							<div class="form-tag">定时赛允许迟到的秒数</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.allow_late_minutes" valid="true" required="required" focus="focus" name="allow_late_minutes"></ng-input>
+							</div>
+						</div>
+					</div>
 					</form>
 				</div>
 			</div>

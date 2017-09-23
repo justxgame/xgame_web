@@ -350,6 +350,15 @@ define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], f
 				error: err
 			})
 		};
+		this.setGameServerInfo = function(data,suc,com,err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/gameSetting/update',
+				data:data,
+				success: suc,
+				complete: com,
+				error: err
+			})
+		};
 	}]);
 	appServices.service('debug',function() {
 		$(document).off('click','.icon-debug',function(){});

@@ -83,7 +83,10 @@
 						<div class="form-line pull-left has-textarea">
 							<div class="form-tag">信息</div>
 							<div class="form-input">
-								<textarea name="message" ng-model="formModel.message" placeholder="请输入广播内容..." required></textarea>
+								<div class="textarea-wrapper">
+									<textarea name="message" ng-model="formModel.message" placeholder="请输入广播内容..." required></textarea>
+									<span class="error-lable" ng-show="(modalForm.message.$error.required&&modalForm.message.$touched)||(modalForm.message.$error.required&&modalForm.$submitted)">广播内容不可为空</span>
+								</div>
 							</div>
 						</div>
 					</form>

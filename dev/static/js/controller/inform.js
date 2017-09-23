@@ -121,9 +121,24 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','
 			};
 			appApi.sendInform($scope.formModel,data=>{
 				console.log(data);
+				$scope.btnText = '关闭';
+				$('.submit-success').css('visibility','visible');
+				$scope.success = true;
+				Query();
+				setTimeout(()=>{
+					$scope.$modal.modal('hide');
+				},1000);
 			});
 		};
-		
+		$scope.$modal.on('hidden.bs.modal',()=>{
+			$scope.success = false;
+			$scope.formModel = {};
+			$('.submit-success').css('visibility','hidden');
+			$scope.modalForm.$submitted = false;
+			$scope.modalForm.message.$touched = false;
+			$scope.formModel.serverId = $scope.serverBox[0].serverId;
+			$scope.formModel.serverName = $scope.serverBox[0].serverName;
+		});
 	};
 	return {
 		controller: controller,

@@ -4,6 +4,7 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 		$scope.filterBarModel = {};
 		$scope.serverBox = [];
 		$scope.$table = $('.game-table');
+		$scope.$modal = $('.game-modal');
 		$scope.QueryParam = {}
 		$scope.formModel = {};
 		appApi.getGameServerInfo(data=>{
@@ -89,6 +90,50 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 				$scope.dt.fnAddData(data);
 			});
 		};
+		$scope.$table.on('click','.btn-edit',function(e){
+			var data = $scope.dt.api(true)
+			.row($(this).parents('tr')).data();
+			$scope.formModel = $.extend(true, {}, data);
+			console.log($scope.formModel);
+			$scope.$digest();
+			$scope.$modal.modal('show');
+		});
+		$scope.submitForm = (e)=>{
+			if($scope.success){
+				$scope.$modal.modal('hide');
+				return false;
+			};
+			$scope.modalForm.$submitted = true;
+			if(!$scope.modalForm.$valid){
+				e.stopPropagation();
+				e.preventDefault(); 
+				return false;
+			};
+			appApi.setGameServerInfo($scope.formModel,data=>{
+				console.log(data);
+				$scope.btnText = '关闭';
+				$('.submit-success').css('visibility','visible');
+				$scope.success = true;
+				Query();
+				setTimeout(()=>{
+					$scope.$modal.modal('hide');
+				},1000)
+			});
+		};
+		$scope.$modal.on('shown.bs.modal',()=>{
+			$scope.$modal.find('.game-form-wrapper').perfectScrollbar({
+        		suppressScrollX: true
+        	});
+		});
+		$scope.$modal.on('hidden.bs.modal',()=>{
+			$scope.success = false;
+			$scope.formModel = {};
+			$('.submit-success').css('visibility','hidden');
+			$scope.modalForm.$submitted = false;
+			for(let item of $scope.modalForm){
+				console.log(item);
+			}
+		});
 	};
 	return {
 		controller: controller,

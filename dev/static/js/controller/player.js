@@ -10,8 +10,8 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 		$scope.errorMsg = '';
 		appApi.getServerBox(data=>{
 			$scope.serverBox = data;
-			$scope.filterBarModel.serverName = data[0].serverName;
-			$scope.filterBarModel.serverId = data[0].serverId;
+			$scope.filterBarModel.serverId = 'ALL';
+			$scope.filterBarModel.serverName = '全服';
 			console.log($scope.filterBarModel);
 //			Query();
 		});
@@ -77,7 +77,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 				render: function(data, type, row, meta) {
 					console.log(data);
 					var tmp = '<button class="btn btn-primary send-mail">发送补偿邮件</button><button class="btn btn-info btn-edit">修改玩家数据</button>';
-					return data.exist?tmp+='<button class="btn btn-danger btn-blockade">封号</button>':tmp+='<button class="btn btn-success btn-relieve">解封</button>';
+					return tmp+='<button class="btn btn-danger btn-blockade">封号</button><button class="btn btn-success btn-relieve">解封</button>';
 				}
 			}]
 		});
@@ -126,7 +126,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
-				html: '确认解除<label class="red">'+data.uid+'</label>解封?',
+				html: '确认解除<label class="red">'+data.userName+'</label>解封?',
 				type: 'warning',
 				confirmButtonText: '确定',
 				showCancelButton:true,
@@ -134,6 +134,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			}).then(()=>{
 				$scope.formModel = $.extend(true, {}, data);
 				$scope.formModel.actionId = 2;
+				$scope.formModel.pid = 7;
 				userUpdate();
 			}).catch(swal.noop);
 		});
@@ -152,6 +153,7 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			}else{
 				$scope.errorMsg = '';
 				$scope.queryParam = $.extend(true, {}, $scope.filterBarModel);
+				delete $scope.queryParam.serverName;
 			}
 			Query();
 		};
@@ -159,13 +161,16 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			console.log($scope.formModel);
 			appApi.userUpdate($scope.formModel,data=>{
 				console.log(data);
-				$scope.btnText = '关闭';
-				$('.submit-success').css('visibility','visible');
-				$scope.success = true;
+				if($scope.formModel.actionId == 3 || $scope.formModel.actionId == 4) {
+					$scope.btnText = '关闭';
+					$('.submit-success').css('visibility','visible');
+					$scope.success = true;
+					setTimeout(()=>{
+						$scope.$modal.modal('hide');
+					},1000)
+				};
 				Query();
-				setTimeout(()=>{
-					$scope.$modal.modal('hide');
-				},1000)
+				
 			});
 		};
 		$scope.submitForm = (e)=>{
