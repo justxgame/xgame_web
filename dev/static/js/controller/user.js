@@ -192,8 +192,5 @@ define(['angular', 'text!tpl/user.html', 'require', 'nprogress', 'sweetalert'], 
 			serverPost();
 		};
 	};
-	return {
-		controller: controller,
-		tpl: tpl
-	};
+	return {controller: controller, tpl: tpl};
 });

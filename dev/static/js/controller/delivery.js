@@ -162,8 +162,5 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 	    	$scope.QueryDate = 0;
 		});
 	};
-	return {
-		controller: controller,
-		tpl: tpl
-	};
+	return {controller: controller, tpl: tpl};
 });

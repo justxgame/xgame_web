@@ -196,8 +196,5 @@ define(['angular', 'text!tpl/server.html', 'require', 'nprogress', 'sweetalert']
 			formModelInit();
 		});
 	};
-	return {
-		controller: controller,
-		tpl: tpl
-	};
+	return {controller: controller, tpl: tpl};
 });

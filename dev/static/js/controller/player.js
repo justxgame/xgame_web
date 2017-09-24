@@ -132,7 +132,6 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			}).then(()=>{
 				$scope.formModel = $.extend(true, {}, data);
 				$scope.formModel.actionId = 2;
-				$scope.formModel.pid = 7;
 				userUpdate();
 			}).catch(swal.noop);
 		});
@@ -196,8 +195,5 @@ define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'],
 			$scope.modalForm.name?$scope.modalForm.name.$touched=false:console.log(null);
 		});
 	};
-	return {
-		controller: controller,
-		tpl: tpl
-	};
+	return {controller: controller, tpl: tpl};
 });

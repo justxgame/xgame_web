@@ -1,4 +1,4 @@
-define(['angular', 'moment', 'jquery', 'Ps', 'paginator', 'datepicker', 'daterange'], function(angular, moment, $) {
+define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, moment, $) {
 	'use strict';
 	var appDirectives = angular.module('app.directives', []);
 	appDirectives.directive('ngScrollbar', function() {
@@ -211,10 +211,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'paginator', 'datepicker', 'dateran
 					options = {
 						size: size,
 						maxDate: moment(),
-						startDate: moment(),
-						endDate: moment(),
 						ranges: {
-							'不限': [null, null],
 							'今天': [moment(), moment()],
 							'最近7天': [moment().subtract(6, 'days'), moment()],
 							'最近14天': [moment().subtract(13, 'days'), moment()],

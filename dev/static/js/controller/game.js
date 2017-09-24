@@ -140,8 +140,5 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			}
 		});
 	};
-	return {
-		controller: controller,
-		tpl: tpl
-	};
+	return {controller: controller, tpl: tpl};
 });

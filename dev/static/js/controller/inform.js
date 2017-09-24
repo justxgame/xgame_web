@@ -140,8 +140,5 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','
 			$scope.formModel.serverName = $scope.serverBox[0].serverName;
 		});
 	};
-	return {
-		controller: controller,
-		tpl: tpl
-	};
+	return {controller: controller, tpl: tpl};
 });

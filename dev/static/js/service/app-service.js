@@ -1,4 +1,4 @@
-define(['angular','js.cookie','local','baseSet', 'jquery', 'sweetalert','Ps'], function(angular,Cookies,local,baseSet,$,swal) {
+define(['angular','js.cookie','baseSet', 'jquery', 'sweetalert','Ps'], function(angular,Cookies,baseSet,$,swal) {
 	'use strict';
 	var userInfo =Cookies.getJSON('user')?Cookies.getJSON('user'):{};
 	console.log(userInfo);
