@@ -1,7 +1,7 @@
 /*-----------------------
  * Site:  Kingnet - xgame_web - start
  * Author: Clearlove 7*
- * Updated: 2017-09-24 23:42
+ * Updated: 2017-09-25 00:20
  * Version: 1.0.0
  * -----------------------*/
 define('angular', [], function () {
@@ -17519,7 +17519,7 @@ define('appDirectives', [
                 }
                 ;
                 if (!$scope.model || $scope.model == '') {
-                    $scope.model = startDate.format('YYYY-MM-DD') + '|' + endDate.format('YYYY-MM-DD');
+                    $scope.model = undefined;
                 } else {
                     opts.startDate = moment($scope.model.split('|')[0]);
                     opts.endDate = moment($scope.model.split('|')[1]);

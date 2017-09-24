@@ -238,7 +238,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 					opts.minDate = moment().subtract(90, 'days');
 				};
 				if(!$scope.model || $scope.model == '') {
-					$scope.model = startDate.format('YYYY-MM-DD') + '|' + endDate.format('YYYY-MM-DD');
+					$scope.model = undefined;
 				} else {
 					opts.startDate = moment($scope.model.split('|')[0]);
 					opts.endDate = moment($scope.model.split('|')[1]);
