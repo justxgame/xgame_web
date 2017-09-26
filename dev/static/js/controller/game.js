@@ -97,7 +97,7 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 		$scope.addGame = function(e) {
 			$scope.title = '新增';
 			$scope.$modal.modal('show');
-			$scope.formModel.id = 0;
+			$scope.formModel.id = 9999;
 		};
 		$scope.$table.on('click','.btn-edit',function(e){
 			var data = $scope.dt.api(true)
