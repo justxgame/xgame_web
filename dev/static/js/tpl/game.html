@@ -8,7 +8,7 @@
 				<div class="x_content">
 					<!--filter-bar-->
 					<div class="filter-bar form-line clearfix">
-						<div class="form-item only col-md-3 col-sm-12 col-xs-12">
+						<div class="form-item col-md-3 col-sm-12 col-xs-12">
 							<div class="form-tag">服务器选择</div>
 							<div class="channel-drapdown dropdown select form-content transition-02">
 								<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
@@ -26,6 +26,12 @@
 									</div>
 								</div>
 							</div>
+						</div>
+						<div class="pull-right form-item btn-wrap clearfix col-md-3 col-sm-12 col-xs-12">
+							<button type="submit" class="btn btn-success btn-query" ng-click="addGame($event)">
+								<span>新增游戏配置</span>
+								<i class="icon-loading"></i>
+							</button>
 						</div>
 					</div>
 					<!--datatable-->
@@ -79,7 +85,7 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           		</button>
-				<h4 class="modal-title text-center" id="myModalLabel"><span class="pull-left">编辑游戏配置</span></h4>
+				<h4 class="modal-title text-center" id="myModalLabel"><span class="pull-left">{{title}}游戏配置</span></h4>
 			</div>
 			<div class="modal-body">
 				<div class="body-container" ng-class="{'success overflow':success}">
@@ -91,7 +97,7 @@
 					</div>
 					<form role="form" name="modalForm" class="clearfix transition-05" novalidate>
 						<div class="game-form-wrapper">
-						<div class="form-line pull-left" ng-if="formModel.actionId==4">
+						<div class="form-line pull-left">
 							<div class="form-tag">奖品大类型</div>
 							<div class="form-input">
 								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.match_item_type" valid="true" required="required" focus="focus" name="match_item_type"></ng-input>
@@ -247,10 +253,16 @@
 								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.date_hour_minute" valid="true" required="required" focus="focus" name="date_hour_minute"></ng-input>
 							</div>
 						</div>
-						<div class="form-line pull-left last">
+						<div class="form-line pull-left">
 							<div class="form-tag">定时赛允许迟到的秒数</div>
 							<div class="form-input">
 								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.allow_late_minutes" valid="true" required="required" focus="focus" name="allow_late_minutes"></ng-input>
+							</div>
+						</div>
+						<div class="form-line pull-left last">
+							<div class="form-tag">开放标志</div>
+							<div class="form-input">
+								<ng-input class="sm" placeholder="请输入..." form="modalForm" model="formModel.open_flag" valid="true" required="required" focus="focus" name="open_flag"></ng-input>
 							</div>
 						</div>
 					</div>

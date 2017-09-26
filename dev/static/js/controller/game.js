@@ -27,7 +27,6 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			$scope.filterBarModel.serverName = n;
 			Query();
 		};
-		
 		$scope.dt = $scope.$table.dataTable({
 			fixedColumns: {
 		        leftColumns: 2
@@ -95,11 +94,17 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 				$scope.dt.fnAddData(data);
 			});
 		};
+		$scope.addGame = function(e) {
+			$scope.title = '新增';
+			$scope.$modal.modal('show');
+			$scope.formModel.id = 0;
+		};
 		$scope.$table.on('click','.btn-edit',function(e){
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			$scope.formModel = $.extend(true, {}, data);
 			console.log($scope.formModel);
+			$scope.title = '编辑';
 			$scope.$digest();
 			$scope.$modal.modal('show');
 		});
@@ -111,7 +116,7 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			$scope.modalForm.$submitted = true;
 			if(!$scope.modalForm.$valid){
 				e.stopPropagation();
-				e.preventDefault(); 
+				e.preventDefault();
 				return false;
 			};
 			appApi.setGameServerInfo($scope.formModel,data=>{
@@ -135,9 +140,7 @@ define(['angular', 'text!tpl/game.html', 'require', 'nprogress','sweetalert'], f
 			$scope.formModel = {};
 			$('.submit-success').css('visibility','hidden');
 			$scope.modalForm.$submitted = false;
-			for(let item in $scope.modalForm){
-				console.log(item);
-			}
+			$scope.modalForm.$setUntouched();
 		});
 	};
 	return {controller: controller, tpl: tpl};

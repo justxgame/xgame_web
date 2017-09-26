@@ -2,11 +2,11 @@
 //cnpm install --save-dev gulp gulp-minify-css amd-optimize gulp-jshint  gulp-uglify gulp-rename gulp-concat gulp-clean gulp-insert through2 gulp-htmlmin gulp-ng-html2js gulp-replace gulp-sourcemaps browser-sync gulp-rev gulp-rev-collector gulp-livereload gulp-imagemin gulp-html-replace rev-hash
 //
 
-//var project = 'Love/dev';
-var project = 'xgame_web/dev';
-var projectDist = 'xgame_web';
-var version = '1.2';
-var prevVersion = '1.1';
+
+var project = './dev';
+var projectDist = './';
+var version = '1.1';
+var prevVersion = '1.0';
 
 getWrapper = function(name) {
 	return "define(['angular'], function(angular) {\n" +
@@ -21,9 +21,9 @@ var wrapperEnd = "\n})";
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	babel = require('gulp-babel'),
-	minifycss = require('gulp-minify-css'), //css压缩    
+	minifycss = require('gulp-clean-css'), //css压缩
 	amdOptimize = require('amd-optimize'), //requirejs打包
-	jshint = require('gulp-jshint'), //js语法检查          
+	jshint = require('gulp-jshint'), //js语法检查
 	uglify = require('gulp-uglify'), //压缩混淆
 	rename = require('gulp-rename'), //重命名
 	concat = require('gulp-concat'), //文件合并
@@ -112,183 +112,9 @@ gulp.task('html', function() {
 		.pipe(gulp.dest(htmlDst));
 });
 
-gulp.task('jshint', function() {
-	gulp.src('./static/js/**/*.js')
-		.pipe(jshint())
-		.pipe(jshint.reporter('default'))
-});
 
-gulp.task('common', function() {
-	var name = 'common',
-		common = gulp.src('./' + project + '/static/js/*.js')
-		.pipe(amdOptimize(name, {
-			baseUrl: './' + project + '/static/js/',
-			configFile: './' + project + '/static/js/config.js',
-			findNestedDependencies: false,
-			include: false
-		}))
-		.pipe(concat('common.js'))
-		//      .pipe(uglify({
-		//      	mangle: false}))
-		.pipe(insert.prepend(header))
-		.pipe(replace('{{ date }}', getDate(nowTime, 'yyyy-MM-dd HH:mm')))
-		.pipe(replace('{{ version }}', package.version))
-		.pipe(replace('{{ name }}', name))
-		.pipe(gulp.dest('./dist/static/js/libs/common'));
 
-	return common
-});
 
-var controllers = [];
-gulp.task('addControllers', function() {
-	return gulp.src('./static/js/controller/*.js')
-		//.pipe(rename({ suffix: '.min' }))
-		//.pipe(uglify())
-		//.pipe(gulp.dest(libsjsDst));
-		.pipe(through.obj(function(file, enc, cb) {
-			controllers.push(file.relative.replace('.js', ''));
-			this.push(file);
-			cb();
-		}));
-});
-gulp.task('controller', ['addControllers'], function() {
-	console.log(controllers);
-	var jsDst = './dist/static/js/controller/',
-		stream, name;
-	for(var i = 0; i < controllers.length; i++) {
-		name = controllers[i];
-		stream = gulp.src('./static/js/**/*.js')
-			.pipe(amdOptimize(name, {
-				baseUrl: './static/js/',
-				configFile: './static/js/config.js',
-				findNestedDependencies: true,
-				include: false,
-				exclude: ['common']
-			}))
-			.pipe(concat(controllers[i] + '.js'))
-			.pipe(uglify())
-			.pipe(insert.prepend(header))
-			.pipe(replace('{{ date }}', getDate(nowTime, 'yyyy-MM-dd HH:mm')))
-			.pipe(replace('{{ version }}', package.version))
-			.pipe(replace('{{ name }}', name))
-			.pipe(gulp.dest(jsDst));
-	};
-	return stream;
-});
-
-var jsFiles = [];
-gulp.task('addjs', function() {
-	var alljs = './' + project + '/static/js/*.js';
-	var addjs = gulp.src(alljs)
-		//.pipe(rename({ suffix: '.min' }))
-		//.pipe(uglify())
-		//.pipe(gulp.dest(libsjsDst));
-		.pipe(through.obj(function(file, enc, cb) {
-			jsFiles.push(file.relative.replace('.js', ''));
-			this.push(file);
-			cb();
-		}));
-	return addjs;
-});
-gulp.task('js', ['addjs'], function() {
-	console.log(jsFiles);
-	var jsDst = './dist/static/js/',
-		stream, name;
-	for(var i = 0; i < jsFiles.length; i++) {
-		name = jsFiles[i];
-		stream = gulp.src('./' + project + '/static/js/**/*.js')
-			.pipe(amdOptimize(name, {
-				baseUrl: './' + project + '/static/js/',
-				configFile: './' + project + '/static/js/config.js',
-				findNestedDependencies: true,
-				include: false,
-				//exclude: ['common']
-			}))
-			.pipe(concat(jsFiles[i] + '.js'))
-			.pipe(uglify())
-			.pipe(insert.prepend(header))
-			.pipe(replace('{{ date }}', getDate(nowTime, 'yyyy-MM-dd HH:mm')))
-			.pipe(replace('{{ version }}', package.version))
-			.pipe(replace('{{ name }}', name))
-			.pipe(gulp.dest(jsDst));
-	};
-	return stream;
-});
-
-var controller = [];
-gulp.task('addCtr', function() {
-	var alljs = './' + project + '/static/js/controller/*.js';
-	return gulp.src(alljs)
-		.pipe(through.obj(function(file, enc, cb) {
-			jsFiles.push(file.relative.replace('.js', ''));
-			this.push(file);
-			cb();
-		}));
-});
-gulp.task('ctrmin', ['addCtr'], function() {
-	var jsDst = './dist/static/js/controller/',
-		stream, name;
-	for(var i = 0; i < jsFiles.length; i++) {
-		name = jsFiles[i];
-		stream = gulp.src('./' + project + '/static/js/controller/' + name + '.js')
-			.pipe(uglify({
-				mangle: false
-			}))
-			.pipe(insert.prepend(header))
-			.pipe(replace('{{ date }}', getDate(nowTime, 'yyyy-MM-dd HH:mm')))
-			.pipe(replace('{{ version }}', package.version))
-			.pipe(replace('{{ name }}', name))
-			.pipe(gulp.dest(jsDst));
-	};
-	return stream;
-});
-gulp.task('jsmin', function() {
-	var jsDst = './dist/static/js/controller/',
-		stream, name;
-	name = 'analysis';
-	stream = gulp.src('./' + project + '/static/js/controller/' + name + '.js')
-		.pipe(uglify({
-			mangle: false
-		}))
-		.pipe(insert.prepend(header))
-		.pipe(replace('{{ date }}', getDate(nowTime, 'yyyy-MM-dd HH:mm')))
-		.pipe(replace('{{ version }}', package.version))
-		.pipe(replace('{{ name }}', name))
-		.pipe(gulp.dest(jsDst));
-	return stream;
-});
-
-gulp.task('merge', function() {
-	var jsDst = './dist/static/js/',
-		stream, name;
-	name = 'main';
-	stream = gulp.src(['./' + project + '/static/js/config.js', './' + project + '/static/js/start.js'])
-		.pipe(concat(name + '.js'))
-		.pipe(uglify({
-			mangle: false
-		}))
-		.pipe(insert.prepend(header))
-		.pipe(replace('{{ date }}', getDate(nowTime, 'yyyy-MM-dd HH:mm')))
-		.pipe(replace('{{ version }}', package.version))
-		.pipe(replace('{{ name }}', name))
-		.pipe(gulp.dest(jsDst));
-	return stream;
-});
-
-gulp.task('jsrev', function() {
-	return gulp.src('./cubemobile/static/js/main.js')
-		.pipe(rev())
-		.pipe(gulp.dest('./cubemobile/static/js/'))
-		.pipe(rev.manifest())
-		.pipe(gulp.dest('./cubemobile/static/rev/js/'));
-});
-gulp.task('cssrev', function() {
-	return gulp.src('./cubemobile/static/css/main.min.css')
-		.pipe(rev())
-		.pipe(gulp.dest('./cubemobile/static/css/'))
-		.pipe(rev.manifest())
-		.pipe(gulp.dest('./cubemobile/static/rev/css/'));
-});
 
 gulp.task('update', function() {
 	return gulp.src(['./' + project + '/static/**/**.**'])
@@ -358,7 +184,7 @@ gulp.task('fontrev', function() {
 		.pipe(gulp.dest('./' + project + '/static/rev/fonts/'));
 });
 
-gulp.task('css', ['cssmin', 'theme'], function() {
+gulp.task('css', ['cssmin', 'buildSass'], function() {
 	return gulp.src(['./' + project + '/static/rev/fonts/*.json', './' + project + '/static/css/main.min.css'])
 		.pipe(revCollector())
 		.pipe(gulp.dest('./' + projectDist + '/static/css/'));
