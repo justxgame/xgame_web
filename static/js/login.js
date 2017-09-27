@@ -163,7 +163,7 @@ define('tools', ['local'], function (local) {
 });
 define('baseSet', [], function () {
     return {
-        postServer: 'http://117.50.8.212:9100/',
+        postServer: window.location.origin + '/',
         pageHost: './../'
     };
 });

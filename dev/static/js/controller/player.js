@@ -1,5 +1,6 @@
 define(['angular', 'text!tpl/player.html', 'require', 'nprogress','sweetalert'], function(angular, tpl, require, NProgress,swal) {
 	function controller($scope, appApi) {
+		console.log(window.location.origin);
 		NProgress.done();
 		$scope.filterBarModel = {};
 		$scope.serverBox = [];

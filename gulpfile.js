@@ -7,6 +7,8 @@ var project = './dev';
 var projectDist = './';
 var version = '1.1';
 var prevVersion = '1.0';
+var postServer = 'http://117.50.8.212';
+var postPort = '9100';
 
 getWrapper = function(name) {
 	return "define(['angular'], function(angular) {\n" +

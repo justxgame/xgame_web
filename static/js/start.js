@@ -1,7 +1,7 @@
 /*-----------------------
  * Site:  Kingnet - ./ - start
  * Author: Clearlove 7*
- * Updated: 2017-09-26 22:24
+ * Updated: 2017-09-27 22:06
  * Version: 1.0.0
  * -----------------------*/
 define('angular', [], function () {
@@ -17699,7 +17699,7 @@ define('appDirectives', [
 }.call(this));
 define('baseSet', [], function () {
     return {
-        postServer: 'http://117.50.8.212:9100/',
+        postServer: window.location.origin + '/',
         pageHost: './../'
     };
 });
