@@ -97,7 +97,8 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 				targets: 10,
 				visible: true,
 				render: function(data, type, row, meta) {
-					return data.orderType==0?'':'<button class="btn btn-primary btn-retry">重新发货</button>';
+//					return data.orderType==0?'':'<button class="btn btn-primary btn-retry">重新发货</button>';
+					return '';
 				}
 			}]
 		});
