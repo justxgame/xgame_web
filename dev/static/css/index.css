@@ -123,3 +123,13 @@
 .game-form-wrapper{height: 410px;position: relative;overflow:hidden;border-bottom: 1px solid #c3cbd0;border-top: 1px solid #c3cbd0;}
 .game-form-wrapper .form-line:first-child{border-top:0;}
 .game-form-wrapper .form-line.last{border-bottom:0;}
+
+
+
+
+
+.demo .form-item label{margin:0; padding: 0 20px;display: flex;align-items: center;}
+.demo .form-item label input[type="radio"],.demo .form-item label input[type="checkbox"]{margin-top: 0;margin-right: 10px;}
+
+
+.demo .form-item input.number{height:32px;margin:9px 10px; border:1px solid #ddd;padding:0 10px;}

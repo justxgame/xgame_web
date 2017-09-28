@@ -1,0 +1,161 @@
+<div class="module-wrapper demo">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>DEMO</h2>
+				</div>
+				<div class="x_content">
+					<div class="filter-bar form-line clearfix">
+						<div class="form-item only col-md-3 col-sm-12 col-xs-12">
+							<div class="form-tag">项目</div>
+							<div class="channel-drapdown dropdown select form-content transition-02">
+								<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+									<span class="val pull-left" ng-bind="filterBarModel.name"></span>
+									<div class="pull-right">
+										<span class="caret icon-arrow"></span>
+									</div>
+								</a>
+								<div class="dropdown-menu search animated fadeInUpSmall fast" role="menu">
+									<ng-input class="sm" icon-left="&#xe623;" model="inputKey" type="text" placeholder="搜索项目"></ng-input>
+									<div class="dropdown-list clearfix">
+										<ul class="clearfix">
+											<li role="presentation" ng-repeat="item in projectList" ng-bind="item.name" ng-click="itemClick($event,item.name,item.id)" ng-show="drapListSearch(item.name)" ng-class="{'active':filterBarModel.id===item.id}"></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="filter-bar form-line clearfix" ng-repeat="item in filterData.items" >
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-tag">查询信息</div>
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left" type="checkbox" name="mobile"/><span class="pull-left">手机号码</span></label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								
+								<label class="clearfix"><input class="pull-left"  type="checkbox" name="uid"/>uid</label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								
+								<label class="clearfix"><input class="pull-left"  type="checkbox" name="mobile"/>苹果设备号</label>
+							</div>
+						</div>
+					</div>
+					<div class="filter-bar form-line clearfix" >
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-tag">查询信息</div>
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left" type="checkbox" name="mobile"/><span class="pull-left">手机号码</span></label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								
+								<label class="clearfix"><input class="pull-left"  type="checkbox" name="uid"/>uid</label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								
+								<label class="clearfix"><input class="pull-left"  type="checkbox" name="mobile"/>苹果设备号</label>
+							</div>
+						</div>
+					</div>
+					<div class="filter-bar form-line clearfix">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-tag">登录时间</div>
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left" type="radio" name="mobile"/><span class="pull-left">近3天</span></label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								
+								<label class="clearfix"><input class="pull-left"  type="radio" name="uid"/>近7天</label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								
+								<label class="clearfix"><input class="pull-left"  type="radio" name="mobile"/>近30天</label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								<date-range-picker class="md" model="QueryDate" picker="picker"></date-range-picker>
+							</div>
+						</div>
+					</div>
+					<div class="filter-bar form-line clearfix" ng-if="filterBarModel.id==1">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-tag">登录频率</div>
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left" type="checkbox" name="mobile"/><span class="pull-left">不限</span></label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left"  type="checkbox" name="uid"/>1次/周</label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								
+								<label class="clearfix"><input class="pull-left"  type="checkbox" name="mobile"/>2-10次/周</label>
+							</div>
+						</div>
+						<div class="form-item col-md-6 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								<input type="number" class="number pull-left" placeholder="自定义" />
+								<i class="pull-left">-</i>
+								<input type="number" class="number pull-left" />
+								<span class="pull-left">天</span>
+							</div>
+						</div>
+					</div>
+					<div class="filter-bar form-line clearfix" ng-if="filterBarModel.id==2">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-tag">付费频率</div>
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left" type="checkbox" name="mobile"/><span class="pull-left">不限</span></label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left"  type="checkbox" name="uid"/>1次/周</label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								
+								<label class="clearfix"><input class="pull-left"  type="checkbox" name="mobile"/>>=4次/周</label>
+							</div>
+						</div>
+						<div class="form-item col-md-6 col-sm-12 col-xs-12">
+							<div class="form-input transition-02">
+								<input type="number" class="number pull-left" placeholder="自定义" />
+								<i class="pull-left">-</i>
+								<input type="number" class="number pull-left" />
+								<span class="pull-left">天</span>
+							</div>
+						</div>
+					</div>
+					<div class="filter-bar form-line clearfix">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<button type="submit" class="btn btn-success btn-query" ng-click="Query($event)">
+								<span>查询</span>
+								<i class="icon-loading"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

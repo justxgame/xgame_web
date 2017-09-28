@@ -113,6 +113,11 @@ function(angular, require){
                 //模块的代码路径
                 path: 'static/js/controller/user.js?v='+stamp,
                 controller: 'userController'
+            },
+            '/demo': { //路由
+                //模块的代码路径
+                path: 'static/js/controller/demo.js?v='+stamp,
+                controller: 'demoController'
             }
         };
         //默认跳转到某个路由

@@ -758,7 +758,7 @@ a:focus {
 }
 .nav.side-menu>li>a,
 .nav.child_menu>li>a {
-    color: #e7e7e7;line-height:48px;height: 48px;
+    color: #e7e7e7;line-height:48px;height: 48px;padding: 0 15px;
 }
 
 .nav.child_menu li li:hover,
@@ -791,8 +791,7 @@ a:focus {
     background: linear-gradient(#334556, #2C4257), #2A3F54;
     box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0
 }
-.navbar-brand,
-.navbar-nav>li>a {
+.navbar-brand{
     font-weight: 500;
     color: #ECF0F1 !important;
     margin-left: 0 !important;
