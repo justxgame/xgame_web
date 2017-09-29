@@ -23,6 +23,7 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 			return $scope.inputKey == undefined || $scope.inputKey == '' || name.indexOf($scope.inputKey) > -1;
 		};
 		$scope.dt = $scope.$table.dataTable({
+			order: [[ 9, 'desc' ]],
 			buttons: {
 				buttons: [{
 					extend: 'copyHtml5',
