@@ -372,6 +372,17 @@ define(['angular','js.cookie','baseSet', 'jquery', 'sweetalert','Ps'], function(
 			});
 		});
 	});
+	appServices.service('ArrayhasObj',function() {
+		Array.prototype.hasObj = function(obj){
+			var result = -1;
+			this.forEach((item,index)=>{
+				if(JSON.stringify(item)==JSON.stringify(obj)){
+					result = index;
+				}
+			});
+			return result;
+		};
+	});
 	appServices.service('dropdownMenuScrollbar',function($rootScope){
 		$(document).on('shown.bs.dropdown','.dropdown',function(){
 			var $list = $(this).find('ul').parent('div');
