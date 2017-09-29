@@ -119,7 +119,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 			controller: function($scope, $element, $attrs) {
 				var opt = $parse($attrs.opt)($scope);
 				var $this = $($element);
-				if(opt&&opt.class){
+				if(opt && opt.class) {
 					$this.addClass(opt.class);
 				}
 			}
@@ -195,7 +195,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 				model: '=',
 				apply: '=?',
 				opt: '=options',
-				picker:'=?'
+				picker: '=?'
 			},
 			controller: function($scope, $element, $attrs) {
 				var $this = $($element);
@@ -307,6 +307,362 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 
 			},
 			replace: true
+		}
+	});
+
+	appDirectives.directive('fltCheckbox', function() {
+		return {
+			template: function($element, $attrs) {
+				var tpl =
+					`<div class="filter-bar form-line flt-checkbox clearfix">
+					<div class="form-left">
+						<div class="form-tag">{{data.itemName}}</div>
+					</div>
+					<div class="form-right">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left" type="checkbox" name="{{condition.val}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$index)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>
+							</div>
+						</div>
+					</div>
+				</div>`;
+				return tpl;
+			},
+			replace: true,
+			scope: {
+				model: '=',
+				data: '=?'
+			},
+			controller: function($scope, $element, $attrs) {
+				var conditions = $scope.model.conditions;
+				var updateModel = (condition) => {
+					if(condition.val === null) {
+						conditions.splice(0, conditions.length);
+						return;
+					};
+					if(condition.val === 'all') {
+						if(conditions.length < $scope.data.conditions.length) {
+							conditions.splice(0, conditions.length);
+							$scope.data.conditions.forEach((item) => {
+								conditions.push(item);
+							});
+						} else {
+							conditions.splice(0, conditions.length);
+						};
+						return;
+					};
+					var idx = conditions.hasObj(condition);
+					if(idx == -1) {
+						conditions.push(condition);
+					} else {
+						conditions.splice(idx, 1);
+					};
+				};
+				$scope.itemClick = (condition, index) => {
+					delete condition.$$hashKey;
+					updateModel(condition);
+				};
+				$scope.isChecked = (condition) => {
+					delete condition.$$hashKey;
+					if(condition.val === null) {
+						return conditions.length == 0 ? true : false;
+					} else if(condition.val === 'all') {
+						return conditions.length == $scope.data.conditions.length ? true : false;
+					} else {
+						return conditions.hasObj(condition) > -1 ? true : false;
+					};
+				};
+			}
+		}
+	});
+	appDirectives.directive('fltRadio', function() {
+		return {
+			template: function($element, $attrs) {
+				var tpl =
+					`<div class="filter-bar form-line flt-radio clearfix">
+					<div class="form-left">
+						<div class="form-tag">{{data.itemName}}</div>
+					</div>
+					<div class="form-right">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left" type="radio" name="{{data.itemkey}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$event)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>
+							</div>
+						</div>
+					</div>
+				</div>`;
+				return tpl;
+			},
+			replace: true,
+			scope: {
+				model: '=',
+				data: '=?'
+			},
+			controller: function($scope, $element, $attrs) {
+				var conditions = $scope.model.conditions;
+				console.log(conditions);
+				var updateModel = (condition) => {
+					conditions.splice(0, conditions.length);
+					conditions.push(condition);
+					console.log($scope.model.conditions);
+				};
+				$scope.itemClick = (condition, e) => {
+					delete condition.$$hashKey;
+					updateModel(condition);
+				};
+				$scope.isChecked = (condition) => {
+					delete condition.$$hashKey;
+					return conditions.hasObj(condition) > -1 ? true : false;
+				};
+			}
+		}
+	});
+	appDirectives.directive('fltCheckboxInput', function() {
+		return {
+			template: function($element, $attrs) {
+				var tpl =
+					`<div class="filter-bar form-line flt-checkbox-input clearfix">
+					<div class="form-left">
+						<div class="form-tag">{{data.itemName}}</div>
+					</div>
+					<div class="form-right">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left" type="checkbox" name="{{condition.val}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$index)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<div class="form-input transition-02 input-wrapper">
+								<input type="number" class="number pull-left" ng-model="start" ng-change="inputChange()" placeholder="自定义" />
+								<i class="pull-left bridge">-</i>
+								<input type="number" class="number pull-left" ng-model="end" ng-change="inputChange()" />
+								<span class="pull-left unit">次/周</span>
+							</div>
+						</div>
+					</div>
+				</div>`;
+				return tpl;
+			},
+			replace: true,
+			scope: {
+				model: '=',
+				data: '=?'
+			},
+			controller: function($scope, $element, $attrs) {
+				$scope.start = undefined;
+				$scope.end = undefined;
+				var conditions = $scope.model.conditions;
+				console.log(conditions);
+				var updateModel = (condition) => {
+					if(condition.val === null) {
+						conditions.splice(0, conditions.length);
+						$scope.start = undefined;
+						$scope.end = undefined;
+						return;
+					};
+					if(condition.val === 'all') {
+						if(conditions.length < $scope.data.conditions.length) {
+							conditions.splice(0, conditions.length);
+							$scope.data.conditions.forEach((item) => {
+								conditions.push(item);
+							});
+						} else {
+							conditions.splice(0, conditions.length);
+						};
+						$scope.start = undefined;
+						$scope.end = undefined;
+						return;
+					};
+					var idx = conditions.hasObj(condition);
+					if(idx == -1) {
+						conditions.push(condition);
+					} else {
+						conditions.splice(idx, 1);
+					};
+				};
+				$scope.itemClick = (condition, index) => {
+					delete condition.$$hashKey;
+					updateModel(condition);
+				};
+				$scope.isChecked = (condition) => {
+					delete condition.$$hashKey;
+					if(condition.val === null) {
+						return conditions.length == 0 ? true : false;
+					} else if(condition.val === 'all') {
+						return conditions.length == $scope.data.conditions.length ? true : false;
+					} else {
+						return conditions.hasObj(condition) > -1 ? true : false;
+					};
+				};
+				$scope.inputChange = () => {
+					conditions.splice(0, conditions.length);
+					if($scope.start != undefined || $scope.end != undefined) {
+						conditions.push({
+							id: 666,
+							display: '自定义',
+							val: ($scope.start != undefined ? $scope.start : '') + '|' + ($scope.end != undefined ? $scope.end : '')
+						});
+					};
+				};
+			}
+		}
+	});
+	appDirectives.directive('fltRadioDate', function() {
+		return {
+			template: function($element, $attrs) {
+				var tpl =
+					`<div class="filter-bar form-line flt-radio-date clearfix">
+					<div class="form-left">
+						<div class="form-tag">{{data.itemName}}</div>
+					</div>
+					<div class="form-right">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">
+							<div class="form-input transition-02">
+								<label class="clearfix"><input class="pull-left" type="radio" name="{{data.itemkey}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$event)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>
+							</div>
+						</div>
+						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+							<date-range-picker class="md" model="queryDate" apply="dateApply()" picker="picker" options="pickerOpt"></date-range-picker>
+						</div>
+					</div>
+				</div>`;
+				return tpl;
+			},
+			replace: true,
+			scope: {
+				model: '=',
+				data: '=?'
+			},
+			controller: function($scope, $element, $attrs) {
+				var conditions = $scope.model.conditions;
+				var picker = $($element).find('.date-range-picker');
+				var updateModel = (condition) => {
+					conditions.splice(0, conditions.length);
+					$scope.queryDate = undefined;
+					picker.val('请选择');
+					conditions.push(condition);
+					console.log($scope.model.conditions);
+				};
+				$scope.itemClick = (condition, e) => {
+					delete condition.$$hashKey;
+					updateModel(condition);
+				};
+				$scope.isChecked = (condition) => {
+					delete condition.$$hashKey;
+					return conditions.hasObj(condition) > -1 ? true : false;
+				};
+				$scope.pickerOpt = {
+					parentEl: $($element).find('.date-range-picker-wrapper')
+				};
+				$scope.queryDate = undefined;
+				console.log(conditions);
+				$scope.dateApply = () => {
+					if($scope.queryDate != undefined) {
+						conditions.splice(0, conditions.length);
+						conditions.push({
+							id: 666,
+							display: '自定义',
+							val: $scope.queryDate
+						});
+					};
+				};
+				picker.on('hide.daterangepicker', function(ev, p) {
+					if($scope.queryDate == undefined) {
+						picker.val('请选择');
+					}
+				});
+				$($element).on('click', '.daterangepicker .btn-unrestricted', () => {
+					$scope.picker.hide();
+					picker.val('不限时间');
+					conditions.splice(0, conditions.length);
+					conditions.push({
+						id: 999,
+						display: '不限时间',
+						val: 0
+					});
+				});
+			},
+			link: function($scope, $element, ) {
+				var picker = $($element).find('.date-range-picker');
+				picker.val('请选择');
+			}
+		}
+	});
+	appDirectives.directive('fltSelect', function() {
+		return {
+			template: function($element, $attrs) {
+				var tpl =
+					`<div class="filter-bar form-line flt-select clearfix">
+						<div class="form-left">
+							<div class="form-tag">{{data.itemName}}</div>
+						</div>
+						<div class="form-right">
+							<div class="form-item col-md-2 col-sm-12 col-xs-12">
+								<div class="dropdown form-content select transition-02 ">
+									<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+										<span class="val pull-left">请选择</span>
+										<div class="pull-right">
+											<span class="caret icon-arrow"></span>
+										</div>
+									</a>
+									<div class="dropdown-menu search animated fadeInUpSmall fast" role="menu">
+										<ng-input class="sm" icon-left="&#xe623;" model="inputKey" type="text" placeholder="搜索省份"></ng-input>
+										<div class="dropdown-list clearfix">
+											<ul class="clearfix">
+												<li role="presentation" ng-repeat="condition in data.conditions" ng-bind="condition.display" ng-click="itemClick($event,condition)" ng-show="drapListSearch(condition.display)" ng-class="{'active':isActive(condition)}"></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-item col-md-10 col-sm-12 col-xs-12">
+								<i class="item-tag" ng-repeat="item in model.conditions">{{item.display}}<em class="iconfont" ng-click="delCondition(item)">&#xe641;</em></i>
+							</div>
+						<div>
+					</div>`;
+					return tpl;
+			},
+			replace: true,
+			scope: {
+				model: '=',
+				data: '=?'
+			},
+			controller: function($scope, $element, $attrs) {
+				var conditions = $scope.model.conditions;
+				console.log($scope.data);
+				$scope.drapListSearch = function(name) {
+					return $scope.inputKey == undefined || $scope.inputKey == '' || name.indexOf($scope.inputKey) > -1;
+				};
+				$scope.isActive = (condition)=>{
+					delete condition.$$hashKey;
+					return conditions.hasObj(condition) > -1 ? true : false;
+				};
+				var updateModel = (condition) => {
+					if(condition.val === null) {
+						conditions.splice(0, conditions.length);
+						return;
+					};
+					var idx = conditions.hasObj(condition);
+					if(idx == -1) {
+						conditions.push(condition);
+					} else {
+						conditions.splice(idx, 1);
+					};
+					console.log($scope.model.conditions);
+				};
+				$scope.itemClick = (e,condition) => {
+					if(conditions.hasObj(condition) > -1) {
+						e.stopPropagation();
+						e.preventDefault();
+						return;
+					};
+					delete condition.$$hashKey;
+					updateModel(condition);
+				};
+				$scope.delCondition = (condition)=>{
+					conditions.splice(conditions.hasObj(condition), 1);
+				};
+			}
 		}
 	});
 });

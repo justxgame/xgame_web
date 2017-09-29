@@ -1,7 +1,7 @@
 define(['angular', 'require','angular-route','appDirectives','appServices','appFactorys','appTemplates','appController','jquery','table'],
 function(angular, require){
 	var app = angular.module('webapp', ['ngRoute','app.directives','app.services','app.factorys','app.template','app.controller']);
-	app.run(function($rootScope,$location,dropdownMenuScrollbar){
+	app.run(function($rootScope,$location,dropdownMenuScrollbar,ArrayhasObj){
 		$rootScope.$on('$routeChangeStart', function(evt, next, current){
 	    	$('.daterangepicker').remove();
 	    	$rootScope.path=$location.$$path;
