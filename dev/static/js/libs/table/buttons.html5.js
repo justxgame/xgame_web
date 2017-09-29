@@ -9,8 +9,8 @@
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {
 		// AMD
-		define( ['jquery','jszip', 'datatables', 'datatables.buttons'], function ( $,jszip ) {
-			return factory( $, window, document,jszip);
+		define( ['jquery','datatables', 'datatables.buttons'], function ( $) {
+			return factory( $, window, document,window.jszip);
 		} );
 	}
 	else if ( typeof exports === 'object' ) {

@@ -13,9 +13,9 @@ var postPort = '9100';
 getWrapper = function(name) {
 	return "define(['angular'], function(angular) {\n" +
 		"try {\n" +
-		"  module = angular.module('" + name + "');\n" +
+		"  var module = angular.module('" + name + "');\n" +
 		"} catch (e) {\n" +
-		"  module = angular.module('" + name + "', []);\n" +
+		"  var module = angular.module('" + name + "', []);\n" +
 		"};\n";
 };
 var wrapperEnd = "\n})";
@@ -196,8 +196,16 @@ gulp.task('baseSet', function() {
 	var stream, name;
 	name = 'baseSet';
 	stream = gulp.src('./' + project + '/static/js/libs/default/baseSet.js')
-		.pipe(replace('{{ version }}', version))
-		.pipe(replace('{{ prevVersion }}', prevVersion))
+		.pipe(replace('\''+postServer+':'+postPort+'/\'', 'window.location.origin+\'/\''))
+		.pipe(gulp.dest('./' + project + '/static/js/libs/default/'));
+	return stream;
+});
+
+gulp.task('returnBaseSet', ['startJs'],function() {
+	var stream, name;
+	name = 'baseSet';
+	stream = gulp.src('./' + project + '/static/js/libs/default/baseSet.js')
+		.pipe(replace('window.location.origin+\'/\'','\''+postServer+':'+postPort+'/\''))
 		.pipe(gulp.dest('./' + project + '/static/js/libs/default/'));
 	return stream;
 });
@@ -208,7 +216,7 @@ gulp.task('router', function() {
 		.pipe(gulp.dest('./' + project + '/static/js/'));
 });
 
-gulp.task('routerClean', ['startJs'], function() {
+gulp.task('routerClean',['returnBaseSet'],function() {
 	return gulp.src('./' + project + '/static/js/router-config.js')
 		.pipe(replace('$templateCache.get(getTplName(key)+\'.html\')', 'ret.tpl'))
 		.pipe(gulp.dest('./' + project + '/static/js/'));
@@ -266,9 +274,6 @@ gulp.task('indexJs', ['ctrMini', 'routerClean', 'configJs'], function() {
 			'./' + projectDist + '/static/js/start.js'
 		])
 		.pipe(concat(name + '.js'))
-//		.pipe(babel({
-//	      presets: ['es2015']
-//	    }))
 		.pipe(uglify({
 			mangle:false
 		}))
@@ -280,7 +285,15 @@ gulp.task('indexJs', ['ctrMini', 'routerClean', 'configJs'], function() {
 	return stream;
 });
 
-gulp.task('startJs', ['router', 'tpl'], function() {
+gulp.task('service2ES5',['tpl'],function() {
+	return gulp.src('./' + project + '/static/js/service/*.js')
+	.pipe(babel({
+      presets: ['es2015']
+    }))
+	.pipe(gulp.dest('./' + project + '/static/js/service/ES5/'));
+})
+
+gulp.task('startJs', ['service2ES5','router','baseSet'], function() {
 	var name = 'start';
 	return gulp.src('./' + project + '/static/js/*.js')
 		.pipe(amdOptimize(name, {
@@ -316,7 +329,7 @@ gulp.task('index', ['indexJs', 'cssmin'], function() {
 		.pipe(gulp.dest('./' + projectDist + '/'));
 });
 
-gulp.task('loginJs', function() {
+gulp.task('loginJs',['baseSet'],function() {
 	var jsDst = './' + projectDist + '/static/js/',
 		stream, name;
 	name = 'login';
@@ -374,8 +387,16 @@ gulp.task('loginHtml', function() {
 		}))
 		.pipe(gulp.dest('./' + projectDist + '/'));
 });
-
-gulp.task('login', ['loginJs', 'loginCssmin', 'loginHtml'], function() {
+gulp.task('loginBaseSet', ['loginJs'], function() {
+	var stream, name;
+	name = 'baseSet';
+	stream = gulp.src('./' + project + '/static/js/libs/default/baseSet.js')
+		.pipe(replace('window.location.origin+\'/\'','\''+postServer+':'+postPort+'/\''))
+		.pipe(gulp.dest('./' + project + '/static/js/libs/default/'));
+	return stream;
+	return;
+});
+gulp.task('login', ['loginBaseSet', 'loginCssmin', 'loginHtml'], function() {
 	var jsDst = './' + projectDist + '/static/js/',
 		stream, name;
 	name = 'login.min';

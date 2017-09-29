@@ -313,8 +313,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 	appDirectives.directive('fltCheckbox', function() {
 		return {
 			template: function($element, $attrs) {
-				var tpl =
-					`<div class="filter-bar form-line flt-checkbox clearfix">
+				var tpl =`<div class="filter-bar form-line flt-checkbox clearfix">
 					<div class="form-left">
 						<div class="form-tag">{{data.itemName}}</div>
 					</div>
