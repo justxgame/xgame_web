@@ -39,7 +39,6 @@ define(['angular','js.cookie','baseSet', 'jquery', 'sweetalert','Ps'], function(
 					}
 				};
 				getModel = angular.merge({},getModel, obj);
-//				console.log(getModel);
 				$http(getModel).then(function(response) {
 					if(response.data.code == 0) {
 						suc(response.data.data);
@@ -214,25 +213,15 @@ define(['angular','js.cookie','baseSet', 'jquery', 'sweetalert','Ps'], function(
 		}
 	});
 	appServices.service('appApi', ['$q','appHttp', function($q,appHttp) {
-		this.kpiGetNav = function(suc,com,err) {
+		this.kpiGetData = function(name,suc,com,err) {
 			appHttp.appGet({
-				url: baseSet.postServer + 'manager/kpi/getNav',
+				url: baseSet.postServer + 'manager/kpi/'+name,
 				success: suc,
 				complete: com,
 				error: err
-			})
+			});
 		};
-		this.kpiGetData = function(id,suc,com,err) {
-			appHttp.appGet({
-				url: baseSet.postServer + 'manager/kpi/getData',
-				params:{
-					id:id
-				},
-				success: suc,
-				complete: com,
-				error: err
-			})
-		};
+		
 		this.getRewardNav = function(suc,com,err) {
 			appHttp.appGet({
 				url: baseSet.postServer + 'manager/reward/getAllBox',

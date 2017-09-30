@@ -163,6 +163,15 @@ gulp.task('buildSass', ['sass'], function() {
 
 gulp.task('watch', function() {
 	gulp.watch('./' + project + '/static/css/**/**.scss', ['buildSass']);
+	gulp.watch('./' + project + '/static/js/service/**.js', ['watchService']);
+});
+
+gulp.task('watchService',function() {
+	return gulp.src('./' + project + '/static/js/service/*.js')
+	.pipe(babel({
+      presets: ['es2015']
+    }))
+	.pipe(gulp.dest('./' + project + '/static/js/service/ES5/'));
 });
 
 gulp.task('theme', function() {
