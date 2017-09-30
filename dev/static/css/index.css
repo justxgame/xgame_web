@@ -5,7 +5,7 @@
 
 
 .dataTables_wrapper{overflow-x: scroll;overflow-y: hidden;margin-top:10px;}
-.top_nav .user-info{line-height:56px;margin:0 15px;}
+.top_nav .user-info{line-height:50px;margin:0 15px;}
 .dataTables_wrapper .table{min-width:1200px;}
 .dataTables_wrapper .dataTables_length{width: auto;}
 .dataTables_wrapper .dt-buttons{margin-right: 20px;}

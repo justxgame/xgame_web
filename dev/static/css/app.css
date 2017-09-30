@@ -181,11 +181,6 @@ html , body{
     font-size: 27px;
     margin: 13px 0 0 3px
 }
-.site_title i {
-    border: 1px solid #EAEAEA;
-    padding: 5px 6px;
-    border-radius: 50%
-}
 .nav-sm .main_container .top_nav {
     display: block;
     margin-left: 70px;
@@ -330,7 +325,7 @@ html , body{
     border-bottom: 1px solid #D9DEE4;
     width: 100%;
     position: relative;
-    
+    line-height:50px;height: 50px;
 }
 @media (min-width: 480px) {
     .nav_menu {
@@ -797,7 +792,7 @@ a:focus {
     margin-left: 0 !important;
     line-height:56px;
 }
-.navbar-nav>li>a.icon{font-size:22px;}
+.navbar-nav>li>a.icon{font-size:22px;padding:0;line-height:50px;}
 .site_title {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -806,12 +801,14 @@ a:focus {
     width: 100%;
     color: #ECF0F1 !important;
     margin-left: 0 !important;
-    line-height: 59px;
+    line-height: 60px;
     display: block;
-    height: 55px;
+    height: 60px;
     margin: 0;
     padding-left: 10px
 }
+.site_title .icon{color: #fff;font-size:36px;}
+.site_title span{margin-left: 10px;}
 .site_title:hover,
 .site_title:focus {
     text-decoration: none
@@ -854,11 +851,10 @@ a:focus {
 .toggle {
     float: left;
     margin: 0;
-    padding-top: 16px;
-    width: 70px
+    width: 70px;
+    text-align: center;
 }
 .toggle a {
-    padding: 15px 15px 0;
     margin: 0;
     cursor: pointer
 }
