@@ -142,7 +142,7 @@ define(['angular','text!tpl/kpi.html','require','nprogress'],function (angular,t
 		};
 		function initTable (item){
 			$scope.tableList[item.name] = $('.'+item.cless).dataTable({
-				order: [[ 0, 'desc']],
+				order: [],
 				buttons: {
 					buttons: [{
 						extend: 'copyHtml5',

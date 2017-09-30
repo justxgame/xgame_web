@@ -1,7 +1,7 @@
 /*-----------------------
  * Site:  Kingnet - ./ - start
  * Author: Clearlove 7*
- * Updated: 2017-09-30 10:51
+ * Updated: 2017-09-30 23:37
  * Version: 1.0.0
  * -----------------------*/
 define('angular', [], function () {
@@ -19570,18 +19570,9 @@ define('appServices', [
         '$q',
         'appHttp',
         function ($q, appHttp) {
-            this.kpiGetNav = function (suc, com, err) {
+            this.kpiGetData = function (name, suc, com, err) {
                 appHttp.appGet({
-                    url: baseSet.postServer + 'manager/kpi/getNav',
-                    success: suc,
-                    complete: com,
-                    error: err
-                });
-            };
-            this.kpiGetData = function (id, suc, com, err) {
-                appHttp.appGet({
-                    url: baseSet.postServer + 'manager/kpi/getData',
-                    params: { id: id },
+                    url: baseSet.postServer + 'manager/kpi/' + name,
                     success: suc,
                     complete: com,
                     error: err
@@ -19956,7 +19947,7 @@ define('appTemplates', ['angular'], function (angular) {
     angular.module('app.template').run([
         '$templateCache',
         function ($templateCache) {
-            $templateCache.put('kpi.html', '<div class="module-wrapper"><div class="row"><div class="col-xs-12"><div class="x_panel"><div class="x_title"><h2>数据统计</h2></div><div class="x_content"><!--filter-bar--><div class="filter-bar form-line clearfix"><div class="form-item col-md-3 col-sm-12 col-xs-12"><div class="form-tag">统计类型</div><div class="channel-drapdown dropdown form-content transition-02"><a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><span class="val pull-left" ng-bind="filterBarModel.navName"></span><div class="pull-right"><span class="caret icon-arrow"></span></div></a><ul class="dropdown-menu animated fadeInUpSmall fast" role="menu"><li role="presentation" ng-repeat="item in allType" ng-bind="item.navName" ng-click="navClick($event,item.navName,item.kpiMetaModelList)" ng-class="{\'active\':filterBarModel.navName===item.navName}"></li></ul></div></div><div class="form-item col-md-3 col-sm-12 col-xs-12"><div class="form-tag">统计选项</div><div class="channel-drapdown dropdown form-content transition-02"><a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><span class="val pull-left" ng-bind="filterBarModel.kpiName"></span><div class="pull-right"><span class="caret icon-arrow"></span></div></a><ul class="dropdown-menu animated fadeInUpSmall fast" role="menu"><li role="presentation" ng-repeat="item in filterBarModel.kpiMetaModelList" ng-bind="item.kpiName" ng-click="kpiClick($event,item.kpiName,item.kpiId)" ng-class="{\'active\':filterBarModel.kpiId===item.kpiId}"></li></ul></div></div><div class="form-item btn-wrap clearfix col-md-3 col-sm-12 col-xs-12"><button type="submit" class="btn btn-success btn-query" ng-click="Query($event)"><span>查询</span> <i class="icon-loading"></i></button></div></div><!--datatable--><table class="table table-striped table-hover table-bordered kpi-data"><thead><tr><th>渠道名称</th><th>应用名称</th><th>已复用应用数</th><th>操作</th></tr></thead><tbody></tbody></table></div></div></div></div></div>');
+            $templateCache.put('kpi.html', '<div class="module-wrapper"><div class="row" ng-repeat="item in kpiList" repeat-finish="listFinish()"><div class="col-xs-12"><div class="x_panel"><div class="x_title"><h2>{{item.table}}</h2></div><div class="x_content"><table class="table table-striped table-hover table-bordered {{item.cless}}"><thead><tr><th ng-repeat="col in item.columns">{{col.name}}</th></tr></thead><tbody></tbody></table></div></div></div></div></div>');
         }
     ]);
     angular.module('app.template').run([
