@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -51,7 +50,11 @@
 										<a href="#player" class="clearfix"><i class="icon pull-left">&#xe600;</i><span class="pull-left">玩家管理</span></a>
 									</li>
 									<li ng-class="{'active':$root.path=='/inform'}">
-										<a href="#inform" class="clearfix"><i class="icon pull-left">&#xe7ba;</i><span class="pull-left">广播管理</span></a>
+										<a data-toggle="collapse" class="clearfix"><i class="icon pull-left">&#xe7ba;</i><span class="pull-left">广播管理</span></a>
+										<ul class="nav child_menu collapse">
+                      <li><a href="#inform/realtime" class="clearfix"><i class="icon pull-left">&#xe7ba;</i><span class="pull-left">即时广播</span></a></li>
+                      <li><a href="#inform/timing" class="clearfix"><i class="icon pull-left">&#xe7ba;</i><span class="pull-left">定时广播</span></a></li>
+                    </ul>
 									</li>
 									<li ng-class="{'active':$root.path=='/game'}">
 										<a href="#game" class="clearfix"><i class="icon pull-left">&#xe608;</i><span class="pull-left">游戏管理</span></a>
@@ -109,5 +112,4 @@
 		</script>
 		<!-- endbuild -->
 	</body>
-
 </html>

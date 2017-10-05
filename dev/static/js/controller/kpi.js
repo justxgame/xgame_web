@@ -1,4 +1,4 @@
-define(['angular', 'text!tpl/tpl.html', 'require', 'nprogress','sweetalert'], function(angular, tpl, require, NProgress,swal) {
+define(['angular', 'text!tpl/kpi.html', 'require', 'nprogress','sweetalert'], function(angular, tpl, require, NProgress,swal) {
 	function controller($scope,appApi){
 		NProgress.done();
 		$scope.kpiData = {};
