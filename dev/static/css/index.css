@@ -24,8 +24,8 @@
 .form-line .form-item:first-child{padding-left: 0;}
 .form-line .form-item.only{border-right:1px solid #c3cbd0;}
 .form-line .form-content .dropdown-toggle{display:block;}
-.form-line .form-content.open{box-shadow:0 0 20px rgba(42,63,84,.5);}
-.form-line .form-content.open .dropdown-menu{box-shadow:0 5px 15px rgba(42,63,84,.5);}
+.form-line .dropdown.open{box-shadow:0 0 20px rgba(42,63,84,.5);}
+.form-line .dropdown.open .dropdown-menu{box-shadow:0 5px 15px rgba(42,63,84,.5);}
 .form-line .form-content .dropdown-menu{width:calc(100% + 2px);font-size:14px;margin-top:1px;margin-left:-1px;border-top:none;border-top-left-radius: 0;border-top-right-radius: 0;}
 .form-line .form-content .dropdown-menu>li{height:41px;border-bottom:1px solid #c3cbd0;line-height: 40px;padding:0 20px;cursor: pointer;}
 .form-line .form-content .dropdown-menu>li:last-child{border-bottom: none;}
@@ -33,8 +33,8 @@
 .form-line .form-content .dropdown-menu>li>a{padding:0;line-height: 40px;}
 .filter-bar .btn-query{padding-right:40px;padding-left:40px;}
 .form-line.has-textarea textarea{width: 100%;resize: none;line-height: 40px;height:160px;border: none;padding:0 20px;}
-.form-line.has-textarea .form-tag{border-right:none;}
-.form-line.has-textarea .form-input{border-left: 1px solid #c3cbd0;}
+.form-line.has-textarea .form-tag{border-right:none;width: 99px;}
+.form-line.has-textarea .form-input{border-left: 1px solid #c3cbd0;width: calc(100% - 99px)}
 
 
 .copy-modal .modal-body{padding:0;}
@@ -72,8 +72,12 @@
 .form-modal .form-line{border-bottom:1px solid #c3cbd0;line-height: 40px;}
 .form-modal .form-line:first-child{border-top:1px solid #c3cbd0;}
 .form-modal .form-line .form-content .dropdown-menu{margin-top: 1px;}
+.form-modal .form-line.input-select .default-input{padding:0;}
+.form-modal .form-line.input-select .form-content{margin:0;padding:0;}
+.form-modal .form-line.input-select .form-content .dropdown{padding:0 20px;border-left:1px solid #c3cbd0;}
 .form-modal .error-lable{right:0;left:auto;top:0; line-height:40px;}
 .app-modal .error-lable{right:20px;}
+
 
 
 

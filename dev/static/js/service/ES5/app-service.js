@@ -303,6 +303,42 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 				error: err
 			});
 		};
+		this.getTimingInform = function (suc, com, err) {
+			appHttp.appGet({
+				url: baseSet.postServer + 'manager/broadcast/regular/tasks',
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
+		this.getTimingBox = function (suc, com, err) {
+			appHttp.appGet({
+				url: baseSet.postServer + 'manager/broadcast/regular/box',
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
+		this.deleteTimingInform = function (id, suc, com, err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/broadcast/regular/delete',
+				data: {
+					transection: id
+				},
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
+		this.addTimingInform = function (data, suc, com, err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/broadcast/regular/new',
+				data: data,
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
 		this.getPlayerInfo = function (params, suc, com, err) {
 			appHttp.appGet({
 				url: baseSet.postServer + 'manager/user/search',

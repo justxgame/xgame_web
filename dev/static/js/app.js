@@ -1,6 +1,6 @@
 define(['waves','fastclick','nprogress','js.cookie','jquery','bootstrap','Ps'],function(Waves,FastClick,NProgress,Cookies){
 	Waves.init();
-	Waves.attach('#sidebar-menu li', ['waves-block','waves-green']);
+	Waves.attach('#sidebar-menu li a', ['waves-block','waves-green']);
 	$('.main_container>.left_col').perfectScrollbar({
 		suppressScrollX: true
 	});

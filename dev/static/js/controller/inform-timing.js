@@ -1,4 +1,4 @@
-define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','moment'], function(angular, tpl, require, NProgress,swal,moment) {
+define(['angular', 'text!tpl/inform-timing.html', 'require', 'nprogress','sweetalert','moment'], function(angular, tpl, require, NProgress,swal,moment) {
 	function controller($scope, appApi, getMillisecond) {
 		NProgress.done();
 		$scope.filterBarModel = {};
@@ -8,13 +8,15 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','
 		$scope.QueryParam = {}
 		$scope.formModel = {};
 		appApi.getServerBox(data=>{
-			console.log(data);
 			$scope.serverBox = data;
-			$scope.filterBarModel.serverId = data[0].serverId;
-			$scope.filterBarModel.serverName = data[0].serverName;
 			$scope.formModel.serverId = data[0].serverId;
 			$scope.formModel.serverName = data[0].serverName;
-//			Query();
+		});
+		appApi.getTimingBox(data=>{
+			console.log(data);
+			$scope.timingBox = data;
+			$scope.formModel.freqUnit = data[0].boxId;
+			$scope.formModel.boxName = data[0].boxName;
 		});
 		$scope.dt = $scope.$table.dataTable({
 			buttons: {
@@ -23,7 +25,7 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','
 					className: 'btn-success btn-sm'
 				}, {
 					extend: 'excelHtml5',
-					title: '广播信息表',
+					title: '定时广播信息表',
 					className: 'btn-success btn-sm',
 				}, {
 					extend: 'csvHtml5',
@@ -31,63 +33,75 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','
 				}]
 			},
 			columns: [{
-					data: 'message',
-					width: '45%'
+					data: 'msg',
+					width: '31%'
 				},
 				{
 					data: 'serverId',
+					width: '5%'
+				},
+				{
+					data: 'uid',
+					width: '7%'
+				},
+				{
+					data: 'indate',
 					width: '10%'
 				},
 				{
-					data: 'sendDate',
-					width: '20%'
+					data: 'startDate',
+					width: '10%'
 				},
 				{
-					data: 'sendUserName',
+					data: 'endDate',
 					width: '10%'
+				},
+				{
+					data: 'nextSendDate',
+					width: '10%'
+				},
+				{
+					data: null,
+					width: '10%'
+				},
+				{
+					data: null,
+					width: '7%'
 				}
-//				,
-//				{
-//					data: null,
-//					width: '15%'
-//				}
 			],
 			columnDefs: [{
-				targets: 2,
+				targets: 7,
 				visible: true,
 				render: function(data, type, row, meta) {
-					return moment(data).format('YYYY-MM-DD hh:mm:ss');
-				}
-			}
-//			,{
-//				targets: 4,
-//				visible: true,
-//				render: function(data, type, row, meta) {
-//					return '<button class="btn btn-danger btn-del">删除</button>';
-//				}
-//			}
-			]
+					var unit = data.freqUnit=='H'?'小时':data.freqUnit=='m'?'分钟':'秒';
+					return data.freqVal+unit;
+					}
+				},
+				{
+					targets: 8,
+					visible: true,
+					render: function(data, type, row, meta) {
+						return '<button class="btn btn-danger btn-del">删除</button>';
+					}
+				}]
 		});
 		$scope.$table.on('click','.btn-del',function(e){
 			var data = $scope.dt.api(true)
 			.row($(this).parents('tr')).data();
 			swal({
-				html: '确认删除这条广播?',
+				html: '确认删除这条定时广播?',
 				type: 'warning',
 				confirmButtonText: '确定',
 				showCancelButton:true,
 				cancelButtonText:'取消'
 			}).then(()=>{
-				$scope.formModel = $.extend(true, {}, data);
-				$scope.formModel.actionId = 2;
-				appApi.deleteInform(data,data=>{
-					console.log(data);
+				appApi.deleteTimingInform(data.transection,data=>{
 					Query();
 				});
 			}).catch(swal.noop);
 		});
 		function Query(){
-			appApi.getInform(data=>{
+			appApi.getTimingInform(data=>{
 				console.log(data);
 				$scope.dt.fnClearTable();
 				if(data.length==0) return;
@@ -104,6 +118,15 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','
 			$scope.formModel.serverId = i;
 			$scope.formModel.serverName = n;
 		};
+		$scope.unitClick = (e,n,i)=>{
+			if(i==$scope.formModel.freqUnit) {
+				e.stopPropagation();
+				e.preventDefault();
+				return;
+			};
+			$scope.formModel.freqUnit = i;
+			$scope.formModel.boxName = n;
+		};
 		$scope.Send = ()=>{
 			$scope.$modal.modal('show');
 		};
@@ -113,13 +136,12 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','
 				return false;
 			};
 			$scope.modalForm.$submitted = true;
-			console.log($scope.modalForm.$valid);
-			if(!$scope.modalForm.$valid||!$scope.formModel.serverId){
+			if(!$scope.modalForm.$valid){
 				e.stopPropagation();
 				e.preventDefault();
 				return false;
 			};
-			appApi.sendInform($scope.formModel,data=>{
+			appApi.addTimingInform($scope.formModel,data=>{
 				console.log(data);
 				$scope.btnText = '关闭';
 				$('.submit-success').css('visibility','visible');
@@ -136,8 +158,11 @@ define(['angular', 'text!tpl/inform.html', 'require', 'nprogress','sweetalert','
 			$('.submit-success').css('visibility','hidden');
 			$scope.modalForm.$submitted = false;
 			$scope.modalForm.message.$touched = false;
+			$scope.modalForm.freqVal.$touched = false;
 			$scope.formModel.serverId = $scope.serverBox[0].serverId;
 			$scope.formModel.serverName = $scope.serverBox[0].serverName;
+			$scope.formModel.freqUnit = $scope.timingBox[0].boxId;
+			$scope.formModel.boxName = $scope.timingBox[0].boxName;
 		});
 	};
 	return {controller: controller, tpl: tpl};

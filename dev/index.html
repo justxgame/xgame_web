@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="renderer" content="webkit"/>
+		<meta name="renderer" content="webkit" />
 		<meta name="format-detection" content="telephone=no" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta content="yes" name="apple-touch-fullscreen">
@@ -49,12 +50,16 @@
 									<li ng-class="{'active':$root.path=='/player'}">
 										<a href="#player" class="clearfix"><i class="icon pull-left">&#xe600;</i><span class="pull-left">玩家管理</span></a>
 									</li>
-									<li ng-class="{'active':$root.path=='/inform'}">
+									<li>
 										<a data-toggle="collapse" class="clearfix"><i class="icon pull-left">&#xe7ba;</i><span class="pull-left">广播管理</span></a>
-										<ul class="nav child_menu collapse">
-                      <li><a href="#inform/realtime" class="clearfix"><i class="icon pull-left">&#xe7ba;</i><span class="pull-left">即时广播</span></a></li>
-                      <li><a href="#inform/timing" class="clearfix"><i class="icon pull-left">&#xe7ba;</i><span class="pull-left">定时广播</span></a></li>
-                    </ul>
+										<ul class="nav child_menu collapse"  ng-class="{'in':$root.path.indexOf('inform')>-1}">
+											<li ng-class="{'active':$root.path=='/inform/realtime'}">
+												<a href="#inform/realtime" class="clearfix"><i class="icon pull-left">&#xe604;</i><span class="pull-left">即时广播</span></a>
+											</li>
+											<li ng-class="{'active':$root.path=='/inform/timing'}">
+												<a href="#inform/timing" class="clearfix"><i class="icon pull-left">&#xe601;</i><span class="pull-left">定时广播</span></a>
+											</li>
+										</ul>
 									</li>
 									<li ng-class="{'active':$root.path=='/game'}">
 										<a href="#game" class="clearfix"><i class="icon pull-left">&#xe608;</i><span class="pull-left">游戏管理</span></a>
@@ -88,8 +93,10 @@
 								<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 							</div>
 							<ul class="nav navbar-nav navbar-right">
-								<li><a class="icon" title="退出" ng-click="logout()" >&#xe615;</a></li>
-								<li class="user-info">你好  <span class="user"></span></li>
+								<li>
+									<a class="icon" title="退出" ng-click="logout()">&#xe615;</a>
+								</li>
+								<li class="user-info">你好 <span class="user"></span></li>
 							</ul>
 						</nav>
 					</div>
@@ -112,4 +119,5 @@
 		</script>
 		<!-- endbuild -->
 	</body>
+
 </html>

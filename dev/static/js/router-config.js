@@ -94,10 +94,10 @@ function(angular, require){
                 path: 'static/js/controller/server.js?v='+stamp,
                 controller: 'serverController'
             },
-            '/inform': { //路由
+            '/inform/realtime': { //路由
                 //模块的代码路径
-                path: 'static/js/controller/inform.js?v='+stamp,
-                controller: 'informController'
+                path: 'static/js/controller/inform-realtime.js?v='+stamp,
+                controller: 'realtimeController'
             },
             '/game': { //路由
                 //模块的代码路径
@@ -118,6 +118,11 @@ function(angular, require){
                 //模块的代码路径
                 path: 'static/js/controller/demo.js?v='+stamp,
                 controller: 'demoController'
+            },
+            '/inform/timing': { //路由
+                //模块的代码路径
+                path: 'static/js/controller/inform-timing.js?v='+stamp,
+                controller: 'timingController'
             }
         };
         //默认跳转到某个路由
