@@ -17,6 +17,7 @@ define(['angular', 'text!tpl/inform-realtime.html', 'require', 'nprogress','swee
 //			Query();
 		});
 		$scope.dt = $scope.$table.dataTable({
+			order: [],
 			buttons: {
 				buttons: [{
 					extend: 'copyHtml5',
@@ -55,7 +56,7 @@ define(['angular', 'text!tpl/inform-realtime.html', 'require', 'nprogress','swee
 				targets: 2,
 				visible: true,
 				render: function(data, type, row, meta) {
-					return moment(data).format('YYYY-MM-DD hh:mm:ss');
+					return moment(data).format('YYYY-MM-DD HH:mm:ss');
 				}
 			},{
 				targets: 4,

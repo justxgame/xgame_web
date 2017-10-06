@@ -19,6 +19,7 @@ define(['angular', 'text!tpl/inform-timing.html', 'require', 'nprogress','sweeta
 			$scope.formModel.boxName = data[0].boxName;
 		});
 		$scope.dt = $scope.$table.dataTable({
+			order: [],
 			buttons: {
 				buttons: [{
 					extend: 'copyHtml5',

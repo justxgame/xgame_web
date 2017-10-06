@@ -92,7 +92,7 @@ define(['angular', 'text!tpl/delivery.html', 'require', 'nprogress','sweetalert'
 				targets: 9,
 				visible: true,
 				render: function(data, type, row, meta) {
-					return moment(data).format('YYYY-MM-DD hh:mm:ss');
+					return moment(data).format('YYYY-MM-DD HH:mm:ss');
 				}
 			},{
 				targets: 10,

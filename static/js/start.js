@@ -1,7 +1,7 @@
 /*-----------------------
  * Site:  Kingnet - ./ - start
  * Author: Clearlove 7*
- * Updated: 2017-10-06 21:54
+ * Updated: 2017-10-06 23:03
  * Version: 1.0.0
  * -----------------------*/
 define('angular', [], function () {
