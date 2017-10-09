@@ -1790,7 +1790,7 @@ h4.graph_title {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
 }
-.main_menu .icon{opacity: .99; font-size:30px;color:#e7e7e7;margin-right: 10px;font-weight: normal;}
+.main_menu .icon{display: inline-block;width:40px;text-align: center;opacity: .99; font-size:30px;color:#e7e7e7;margin-right: 10px;font-weight: normal;}
 .tile-stats {
     position: relative;
     display: block;
