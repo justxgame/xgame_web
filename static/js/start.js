@@ -1,7 +1,7 @@
 /*-----------------------
  * Site:  Kingnet - ./ - start
  * Author: Clearlove 7*
- * Updated: 2017-11-12 18:08
+ * Updated: 2017-11-12 18:29
  * Version: 1.0.0
  * -----------------------*/
 define('angular', [], function () {
@@ -19640,7 +19640,7 @@ define('appServices', [
             };
             this.sendInform = function (data, suc, com, err) {
                 appHttp.appPost({
-                    url: baseSet.postServer + 'manager/broadcast/send?type=1',
+                    url: baseSet.postServer + 'manager/broadcast/send',
                     data: data,
                     success: suc,
                     complete: com,
@@ -19649,7 +19649,7 @@ define('appServices', [
             };
             this.deleteInform = function (data, suc, com, err) {
                 appHttp.appPost({
-                    url: baseSet.postServer + 'manager/broadcast/delete?type=1',
+                    url: baseSet.postServer + 'manager/broadcast/delete',
                     data: data,
                     success: suc,
                     complete: com,
@@ -19674,7 +19674,7 @@ define('appServices', [
             };
             this.deleteTimingInform = function (id, suc, com, err) {
                 appHttp.appPost({
-                    url: baseSet.postServer + 'manager/broadcast/regular/delete?type=1',
+                    url: baseSet.postServer + 'manager/broadcast/regular/delete',
                     data: { transection: id },
                     success: suc,
                     complete: com,
@@ -19683,7 +19683,7 @@ define('appServices', [
             };
             this.addTimingInform = function (data, suc, com, err) {
                 appHttp.appPost({
-                    url: baseSet.postServer + 'manager/broadcast/regular/new?type=1',
+                    url: baseSet.postServer + 'manager/broadcast/regular/new',
                     data: data,
                     success: suc,
                     complete: com,

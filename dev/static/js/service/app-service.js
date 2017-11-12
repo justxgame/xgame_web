@@ -286,7 +286,7 @@ define(['angular','js.cookie','baseSet', 'jquery', 'sweetalert','Ps'], function(
 		};
 		this.sendInform = function(data,suc,com,err) {
 			appHttp.appPost({
-				url: baseSet.postServer + 'manager/broadcast/send?type=1',
+				url: baseSet.postServer + 'manager/broadcast/send',
 				data:data,
 				success: suc,
 				complete: com,
@@ -295,7 +295,7 @@ define(['angular','js.cookie','baseSet', 'jquery', 'sweetalert','Ps'], function(
 		};
 		this.deleteInform = function(data,suc,com,err) {
 			appHttp.appPost({
-				url: baseSet.postServer + 'manager/broadcast/delete?type=1',
+				url: baseSet.postServer + 'manager/broadcast/delete',
 				data:data,
 				success: suc,
 				complete: com,
@@ -320,7 +320,7 @@ define(['angular','js.cookie','baseSet', 'jquery', 'sweetalert','Ps'], function(
 		};
 		this.deleteTimingInform = function(id,suc,com,err){
 			appHttp.appPost({
-				url: baseSet.postServer + 'manager/broadcast/regular/delete?type=1',
+				url: baseSet.postServer + 'manager/broadcast/regular/delete',
 				data:{
 					transection:id
 				},
@@ -331,7 +331,7 @@ define(['angular','js.cookie','baseSet', 'jquery', 'sweetalert','Ps'], function(
 		};
 		this.addTimingInform = function(data,suc,com,err){
 			appHttp.appPost({ 
-				url: baseSet.postServer + 'manager/broadcast/regular/new?type=1',
+				url: baseSet.postServer + 'manager/broadcast/regular/new',
 				data:data,
 				success: suc,
 				complete: com,
@@ -482,11 +482,6 @@ define(['angular','js.cookie','baseSet', 'jquery', 'sweetalert','Ps'], function(
 				$list.perfectScrollbar({
 	        		suppressScrollX: true
 	        	});
-//	        	if($bar.height()==0&&listHiehgt>205){
-//	        		console.log($list.find('ul').height());
-//					$bar.height((205/listHiehgt)*205);
-//					$list.addClass('ps-active-y');
-//				}
 			};
 		});
 	});
