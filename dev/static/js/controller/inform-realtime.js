@@ -117,6 +117,7 @@ define(['angular', 'text!tpl/inform-realtime.html', 'require', 'nprogress','swee
 				e.preventDefault();
 				return false;
 			};
+			$scope.formModel.type = 1;
 			appApi.sendInform($scope.formModel,data=>{
 				console.log(data);
 				$scope.btnText = '关闭';

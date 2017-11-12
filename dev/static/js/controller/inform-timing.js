@@ -142,6 +142,7 @@ define(['angular', 'text!tpl/inform-timing.html', 'require', 'nprogress','sweeta
 				e.preventDefault();
 				return false;
 			};
+			$scope.formModel.type = 1;
 			appApi.addTimingInform($scope.formModel,data=>{
 				console.log(data);
 				$scope.btnText = '关闭';
