@@ -123,6 +123,16 @@ function(angular, require){
                 //模块的代码路径
                 path: 'static/js/controller/inform-timing.js?v='+stamp,
                 controller: 'timingController'
+            },
+            '/notification/timing': { //路由
+                //模块的代码路径
+                path: 'static/js/controller/notification-timing.js?v='+stamp,
+                controller: 'noticeTimingController'
+            },
+            '/notification/realtime': { //路由
+                //模块的代码路径
+                path: 'static/js/controller/notification-realtime.js?v='+stamp,
+                controller: 'noticeRealtimeController'
             }
         };
         //默认跳转到某个路由

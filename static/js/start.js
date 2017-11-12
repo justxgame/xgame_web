@@ -1,7 +1,7 @@
 /*-----------------------
  * Site:  Kingnet - ./ - start
  * Author: Clearlove 7*
- * Updated: 2017-10-09 22:00
+ * Updated: 2017-11-12 18:08
  * Version: 1.0.0
  * -----------------------*/
 define('angular', [], function () {
@@ -19632,7 +19632,7 @@ define('appServices', [
             };
             this.getInform = function (suc, com, err) {
                 appHttp.appGet({
-                    url: baseSet.postServer + 'manager/broadcast/history',
+                    url: baseSet.postServer + 'manager/broadcast/history?type=1',
                     success: suc,
                     complete: com,
                     error: err
@@ -19640,7 +19640,7 @@ define('appServices', [
             };
             this.sendInform = function (data, suc, com, err) {
                 appHttp.appPost({
-                    url: baseSet.postServer + 'manager/broadcast/send',
+                    url: baseSet.postServer + 'manager/broadcast/send?type=1',
                     data: data,
                     success: suc,
                     complete: com,
@@ -19649,7 +19649,7 @@ define('appServices', [
             };
             this.deleteInform = function (data, suc, com, err) {
                 appHttp.appPost({
-                    url: baseSet.postServer + 'manager/broadcast/delete',
+                    url: baseSet.postServer + 'manager/broadcast/delete?type=1',
                     data: data,
                     success: suc,
                     complete: com,
@@ -19658,7 +19658,7 @@ define('appServices', [
             };
             this.getTimingInform = function (suc, com, err) {
                 appHttp.appGet({
-                    url: baseSet.postServer + 'manager/broadcast/regular/tasks',
+                    url: baseSet.postServer + 'manager/broadcast/regular/tasks?type=1',
                     success: suc,
                     complete: com,
                     error: err
@@ -19674,7 +19674,7 @@ define('appServices', [
             };
             this.deleteTimingInform = function (id, suc, com, err) {
                 appHttp.appPost({
-                    url: baseSet.postServer + 'manager/broadcast/regular/delete',
+                    url: baseSet.postServer + 'manager/broadcast/regular/delete?type=1',
                     data: { transection: id },
                     success: suc,
                     complete: com,
@@ -19683,7 +19683,7 @@ define('appServices', [
             };
             this.addTimingInform = function (data, suc, com, err) {
                 appHttp.appPost({
-                    url: baseSet.postServer + 'manager/broadcast/regular/new',
+                    url: baseSet.postServer + 'manager/broadcast/regular/new?type=1',
                     data: data,
                     success: suc,
                     complete: com,
@@ -19728,6 +19728,58 @@ define('appServices', [
             this.setGameServerInfo = function (data, suc, com, err) {
                 appHttp.appPost({
                     url: baseSet.postServer + 'manager/gameSetting/update',
+                    data: data,
+                    success: suc,
+                    complete: com,
+                    error: err
+                });
+            };
+            this.getNotice = function (suc, com, err) {
+                appHttp.appGet({
+                    url: baseSet.postServer + 'manager/broadcast/history?type=2',
+                    success: suc,
+                    complete: com,
+                    error: err
+                });
+            };
+            this.sendNotice = function (data, suc, com, err) {
+                appHttp.appPost({
+                    url: baseSet.postServer + 'manager/broadcast/send',
+                    data: data,
+                    success: suc,
+                    complete: com,
+                    error: err
+                });
+            };
+            this.deleteNotice = function (data, suc, com, err) {
+                appHttp.appPost({
+                    url: baseSet.postServer + 'manager/broadcast/delete',
+                    data: data,
+                    success: suc,
+                    complete: com,
+                    error: err
+                });
+            };
+            this.getTimingNotice = function (suc, com, err) {
+                appHttp.appGet({
+                    url: baseSet.postServer + 'manager/broadcast/regular/tasks?type=2',
+                    success: suc,
+                    complete: com,
+                    error: err
+                });
+            };
+            this.deleteTimingNotice = function (id, suc, com, err) {
+                appHttp.appPost({
+                    url: baseSet.postServer + 'manager/broadcast/regular/delete',
+                    data: { transection: id },
+                    success: suc,
+                    complete: com,
+                    error: err
+                });
+            };
+            this.addTimingNotice = function (data, suc, com, err) {
+                appHttp.appPost({
+                    url: baseSet.postServer + 'manager/broadcast/regular/new',
                     data: data,
                     success: suc,
                     complete: com,
@@ -19975,7 +20027,7 @@ define('appTemplates', ['angular'], function (angular) {
     angular.module('app.template').run([
         '$templateCache',
         function ($templateCache) {
-            $templateCache.put('inform-realtime.html', '<div class="module-wrapper"><div class="row"><div class="col-xs-12"><div class="x_panel"><div class="x_title"><h2>广播管理</h2></div><div class="x_content"><!--filter-bar--><div class="filter-bar form-line clearfix"><!--<div class="form-item col-md-3 col-sm-12 col-xs-12">\n' + '\t\t\t\t\t\t\t<div class="form-tag">广播类型</div>\n' + '\t\t\t\t\t\t\t<div class="channel-drapdown dropdown form-content transition-02">\n' + '\t\t\t\t\t\t\t\t<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">\n' + '\t\t\t\t\t\t\t\t\t<span class="val pull-left" ng-bind="filterBarModel.serverName"></span>\n' + '\t\t\t\t\t\t\t\t\t<div class="pull-right">\n' + '\t\t\t\t\t\t\t\t\t\t<span class="caret icon-arrow"></span>\n' + '\t\t\t\t\t\t\t\t\t</div>\n' + '\t\t\t\t\t\t\t\t</a>\n' + '\t\t\t\t\t\t\t\t<ul class="dropdown-menu animated fadeInUpSmall fast" role="menu">\n' + '\t\t\t\t\t\t\t\t\t<li role="presentation" ng-repeat="item in serverBox" ng-bind="item.serverName" ng-click="serverClick($event,item.serverName,item.serverId)" ng-class="{\'active\':filterBarModel.serverId===item.serverId}"></li>\n' + '\t\t\t\t\t\t\t\t</ul>\n' + '\t\t\t\t\t\t\t</div>\n' + '\t\t\t\t\t\t</div>--><div class="form-item btn-wrap clearfix col-md-3 col-sm-12 col-xs-12"><button type="submit" class="btn btn-success btn-query" ng-click="Send($event)"><span>新增</span> <i class="icon-loading"></i></button></div></div><!--datatable--><table class="table table-striped table-hover table-bordered inform-data"><thead><tr><th>广播内容</th><th>服务器ID</th><th>发送时间</th><th>发送人</th><th>操作</th></tr></thead><tbody></tbody></table></div></div></div></div></div><div class="modal fade custom-modal inform-modal form-modal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-md"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">\xD7</span></button><h4 class="modal-title text-center" id="myModalLabel"><span class="pull-left">发送广播</span></h4></div><div class="modal-body"><div class="body-container" ng-class="{\'success overflow\':success}"><div class="submit-success transition-05"><div class="center"><p class="icon"><i class="icon">&#xe60c;</i></p><p class="text">提交成功</p></div></div><form role="form" name="modalForm" class="clearfix transition-05" novalidate><div class="form-line pull-left"><div class="form-tag">服务器</div><div class="dropdown form-content transition-02"><a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><span class="val pull-left" ng-bind="formModel.serverName"></span><div class="pull-right"><span class="caret icon-arrow"></span></div></a><ul class="dropdown-menu animated fadeInUpSmall fast" role="menu"><li role="presentation" ng-repeat="item in serverBox" ng-bind="item.serverName" ng-click="serverClick($event,item.serverName,item.serverId)" ng-class="{\'active\':formModel.serverId===item.serverId}"></li></ul></div></div><div class="form-line pull-left has-textarea"><div class="form-tag">信息</div><div class="form-input"><div class="textarea-wrapper"><textarea name="message" ng-model="formModel.message" placeholder="请输入广播内容..." required></textarea><span class="error-lable" ng-show="(modalForm.message.$error.required&&modalForm.message.$touched)||(modalForm.message.$error.required&&modalForm.$submitted)">广播内容不可为空</span></div></div></div></form></div></div><div class="modal-footer"><button type="button" class="btn btn-success btn-submit" ng-click="submitForm($event)" ng-bind="success?\'关闭\':\'提交\'"></button></div></div></div></div>');
+            $templateCache.put('inform-realtime.html', '<div class="module-wrapper"><div class="row"><div class="col-xs-12"><div class="x_panel"><div class="x_title"><h2>即时广播管理</h2></div><div class="x_content"><!--filter-bar--><div class="filter-bar form-line clearfix"><!--<div class="form-item col-md-3 col-sm-12 col-xs-12">\n' + '\t\t\t\t\t\t\t<div class="form-tag">广播类型</div>\n' + '\t\t\t\t\t\t\t<div class="channel-drapdown dropdown form-content transition-02">\n' + '\t\t\t\t\t\t\t\t<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">\n' + '\t\t\t\t\t\t\t\t\t<span class="val pull-left" ng-bind="filterBarModel.serverName"></span>\n' + '\t\t\t\t\t\t\t\t\t<div class="pull-right">\n' + '\t\t\t\t\t\t\t\t\t\t<span class="caret icon-arrow"></span>\n' + '\t\t\t\t\t\t\t\t\t</div>\n' + '\t\t\t\t\t\t\t\t</a>\n' + '\t\t\t\t\t\t\t\t<ul class="dropdown-menu animated fadeInUpSmall fast" role="menu">\n' + '\t\t\t\t\t\t\t\t\t<li role="presentation" ng-repeat="item in serverBox" ng-bind="item.serverName" ng-click="serverClick($event,item.serverName,item.serverId)" ng-class="{\'active\':filterBarModel.serverId===item.serverId}"></li>\n' + '\t\t\t\t\t\t\t\t</ul>\n' + '\t\t\t\t\t\t\t</div>\n' + '\t\t\t\t\t\t</div>--><div class="form-item btn-wrap clearfix col-md-3 col-sm-12 col-xs-12"><button type="submit" class="btn btn-success btn-query" ng-click="Send($event)"><span>新增</span> <i class="icon-loading"></i></button></div></div><!--datatable--><table class="table table-striped table-hover table-bordered inform-data"><thead><tr><th>广播内容</th><th>服务器ID</th><th>发送时间</th><th>发送人</th><th>操作</th></tr></thead><tbody></tbody></table></div></div></div></div></div><div class="modal fade custom-modal inform-modal form-modal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-md"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">\xD7</span></button><h4 class="modal-title text-center" id="myModalLabel"><span class="pull-left">发送广播</span></h4></div><div class="modal-body"><div class="body-container" ng-class="{\'success overflow\':success}"><div class="submit-success transition-05"><div class="center"><p class="icon"><i class="icon">&#xe60c;</i></p><p class="text">提交成功</p></div></div><form role="form" name="modalForm" class="clearfix transition-05" novalidate><div class="form-line pull-left"><div class="form-tag">服务器</div><div class="dropdown form-content transition-02"><a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><span class="val pull-left" ng-bind="formModel.serverName"></span><div class="pull-right"><span class="caret icon-arrow"></span></div></a><ul class="dropdown-menu animated fadeInUpSmall fast" role="menu"><li role="presentation" ng-repeat="item in serverBox" ng-bind="item.serverName" ng-click="serverClick($event,item.serverName,item.serverId)" ng-class="{\'active\':formModel.serverId===item.serverId}"></li></ul></div></div><div class="form-line pull-left has-textarea"><div class="form-tag">信息</div><div class="form-input"><div class="textarea-wrapper"><textarea name="message" ng-model="formModel.message" placeholder="请输入广播内容..." required></textarea><span class="error-lable" ng-show="(modalForm.message.$error.required&&modalForm.message.$touched)||(modalForm.message.$error.required&&modalForm.$submitted)">广播内容不可为空</span></div></div></div></form></div></div><div class="modal-footer"><button type="button" class="btn btn-success btn-submit" ng-click="submitForm($event)" ng-bind="success?\'关闭\':\'提交\'"></button></div></div></div></div>');
         }
     ]);
     angular.module('app.template').run([
@@ -19988,6 +20040,18 @@ define('appTemplates', ['angular'], function (angular) {
         '$templateCache',
         function ($templateCache) {
             $templateCache.put('kpi.html', '<div class="module-wrapper"><div class="row" ng-repeat="item in kpiList" repeat-finish="listFinish()"><div class="col-xs-12"><div class="x_panel"><div class="x_title"><h2>{{item.table}}</h2></div><div class="x_content"><table class="table table-striped table-hover table-bordered {{item.cless}}"><thead><tr><th ng-repeat="col in item.columns">{{col.name}}</th></tr></thead><tbody></tbody></table></div></div></div></div></div>');
+        }
+    ]);
+    angular.module('app.template').run([
+        '$templateCache',
+        function ($templateCache) {
+            $templateCache.put('notification-realtime.html', '<div class="module-wrapper"><div class="row"><div class="col-xs-12"><div class="x_panel"><div class="x_title"><h2>即时推送管理</h2></div><div class="x_content"><!--filter-bar--><div class="filter-bar form-line clearfix"><div class="form-item btn-wrap clearfix col-md-3 col-sm-12 col-xs-12"><button type="submit" class="btn btn-success btn-query" ng-click="Send($event)"><span>新增</span> <i class="icon-loading"></i></button></div></div><!--datatable--><table class="table table-striped table-hover table-bordered notification-data"><thead><tr><th>推送内容</th><th>发送时间</th><th>发送人</th><th>操作</th></tr></thead><tbody></tbody></table></div></div></div></div></div><div class="modal fade custom-modal notification-modal form-modal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-md"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">\xD7</span></button><h4 class="modal-title text-center" id="myModalLabel"><span class="pull-left">发送广播</span></h4></div><div class="modal-body"><div class="body-container" ng-class="{\'success overflow\':success}"><div class="submit-success transition-05"><div class="center"><p class="icon"><i class="icon">&#xe60c;</i></p><p class="text">提交成功</p></div></div><form role="form" name="modalForm" class="clearfix transition-05" novalidate><div class="form-line pull-left has-textarea"><div class="form-tag">信息</div><div class="form-input"><div class="textarea-wrapper"><textarea name="message" ng-model="formModel.message" placeholder="请输入推送内容..." required></textarea><span class="error-lable" ng-show="(modalForm.message.$error.required&&modalForm.message.$touched)||(modalForm.message.$error.required&&modalForm.$submitted)">推送内容不可为空</span></div></div></div></form></div></div><div class="modal-footer"><button type="button" class="btn btn-success btn-submit" ng-click="submitForm($event)" ng-bind="success?\'关闭\':\'提交\'"></button></div></div></div></div>');
+        }
+    ]);
+    angular.module('app.template').run([
+        '$templateCache',
+        function ($templateCache) {
+            $templateCache.put('notification-timing.html', '<div class="module-wrapper"><div class="row"><div class="col-xs-12"><div class="x_panel"><div class="x_title"><h2>定时推送管理</h2></div><div class="x_content"><!--filter-bar--><div class="filter-bar form-line clearfix"><div class="form-item btn-wrap clearfix col-md-3 col-sm-12 col-xs-12"><button type="submit" class="btn btn-success btn-query" ng-click="Send($event)"><span>新增</span> <i class="icon-loading"></i></button></div></div><!--datatable--><table class="table table-striped table-hover table-bordered notification-data"><thead><tr><th>广播内容</th><th>发送人</th><th>任务设置时间</th><th>上轮任务开始时间</th><th>上轮任务结束时间</th><th>下次发送时间</th><th>发送间隔</th><th>操作</th></tr></thead><tbody></tbody></table></div></div></div></div></div><div class="modal fade custom-modal notification-modal form-modal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-md"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">\xD7</span></button><h4 class="modal-title text-center" id="myModalLabel"><span class="pull-left">发送定时广播</span></h4></div><div class="modal-body"><div class="body-container" ng-class="{\'success overflow\':success}"><div class="submit-success transition-05"><div class="center"><p class="icon"><i class="icon">&#xe60c;</i></p><p class="text">提交成功</p></div></div><form role="form" name="modalForm" class="clearfix transition-05" novalidate><div class="form-line pull-left input-select"><div class="form-tag">间隔</div><div class="row form-content"><ng-input class="sm col-xs-6" placeholder="请输入..." form="modalForm" model="formModel.freqVal" valid="true" required="required" focus="focus" name="freqVal" type="number"></ng-input><div class="dropdown transition-02 col-xs-6"><a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><span class="val pull-left" ng-bind="formModel.boxName"></span><div class="pull-right"><span class="caret icon-arrow"></span></div></a><ul class="dropdown-menu animated fadeInUpSmall fast" role="menu"><li role="presentation" ng-repeat="item in timingBox" ng-bind="item.boxName" ng-click="unitClick($event,item.boxName,item.boxId)" ng-class="{\'active\':formModel.freqUnit===item.boxId}"></li></ul></div></div></div><div class="form-line pull-left has-textarea"><div class="form-tag">信息</div><div class="form-input"><div class="textarea-wrapper"><textarea name="message" ng-model="formModel.msg" placeholder="请输入推送内容..." required></textarea><span class="error-lable" ng-show="(modalForm.message.$error.required&&modalForm.message.$touched)||(modalForm.message.$error.required&&modalForm.$submitted)">推送内容不可为空</span></div></div></div></form></div></div><div class="modal-footer"><button type="button" class="btn btn-success btn-submit" ng-click="submitForm($event)" ng-bind="success?\'关闭\':\'提交\'"></button></div></div></div></div>');
         }
     ]);
     angular.module('app.template').run([
@@ -28247,6 +28311,14 @@ define('router-config', [
                 '/inform/timing': {
                     path: 'static/js/controller/inform-timing.js?v=' + stamp,
                     controller: 'timingController'
+                },
+                '/notification/timing': {
+                    path: 'static/js/controller/notification-timing.js?v=' + stamp,
+                    controller: 'noticeTimingController'
+                },
+                '/notification/realtime': {
+                    path: 'static/js/controller/notification-realtime.js?v=' + stamp,
+                    controller: 'noticeRealtimeController'
                 }
             };
             var defaultRoute = '/player';

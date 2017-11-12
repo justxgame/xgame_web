@@ -279,7 +279,7 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 		};
 		this.getInform = function (suc, com, err) {
 			appHttp.appGet({
-				url: baseSet.postServer + 'manager/broadcast/history',
+				url: baseSet.postServer + 'manager/broadcast/history?type=1',
 				success: suc,
 				complete: com,
 				error: err
@@ -287,7 +287,7 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 		};
 		this.sendInform = function (data, suc, com, err) {
 			appHttp.appPost({
-				url: baseSet.postServer + 'manager/broadcast/send',
+				url: baseSet.postServer + 'manager/broadcast/send?type=1',
 				data: data,
 				success: suc,
 				complete: com,
@@ -296,7 +296,7 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 		};
 		this.deleteInform = function (data, suc, com, err) {
 			appHttp.appPost({
-				url: baseSet.postServer + 'manager/broadcast/delete',
+				url: baseSet.postServer + 'manager/broadcast/delete?type=1',
 				data: data,
 				success: suc,
 				complete: com,
@@ -305,7 +305,7 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 		};
 		this.getTimingInform = function (suc, com, err) {
 			appHttp.appGet({
-				url: baseSet.postServer + 'manager/broadcast/regular/tasks',
+				url: baseSet.postServer + 'manager/broadcast/regular/tasks?type=1',
 				success: suc,
 				complete: com,
 				error: err
@@ -321,7 +321,7 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 		};
 		this.deleteTimingInform = function (id, suc, com, err) {
 			appHttp.appPost({
-				url: baseSet.postServer + 'manager/broadcast/regular/delete',
+				url: baseSet.postServer + 'manager/broadcast/regular/delete?type=1',
 				data: {
 					transection: id
 				},
@@ -332,7 +332,7 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 		};
 		this.addTimingInform = function (data, suc, com, err) {
 			appHttp.appPost({
-				url: baseSet.postServer + 'manager/broadcast/regular/new',
+				url: baseSet.postServer + 'manager/broadcast/regular/new?type=1',
 				data: data,
 				success: suc,
 				complete: com,
@@ -379,6 +379,60 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 		this.setGameServerInfo = function (data, suc, com, err) {
 			appHttp.appPost({
 				url: baseSet.postServer + 'manager/gameSetting/update',
+				data: data,
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
+		this.getNotice = function (suc, com, err) {
+			appHttp.appGet({
+				url: baseSet.postServer + 'manager/broadcast/history?type=2',
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
+		this.sendNotice = function (data, suc, com, err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/broadcast/send',
+				data: data,
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
+		this.deleteNotice = function (data, suc, com, err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/broadcast/delete',
+				data: data,
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
+		this.getTimingNotice = function (suc, com, err) {
+			appHttp.appGet({
+				url: baseSet.postServer + 'manager/broadcast/regular/tasks?type=2',
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
+		this.deleteTimingNotice = function (id, suc, com, err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/broadcast/regular/delete',
+				data: {
+					transection: id
+				},
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
+		this.addTimingNotice = function (data, suc, com, err) {
+			appHttp.appPost({
+				url: baseSet.postServer + 'manager/broadcast/regular/new',
 				data: data,
 				success: suc,
 				complete: com,

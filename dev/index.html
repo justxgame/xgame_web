@@ -61,6 +61,17 @@
 											</li>
 										</ul>
 									</li>
+									<li>
+										<a data-toggle="collapse" class="clearfix"><i class="icon pull-left">&#xe64f;</i><span class="pull-left">推送管理</span></a>
+										<ul class="nav child_menu collapse"  ng-class="{'in':$root.path.indexOf('notification')>-1}">
+											<li ng-class="{'active':$root.path=='/notification/realtime'}">
+												<a href="#notification/realtime" class="clearfix"><i class="icon pull-left">&#xe604;</i><span class="pull-left">即时推送</span></a>
+											</li>
+											<li ng-class="{'active':$root.path=='/notification/timing'}">
+												<a href="#notification/timing" class="clearfix"><i class="icon pull-left">&#xe601;</i><span class="pull-left">定时推送</span></a>
+											</li>
+										</ul>
+									</li>
 									<li ng-class="{'active':$root.path=='/game'}">
 										<a href="#game" class="clearfix"><i class="icon pull-left">&#xe608;</i><span class="pull-left">游戏管理</span></a>
 									</li>
